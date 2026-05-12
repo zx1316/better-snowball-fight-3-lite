@@ -5,6 +5,8 @@
     "3": "bsf3lite:item/cold_compression_jet_engine_sc_0",
     "4": "bsf3lite:item/cold_compression_jet_engine_sc_0",
     "5": "bsf3lite:item/cold_compression_jet_engine_sc_0",
+    "12": "bsf3lite:item/cold_compression_jet_engine_body",
+    "missing": "bsf3lite:item/cold_compression_jet_engine_body",
     "particle": "bsf3lite:item/cold_compression_jet_engine_body"
   },
   "overrides": [
