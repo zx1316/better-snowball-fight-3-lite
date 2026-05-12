@@ -26,7 +26,7 @@ public class GloveItem extends AbstractBSFEnhanceableToolItem {
         this.cd = 6;
     }
 
-    public GloveItem(String id, Rarity rarity, int durability, int cd) {
+    protected GloveItem(String id, Rarity rarity, int durability, int cd) {
         super(id, rarity, durability, ItemTags.WOOL);
         this.cd = cd;
     }

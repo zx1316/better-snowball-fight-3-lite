@@ -7,8 +7,8 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jspecify.annotations.NonNull;
 
 public class ColdResistanceEffect extends MobEffect {
-    public ColdResistanceEffect(MobEffectCategory p_19451_, int p_19452_) {
-        super(p_19451_, p_19452_);
+    public ColdResistanceEffect() {
+        super(MobEffectCategory.BENEFICIAL, 0x3498db);
     }
 
     @Override
@@ -24,11 +24,6 @@ public class ColdResistanceEffect extends MobEffect {
         } else {
             mob.setTicksFrozen(0);
         }
-        return true;
-    }
-
-    @Override
-    public boolean isBeneficial() {
         return true;
     }
 }

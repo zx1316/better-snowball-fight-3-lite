@@ -14,16 +14,21 @@ public record ItemData(Item item) {
     public static final Codec<ItemData> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.STRING.fieldOf("item").forGetter(ItemData::getItemResLoc)
-            ).apply(instance, ItemData::new)
+            ).apply(instance, ItemData::makeItemData)
     );
     public static final StreamCodec<ByteBuf, ItemData> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, ItemData::getItemResLoc,
-            ItemData::new
+            ItemData::makeItemData
     );
     public static final ItemData EMPTY = new ItemData(Items.AIR);
 
-    private ItemData(String itemName) {
-        this(BuiltInRegistries.ITEM.get(Identifier.tryParse(itemName)).get().value());
+    private static ItemData makeItemData(String itemName) {
+        Identifier identifier = Identifier.tryParse(itemName);
+        if (identifier == null) {
+            return new ItemData(Items.AIR);
+        }
+        var itemOptional = BuiltInRegistries.ITEM.get(identifier);
+        return itemOptional.map(itemReference -> new ItemData(itemReference.value())).orElseGet(() -> new ItemData(Items.AIR));
     }
 
     private String getItemResLoc() {

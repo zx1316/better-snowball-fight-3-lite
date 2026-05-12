@@ -1,24 +1,16 @@
 package com.linngdu664.bsf3lite.util;
 
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Predicate;
@@ -100,32 +92,6 @@ public class BSFCommonUtil {
 
     public static boolean eq(float a, float b) {
         return Math.abs(a - b) < 1e-5;
-    }
-
-    public static void putVec3(CompoundTag compoundTag, String key, Vector3f vec3) {
-        compoundTag.putFloat(key + "X", vec3.x);
-        compoundTag.putFloat(key + "Y", vec3.y);
-        compoundTag.putFloat(key + "Z", vec3.z);
-    }
-
-    public static Vector3f getVec3(CompoundTag compoundTag, String name) {
-        float x = compoundTag.getFloat(name + "X");
-        float y = compoundTag.getFloat(name + "Y");
-        float z = compoundTag.getFloat(name + "Z");
-        return new Vector3f(x, y, z);
-    }
-
-    public static void putVec3d(CompoundTag compoundTag, String key, Vec3 vec3) {
-        compoundTag.putDouble(key + "X", vec3.x);
-        compoundTag.putDouble(key + "Y", vec3.y);
-        compoundTag.putDouble(key + "Z", vec3.z);
-    }
-
-    public static Vec3 getVec3d(CompoundTag compoundTag, String name) {
-        double x = compoundTag.getDouble(name + "X");
-        double y = compoundTag.getDouble(name + "Y");
-        double z = compoundTag.getDouble(name + "Z");
-        return new Vec3(x, y, z);
     }
 
     /**
@@ -215,33 +181,33 @@ public class BSFCommonUtil {
         return Math.atan2(vec.y, Math.sqrt(vec.x * vec.x + vec.z * vec.z));
     }
 
-    public static List<ItemStack> findInventoryItemStacks(Player player, Predicate<ItemStack> filter) {
-        NonNullList<ItemStack>[] playerInventoryList = getPlayerInventoryList(player);
-        List<ItemStack> outItemStacks = new ArrayList<>();
-        for (NonNullList<ItemStack> inv : playerInventoryList) {
-            for (ItemStack itemStack : inv) {
-                if (filter.test(itemStack)) {
-                    outItemStacks.add(itemStack);
-                }
-            }
-        }
-        return outItemStacks;
-    }
-
-    public static ItemStack findInventoryItemStack(Player player, Predicate<ItemStack> filter) {
-        NonNullList<ItemStack>[] playerInventoryList = getPlayerInventoryList(player);
-        for (NonNullList<ItemStack> inv : playerInventoryList) {
-            for (ItemStack itemStack : inv) {
-                if (filter.test(itemStack)) {
-                    return itemStack;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static NonNullList<ItemStack>[] getPlayerInventoryList(Player player) {
-        Inventory inventory = player.getInventory();
-        return new NonNullList[]{inventory.items, inventory.armor, inventory.offhand};
-    }
+//    public static List<ItemStack> findInventoryItemStacks(Player player, Predicate<ItemStack> filter) {
+//        NonNullList<ItemStack>[] playerInventoryList = getPlayerInventoryList(player);
+//        List<ItemStack> outItemStacks = new ArrayList<>();
+//        for (NonNullList<ItemStack> inv : playerInventoryList) {
+//            for (ItemStack itemStack : inv) {
+//                if (filter.test(itemStack)) {
+//                    outItemStacks.add(itemStack);
+//                }
+//            }
+//        }
+//        return outItemStacks;
+//    }
+//
+//    public static ItemStack findInventoryItemStack(Player player, Predicate<ItemStack> filter) {
+//        NonNullList<ItemStack>[] playerInventoryList = getPlayerInventoryList(player);
+//        for (NonNullList<ItemStack> inv : playerInventoryList) {
+//            for (ItemStack itemStack : inv) {
+//                if (filter.test(itemStack)) {
+//                    return itemStack;
+//                }
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public static NonNullList<ItemStack>[] getPlayerInventoryList(Player player) {
+//        Inventory inventory = player.getInventory();
+//        return new NonNullList[]{inventory.items, inventory.armor, inventory.offhand};
+//    }
 }

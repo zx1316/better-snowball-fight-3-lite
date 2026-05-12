@@ -15,7 +15,6 @@ import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
 import com.linngdu664.bsf3lite.registry.DataComponentRegister;
 import com.linngdu664.bsf3lite.registry.EffectRegister;
 import com.linngdu664.bsf3lite.registry.SoundRegister;
-import com.linngdu664.bsf3lite.util.BSFEnchantmentHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -31,7 +30,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
@@ -93,8 +91,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     @Override
     public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
-        int enchantmentLevel = EnchantmentHelper.getTagEnchantmentLevel(BSFEnchantmentHelper.getEnchantmentHolder(player, BSFEnchantmentHelper.SNOW_GOLEM_EXCLUSIVE), stack);
-        if (enchantmentLevel > 0 || player.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (player.hasEffect(EffectRegister.WEAPON_JAM)) {
             return InteractionResult.FAIL;
         }
         double pushRank = 0;

@@ -89,8 +89,8 @@ public class BSFGuiTool {
         int innerW = (int) ((frame.x - padding - padding) * percent);
         guiGraphics.fill(pos.x + padding, pos.y + padding, pos.x + padding + innerW, pos.y + frame.y - padding, innerColor);
     }
-
-    public static Vec2 renderHackBox(GuiGraphics guiGraphics, CoordinateConverter converter, Window window, LivingEntity livingEntity, int frameColor, float particleTick) {
+/*
+    public static Vec2 renderHackBox(GuiGraphicsExtractor guiGraphics, CoordinateConverter converter, Window window, LivingEntity livingEntity, int frameColor, float particleTick) {
         AABB aabb = livingEntity.getBoundingBox();
         // todo: lerp bounding box
         List<Vec2> vec2List = converter.convert(List.of(
@@ -126,9 +126,9 @@ public class BSFGuiTool {
         }
         renderOutlineCoordinate(guiGraphics, upperLeftCorner.x, upperLeftCorner.y, lowerRightCorner.x, lowerRightCorner.y, frameColor, 0.5f);
         return new Vec2((upperLeftCorner.x + lowerRightCorner.x) / 2, lowerRightCorner.y);
-    }
+    }*/
 
-    /**
+    /*
      * 渲染装备介绍
      *
      * @param guiGraphics
@@ -140,7 +140,7 @@ public class BSFGuiTool {
      * @param font          字体
      * @param msg           装备描述
      */
-    public static void renderEquipIntroduced(GuiGraphics guiGraphics, Vec2 equipPoint, Vec2 framePoint, int lineXDistance, int color, ItemStack itemStack, Font font, Component msg) {
+    /*public static void renderEquipIntroduced(GuiGraphicsExtractor guiGraphics, Vec2 equipPoint, Vec2 framePoint, int lineXDistance, int color, ItemStack itemStack, Font font, Component msg) {
         Vec2 linkPoint = new Vec2(framePoint.x + EQUIPMENT_SLOT_FRAME_GUI.width, framePoint.y + (float) EQUIPMENT_SLOT_FRAME_GUI.height / 2);
         Vec2 xPoint = new Vec2(equipPoint.x - lineXDistance, linkPoint.y);
         if (xPoint.x < linkPoint.x) {
@@ -155,9 +155,9 @@ public class BSFGuiTool {
         guiGraphics.renderItem(itemStack, (int) (framePoint.x + 3), (int) (framePoint.y + 3));
         FormattedCharSequence formattedcharsequence = msg.getVisualOrderText();
         guiGraphics.drawString(font, formattedcharsequence, framePoint.x - font.width(formattedcharsequence), framePoint.y + 7, color, true);
-    }
-
-    public static void renderLineTool(GuiGraphics guiGraphics, Vec2 p1, Vec2 p2, float d, int color, boolean isDown, float padding, int padColor) {
+    }*/
+/*
+    public static void renderLineTool(GuiGraphicsExtractor guiGraphics, Vec2 p1, Vec2 p2, float d, int color, boolean isDown, float padding, int padColor) {
         Vec2 ad = p2.add(p1.negated());
         Vec2 v1 = ad.scale(d / ad.length());
         Vec2 v2 = new Vec2(-v1.y, v1.x);
@@ -173,9 +173,9 @@ public class BSFGuiTool {
             renderFillTool(guiGraphics, p1.add(v2s), p1, p2, p2.add(v2s), padColor);
         }
 
-    }
-
-    public static void renderFillTool(GuiGraphics guiGraphics, Vec2 a, Vec2 b, Vec2 c, Vec2 d, int pColor) {
+    }*/
+/*
+    public static void renderFillTool(GuiGraphicsExtractor guiGraphics, Vec2 a, Vec2 b, Vec2 c, Vec2 d, int pColor) {
         Matrix4f matrix4f = guiGraphics.pose.last().pose();
 
         VertexConsumer vertexconsumer = guiGraphics.bufferSource.getBuffer(RenderType.gui());
@@ -184,38 +184,38 @@ public class BSFGuiTool {
         vertexconsumer.addVertex(matrix4f, c.x, c.y, 0).setColor(pColor);
         vertexconsumer.addVertex(matrix4f, d.x, d.y, 0).setColor(pColor);
         guiGraphics.flushIfUnmanaged();
-    }
-
-    public static void renderFillSquareTool(GuiGraphics guiGraphics, Vec2 a, Vec2 b, int pColor) {
+    }*/
+/*
+    public static void renderFillSquareTool(GuiGraphicsExtractor guiGraphics, Vec2 a, Vec2 b, int pColor) {
         renderFillTool(guiGraphics, a, new Vec2(a.x, b.y), b, new Vec2(b.x, a.y), pColor);
-    }
+    }*/
 
     public static boolean isInScreen(Vec2 point, Window window) {
         return point.x > 0 && point.y > 0 && point.x < window.getGuiScaledWidth() && point.y < window.getGuiScaledHeight();
     }
-
-    public static void renderOutline(GuiGraphics guiGraphics, float x, float y, float width, float height, int color) {
+/*
+    public static void renderOutline(GuiGraphicsExtractor guiGraphics, float x, float y, float width, float height, int color) {
         fill(guiGraphics, x, y, x + width, y + 1, color);
         fill(guiGraphics, x, y + height - 1, x + width, y + height, color);
         fill(guiGraphics, x, y + 1, x + 1, y + height - 1, color);
         fill(guiGraphics, x + width - 1, y + 1, x + width, y + height - 1, color);
-    }
-
-    public static void renderOutlineCoordinate(GuiGraphics guiGraphics, float x, float y, float x2, float y2, int color) {
+    }*/
+/*
+    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color) {
         fill(guiGraphics, x, y, x2, y + 1, color);
         fill(guiGraphics, x, y2 - 1, x2, y2, color);
         fill(guiGraphics, x, y + 1, x + 1, y2 - 1, color);
         fill(guiGraphics, x2 - 1, y + 1, x2, y2 - 1, color);
-    }
-
-    public static void renderOutlineCoordinate(GuiGraphics guiGraphics, float x, float y, float x2, float y2, int color, float width) {
+    }*/
+/*
+    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color, float width) {
         fill(guiGraphics, x, y, x2, y + width, color);
         fill(guiGraphics, x, y2 - width, x2, y2, color);
         fill(guiGraphics, x, y + width, x + width, y2 - width, color);
         fill(guiGraphics, x2 - width, y + width, x2, y2 - width, color);
-    }
-
-    public static void fill(GuiGraphics guiGraphics, float minX, float minY, float maxX, float maxY, int color) {
+    }*/
+/*
+    public static void fill(GuiGraphicsExtractor guiGraphics, float minX, float minY, float maxX, float maxY, int color) {
         Matrix4f matrix4f = guiGraphics.pose.last().pose();
         float j;
         if (minX < maxX) {
@@ -235,7 +235,7 @@ public class BSFGuiTool {
         vertexconsumer.addVertex(matrix4f, maxX, maxY, 0).setColor(color);
         vertexconsumer.addVertex(matrix4f, maxX, minY, 0).setColor(color);
         guiGraphics.flushIfUnmanaged();
-    }
+    }*/
 
     public static class GuiTexture {
         public Identifier texture;

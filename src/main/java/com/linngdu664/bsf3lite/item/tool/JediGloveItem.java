@@ -4,6 +4,7 @@ import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.registry.DataComponentRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -33,18 +34,20 @@ public class JediGloveItem extends GloveItem {
             AABB aabb = player.getBoundingBox().inflate(3);
             List<AbstractBSFSnowballEntity> list = pLevel.getEntitiesOfClass(AbstractBSFSnowballEntity.class, aabb, p -> !player.equals(p.getOwner()) && p.canBeCaught());
             List<Snowball> list1 = pLevel.getEntitiesOfClass(Snowball.class, aabb, p -> !player.equals(p.getOwner()));
+            // todo check power
+            PowerParticleOption particleOption = PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1f);
             for (AbstractBSFSnowballEntity snowball : list) {
                 ItemStack itemStack = snowball.getItem();
                 if (snowball.getRegion() != null) {
                     itemStack.set(DataComponentRegister.REGION.get(), snowball.getRegion());
                 }
                 player.getInventory().placeItemBackInInventory(itemStack, true);
-                ((ServerLevel) pLevel).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
+                ((ServerLevel) pLevel).sendParticles(particleOption, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
             }
             for (Snowball snowball : list1) {
                 player.getInventory().placeItemBackInInventory(snowball.getItem(), true);
-                ((ServerLevel) pLevel).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
+                ((ServerLevel) pLevel).sendParticles(particleOption, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
             }
             if (!list.isEmpty() || !list1.isEmpty()) {

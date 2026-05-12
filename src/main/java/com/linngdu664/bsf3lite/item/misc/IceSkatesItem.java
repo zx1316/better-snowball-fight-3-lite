@@ -1,29 +1,34 @@
 package com.linngdu664.bsf3lite.item.misc;
 
+import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.client.model.IceSkatesModel;
-import com.linngdu664.bsf3lite.registry.ArmorMaterialRegister;
+import com.linngdu664.bsf3lite.misc.BSFArmorMaterials;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class IceSkatesItem extends ArmorItem {
+public class IceSkatesItem extends Item {
     public IceSkatesItem() {
-        super(ArmorMaterialRegister.ICE_SKATES_ARMOR_MATERIAL, Type.BOOTS, new Properties().stacksTo(1).durability(256));
+        super(new Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("ice_skates")))
+                .rarity(Rarity.UNCOMMON)
+                .humanoidArmor(BSFArmorMaterials.ICE_SKATES, ArmorType.LEGGINGS)
+                .repairable(Items.LEATHER_BOOTS));
     }
 
     @Override
@@ -48,12 +53,7 @@ public class IceSkatesItem extends ArmorItem {
     }
 
     @Override
-    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
-        return pRepairCandidate.is(Items.LEATHER_BOOTS);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("ice_skates.tooltip").withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("ice_skates.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

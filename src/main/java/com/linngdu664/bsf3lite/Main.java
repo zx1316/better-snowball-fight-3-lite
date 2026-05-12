@@ -17,7 +17,6 @@ public class Main {
         BlockRegister.BLOCKS.register(modEventBus);
         BlockEntityRegister.BLOCK_ENTITIES.register(modEventBus);
         DataComponentRegister.DATA_COMPONENTS.register(modEventBus);
-        ArmorMaterialRegister.ARMOR_MATERIALS.register(modEventBus);
         ItemRegister.ITEMS.register(modEventBus);
         SoundRegister.SOUNDS.register(modEventBus);
         ParticleRegister.PARTICLES.register(modEventBus);

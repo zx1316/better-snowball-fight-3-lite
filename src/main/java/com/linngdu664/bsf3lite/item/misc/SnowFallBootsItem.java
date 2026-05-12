@@ -1,26 +1,34 @@
 package com.linngdu664.bsf3lite.item.misc;
 
+import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.client.model.SnowFallBootsModel;
-import com.linngdu664.bsf3lite.registry.ArmorMaterialRegister;
+import com.linngdu664.bsf3lite.misc.BSFArmorMaterials;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class SnowFallBootsItem extends ArmorItem {
+public class SnowFallBootsItem extends Item {
     public SnowFallBootsItem() {
-        super(ArmorMaterialRegister.SNOW_FALL_BOOTS_ARMOR_MATERIAL, Type.BOOTS, new Properties().rarity(Rarity.UNCOMMON).stacksTo(1).durability(810));
+        super(new Properties()
+                .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("snow_fall_boots")))
+                .rarity(Rarity.UNCOMMON)
+                .humanoidArmor(BSFArmorMaterials.SNOW_FALL_BOOTS, ArmorType.LEGGINGS)
+                .repairable(Items.LEATHER_BOOTS));
     }
 
     @Override
@@ -45,13 +53,8 @@ public class SnowFallBootsItem extends ArmorItem {
     }
 
     @Override
-    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
-        return pRepairCandidate.is(Items.LEATHER_BOOTS);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("snow_fall_boots.tooltip").withStyle(ChatFormatting.GRAY));
-        tooltipComponents.add(Component.translatable("snow_fall_boots1.tooltip", Component.translatable("enchantment.bsf.kinetic_energy_storage")).withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("snow_fall_boots.tooltip").withStyle(ChatFormatting.GRAY));
+        builder.accept(Component.translatable("snow_fall_boots1.tooltip", Component.translatable("enchantment.bsf.kinetic_energy_storage")).withStyle(ChatFormatting.GRAY));
     }
 }

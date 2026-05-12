@@ -12,7 +12,7 @@ import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
 import com.linngdu664.bsf3lite.registry.DataComponentRegister;
 import com.linngdu664.bsf3lite.registry.EffectRegister;
 import com.linngdu664.bsf3lite.registry.SoundRegister;
-import com.linngdu664.bsf3lite.util.BSFEnchantmentHelper;
+import com.linngdu664.bsf3lite.misc.BSFEnchantmentHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -135,9 +135,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
 
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
-        ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BSFEnchantmentHelper.getEnchantmentHolder(pPlayer, BSFEnchantmentHelper.SNOW_GOLEM_EXCLUSIVE), itemStack);
-        if (enchantmentLevel <= 0 && !pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (!pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
             pPlayer.startUsingItem(pHand);
             return InteractionResult.CONSUME;
         }

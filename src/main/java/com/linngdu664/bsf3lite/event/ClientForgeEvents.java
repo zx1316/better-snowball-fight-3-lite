@@ -1,16 +1,12 @@
 package com.linngdu664.bsf3lite.event;
 
-import com.linngdu664.bsf.Main;
-import com.linngdu664.bsf.client.gui.ScoringGuiHandler;
-import com.linngdu664.bsf.client.screenshake.ScreenshakeHandler;
-import com.linngdu664.bsf.item.minigame_tool.TeamLinkerItem;
-import com.linngdu664.bsf.item.tool.ColdCompressionJetEngineItem;
-import com.linngdu664.bsf.item.weapon.AbstractBSFWeaponItem;
-import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
-import com.linngdu664.bsf.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
-import com.linngdu664.bsf.network.to_server.SwitchTweakerStatusModePayload;
-import com.linngdu664.bsf.network.to_server.SwitchTweakerTargetModePayload;
-import com.linngdu664.bsf.registry.ItemRegister;
+import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
+import com.linngdu664.bsf3lite.item.tool.ColdCompressionJetEngineItem;
+import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
+import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
+import com.linngdu664.bsf3lite.registry.ItemRegister;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -22,20 +18,18 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedHashSet;
 
 
-@EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class ClientForgeEvents {
     public static final RandomSource BSF_RANDOM_SOURCE = RandomSource.create();
-    public static int tickCount = 0;
 
     @SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
@@ -43,13 +37,7 @@ public class ClientForgeEvents {
         Player player = minecraft.player;
         ItemStack itemStack = player.getMainHandItem();
         if (itemStack.is(ItemRegister.SCULK_SNOWBALL_LAUNCHER.get()) && player.isShiftKeyDown()) {
-            PacketDistributor.sendToServer(new SculkSnowballLauncherSwitchSoundPayload(event.getScrollDeltaY() > 0));
-            event.setCanceled(true);
-        } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get()) && minecraft.options.keyShift.isDown()) {
-            PacketDistributor.sendToServer(new SwitchTweakerTargetModePayload(event.getScrollDeltaY() < 0));
-            event.setCanceled(true);
-        } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get()) && minecraft.options.keySprint.isDown()) {
-            PacketDistributor.sendToServer(new SwitchTweakerStatusModePayload(event.getScrollDeltaY() < 0));
+            ClientPacketDistributor.sendToServer(new SculkSnowballLauncherSwitchSoundPayload(event.getScrollDeltaY() > 0));
             event.setCanceled(true);
         }
     }
@@ -82,11 +70,6 @@ public class ClientForgeEvents {
                 }
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void onClientLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-        TeamLinkerItem.shouldShowHighlight = false;
     }
 
     @SubscribeEvent
@@ -126,8 +109,6 @@ public class ClientForgeEvents {
         if (level == null || minecraft.isPaused()) {
             return;
         }
-        tickCount++;
-        ScoringGuiHandler.tick();
         Camera camera = minecraft.gameRenderer.getMainCamera();
         ScreenshakeHandler.clientTick(camera, null);
         ScreenshakeHandler.clientTick(camera, BSF_RANDOM_SOURCE);

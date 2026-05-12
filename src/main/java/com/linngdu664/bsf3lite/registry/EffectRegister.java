@@ -12,6 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EffectRegister {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, Main.MODID);
-    public static final DeferredHolder<MobEffect, MobEffect> COLD_RESISTANCE = EFFECTS.register("cold_resistance", () -> new ColdResistanceEffect(MobEffectCategory.BENEFICIAL, 0x3498db));
-    public static final DeferredHolder<MobEffect, MobEffect> WEAPON_JAM = EFFECTS.register("weapon_jam", () -> new WeaponJamEffect(MobEffectCategory.HARMFUL, 0xffffff));
+    public static final DeferredHolder<MobEffect, MobEffect> COLD_RESISTANCE = EFFECTS.register("cold_resistance", ColdResistanceEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> WEAPON_JAM = EFFECTS.register("weapon_jam", WeaponJamEffect::new);
 }

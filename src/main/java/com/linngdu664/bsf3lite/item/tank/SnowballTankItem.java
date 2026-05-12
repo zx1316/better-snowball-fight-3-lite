@@ -34,7 +34,7 @@ public class SnowballTankItem extends Item {
                 .rarity(Rarity.UNCOMMON));
     }
 
-    public SnowballTankItem(Properties properties) {
+    protected SnowballTankItem(Properties properties) {
         super(properties);
     }
 
@@ -109,6 +109,8 @@ public class SnowballTankItem extends Item {
         }
     }
 
+    // todo check enchantable and repairable
+/*
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return false;
@@ -117,5 +119,5 @@ public class SnowballTankItem extends Item {
     @Override
     public boolean isRepairable(@NotNull ItemStack stack) {
         return false;
-    }
+    }*/
 }

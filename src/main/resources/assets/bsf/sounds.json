@@ -19,11 +19,6 @@
       "bsf:shotgun_fire2"
     ]
   },
-  "black_hole_start": {
-    "sounds": [
-      "bsf:black_hole_start"
-    ]
-  },
   "powder_snowball": {
     "sounds": [
       "bsf:powder_snowball"
@@ -44,11 +39,6 @@
       "bsf:field_start"
     ]
   },
-  "subspace_snowball_cut": {
-    "sounds": [
-      "bsf:subspace_snowball_cut"
-    ]
-  },
   "unstable_core_break": {
     "sounds": [
       "bsf:unstable_core_break"
@@ -57,11 +47,6 @@
   "machine_gun_cooling": {
     "sounds": [
       "bsf:machine_gun_cooling"
-    ]
-  },
-  "subspace_snowball_attack": {
-    "sounds": [
-      "bsf:subspace_snowball_attack"
     ]
   },
   "duck_sound": {
@@ -394,16 +379,6 @@
       "bsf:freezing"
     ]
   },
-  "force_executor_start": {
-    "sounds": [
-      "bsf:force_executor_start"
-    ]
-  },
-  "black_hole_ambience": {
-    "sounds": [
-      "bsf:black_hole_ambience"
-    ]
-  },
   "cold_compression_jet_engine_startup1": {
     "sounds": [
       "bsf:cold_compression_jet_engine_startup1"
@@ -427,11 +402,6 @@
   "cold_compression_jet_engine_startup5": {
     "sounds": [
       "bsf:cold_compression_jet_engine_startup5"
-    ]
-  },
-  "vector_inversion": {
-    "sounds": [
-      "bsf:vector_inversion"
     ]
   },
   "implosion_snowball_cannon": {

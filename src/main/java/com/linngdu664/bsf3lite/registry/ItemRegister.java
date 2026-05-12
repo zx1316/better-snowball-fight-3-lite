@@ -10,10 +10,10 @@ import com.linngdu664.bsf3lite.item.tank.LargeSnowballTankItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
 import com.linngdu664.bsf3lite.item.tool.*;
 import com.linngdu664.bsf3lite.item.weapon.*;
-import com.linngdu664.bsf3lite.misc.BSFTiers;
+import com.linngdu664.bsf3lite.misc.BSFToolMaterials;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -39,17 +39,17 @@ public class ItemRegister {
     public static final DeferredItem<Item> CRITICAL_FROZEN_SNOWBALL = ITEMS.register("critical_frozen_snowball", CriticalFrozenSnowballItem::new);
     public static final DeferredItem<Item> CHERRY_BLOSSOM_SNOWBALL = ITEMS.register("cherry_blossom_snowball", CherryBlossomSnowballItem::new);
 
-    public static final DeferredItem<Item> SNOWBALL_TANK = ITEMS.register("snowball_tank", () -> new SnowballTankItem());
+    public static final DeferredItem<Item> SNOWBALL_TANK = ITEMS.register("snowball_tank", SnowballTankItem::new);
     public static final DeferredItem<Item> LARGE_SNOWBALL_TANK = ITEMS.register("large_snowball_tank", LargeSnowballTankItem::new);
 
-    public static final DeferredItem<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem(Tiers.WOOD, 118));
-    public static final DeferredItem<Item> STONE_SNOWBALL_CLAMP = ITEMS.register("stone_snowball_clamp", () -> new SnowballClampItem(Tiers.STONE, 260));
-    public static final DeferredItem<Item> IRON_SNOWBALL_CLAMP = ITEMS.register("iron_snowball_clamp", () -> new SnowballClampItem(Tiers.IRON, 500));
-    public static final DeferredItem<Item> GOLD_SNOWBALL_CLAMP = ITEMS.register("gold_snowball_clamp", () -> new SnowballClampItem(Tiers.GOLD, 64));
-    public static final DeferredItem<Item> DIAMOND_SNOWBALL_CLAMP = ITEMS.register("diamond_snowball_clamp", () -> new SnowballClampItem(Tiers.DIAMOND, 3122));
-    public static final DeferredItem<Item> NETHERITE_SNOWBALL_CLAMP = ITEMS.register("netherite_snowball_clamp", () -> new SnowballClampItem(Tiers.NETHERITE, 4062));
-    public static final DeferredItem<Item> EMERALD_SNOWBALL_CLAMP = ITEMS.register("emerald_snowball_clamp", () -> new SnowballClampItem(BSFTiers.EMERALD, 2866));
-    public static final DeferredItem<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", () -> new SnowballCannonItem());
+    public static final DeferredItem<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem("wood_snowball_clamp", ToolMaterial.WOOD, 118));
+    public static final DeferredItem<Item> STONE_SNOWBALL_CLAMP = ITEMS.register("stone_snowball_clamp", () -> new SnowballClampItem("stone_snowball_clamp", ToolMaterial.STONE, 260));
+    public static final DeferredItem<Item> IRON_SNOWBALL_CLAMP = ITEMS.register("iron_snowball_clamp", () -> new SnowballClampItem("iron_snowball_clamp", ToolMaterial.IRON, 500));
+    public static final DeferredItem<Item> GOLD_SNOWBALL_CLAMP = ITEMS.register("gold_snowball_clamp", () -> new SnowballClampItem("gold_snowball_clamp", ToolMaterial.GOLD, 64));
+    public static final DeferredItem<Item> DIAMOND_SNOWBALL_CLAMP = ITEMS.register("diamond_snowball_clamp", () -> new SnowballClampItem("diamond_snowball_clamp", ToolMaterial.DIAMOND, 3122));
+    public static final DeferredItem<Item> NETHERITE_SNOWBALL_CLAMP = ITEMS.register("netherite_snowball_clamp", () -> new SnowballClampItem("netherite_snowball_clamp", ToolMaterial.NETHERITE, 4062));
+    public static final DeferredItem<Item> EMERALD_SNOWBALL_CLAMP = ITEMS.register("emerald_snowball_clamp", () -> new SnowballClampItem("emerald_snowball_clamp", BSFToolMaterials.EMERALD, 2866));
+    public static final DeferredItem<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", SnowballCannonItem::new);
     public static final DeferredItem<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", PowerfulSnowballCannonItem::new);
     public static final DeferredItem<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", FreezingSnowballCannonItem::new);
     public static final DeferredItem<Item> IMPLOSION_SNOWBALL_CANNON = ITEMS.register("implosion_snowball_cannon", ImplosionSnowballCannonItem::new);
@@ -76,7 +76,6 @@ public class ItemRegister {
 
     public static final DeferredItem<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> TRACKING_CORE = ITEMS.register("tracking_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", UnstableCoreItem::new);
     public static final DeferredItem<Item> REPULSION_CORE = ITEMS.register("repulsion_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> GRAVITY_CORE = ITEMS.register("gravity_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
