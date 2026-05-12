@@ -1,0 +1,31 @@
+package com.linngdu664.bsf3lite.network.to_client;
+
+import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
+import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
+import com.linngdu664.bsf3lite.particle.util.ParticleUtil;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.jetbrains.annotations.NotNull;
+
+public record ForwardConeParticlesPayload(ForwardConeParticlesParas paras,
+                                          int particleType) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ForwardConeParticlesPayload> TYPE = new CustomPacketPayload.Type<>(Main.makeMyIdentifier("forward_cone_particles"));
+    public static final StreamCodec<ByteBuf, ForwardConeParticlesPayload> STREAM_CODEC = StreamCodec.composite(
+            ForwardConeParticlesParas.STREAM_CODEC, ForwardConeParticlesPayload::paras,
+            ByteBufCodecs.VAR_INT, ForwardConeParticlesPayload::particleType,
+            ForwardConeParticlesPayload::new
+    );
+
+    public static void handleDataInClient(ForwardConeParticlesPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> ParticleUtil.spawnForwardConeParticles(context.player().level(), BSFParticleType.values()[payload.particleType].get(), payload.paras));
+    }
+
+    @Override
+    public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+}

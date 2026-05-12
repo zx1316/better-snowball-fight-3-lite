@@ -1,0 +1,120 @@
+package com.linngdu664.bsf3lite.item.snowball;
+
+import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.entity.snowball.nomal.CompactedSnowballEntity;
+import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
+import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
+import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+public class CompactedSnowballSetItem extends Item {
+    public CompactedSnowballSetItem() {
+        super(new Properties()
+                .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("compacted_snowball_set")))
+                .stacksTo(16)
+                .rarity(Rarity.COMMON));
+    }
+
+    private float getSnowballDamageRate(Player player) {
+        float reDamageRate = 1;
+        if (player.hasEffect(MobEffects.WEAKNESS)) {
+            reDamageRate -= switch (player.getEffect(MobEffects.WEAKNESS).getAmplifier()) {
+                case 0 -> 0.25f;
+                case 1 -> 0.5f;
+                default -> 0.75f;
+            };
+        }
+        if (player.hasEffect(MobEffects.STRENGTH)) {
+            if (player.getEffect(MobEffects.STRENGTH).getAmplifier() == 0) {
+                reDamageRate += 0.15F;
+            } else {
+                reDamageRate += 0.3F;
+            }
+        }
+        return reDamageRate;
+    }
+
+    @Override
+    public @NotNull InteractionResult use(Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
+        ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
+        pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
+        if (!pLevel.isClientSide()) {
+            ILaunchAdjustment launchAdjustment = new ILaunchAdjustment() {
+                @Override
+                public double adjustPunch(double punch) {
+                    return punch;
+                }
+
+                @Override
+                public int adjustWeaknessTicks(int weaknessTicks) {
+                    return weaknessTicks;
+                }
+
+                @Override
+                public int adjustFrozenTicks(int frozenTicks) {
+                    return frozenTicks;
+                }
+
+                @Override
+                public float adjustDamage(float damage) {
+                    return damage * getSnowballDamageRate(pPlayer);
+                }
+
+                @Override
+                public float adjustBlazeDamage(float blazeDamage) {
+                    return blazeDamage * getSnowballDamageRate(pPlayer);
+                }
+
+                @Override
+                public LaunchFrom getLaunchFrom() {
+                    return LaunchFrom.HAND;
+                }
+            };
+            float slowdownRate = (float) Math.exp(-0.005 * pPlayer.getTicksFrozen());
+            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
+            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
+            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
+            snowballEntity1.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);
+            snowballEntity2.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);
+            snowballEntity3.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);
+            pLevel.addFreshEntity(snowballEntity1);
+            pLevel.addFreshEntity(snowballEntity2);
+            pLevel.addFreshEntity(snowballEntity3);
+        }
+        if (!pPlayer.getAbilities().instabuild) {
+            itemStack.shrink(1);
+        }
+        pPlayer.awardStat(Stats.ITEM_USED.get(this));
+        return InteractionResult.SUCCESS;
+//        return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("lunch_yes_hand.tooltip").withStyle(ChatFormatting.DARK_GREEN));
+        builder.accept(Component.translatable("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));
+        builder.accept(Component.translatable("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
+        builder.accept(Component.translatable("lunch_no_shotgun.tooltip").withStyle(ChatFormatting.DARK_RED));
+        builder.accept(Component.translatable("compacted_snowball_set.tooltip").withStyle(ChatFormatting.GRAY));
+    }
+}

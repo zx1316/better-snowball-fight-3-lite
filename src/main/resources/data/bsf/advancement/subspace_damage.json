@@ -1,0 +1,30 @@
+{
+  "parent": "bsf:unstable_core_craft",
+  "display": {
+    "icon": {
+      "id": "bsf:subspace_snowball"
+    },
+    "title": {
+      "translate": "advancements.bsf.subspace_damage.title"
+    },
+    "description": {
+      "translate": "advancements.bsf.subspace_damage.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "subspace_deal_greater_than_40": {
+      "trigger": "bsf:snowball_damage_trigger",
+      "conditions": {
+        "snowball": "bsf:subspace_snowball",
+        "dealt": {
+          "min": 40
+        }
+      }
+    }
+  },
+  "requirements": [["subspace_deal_greater_than_40"]]
+}

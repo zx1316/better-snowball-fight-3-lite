@@ -1,0 +1,30 @@
+{
+  "parent": "bsf:root",
+  "display": {
+    "icon": {
+      "id": "bsf:suspicious_usb_flash_drive",
+      "count": 1
+    },
+    "title": {
+      "translate": "advancements.bsf.suspicious_usb_flash_drive_consume.title"
+    },
+    "description": {
+      "translate": "advancements.bsf.suspicious_usb_flash_drive_consume.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "consume_suspicious_usb_flash_drive": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["bsf:suspicious_usb_flash_drive"]
+        }
+      }
+    }
+  },
+  "requirements": [["consume_suspicious_usb_flash_drive"]]
+}
