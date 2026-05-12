@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 
 public class IronSnowballEntity extends AbstractNormalSnowballEntity {
     public IronSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(4).basicBlazeDamage(6));
+        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(5).basicBlazeDamage(7));
     }
 
     public IronSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {

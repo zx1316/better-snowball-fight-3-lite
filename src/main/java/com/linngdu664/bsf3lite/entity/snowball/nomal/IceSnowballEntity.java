@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class IceSnowballEntity extends AbstractNormalSnowballEntity {
     public IceSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(6).basicFrozenTicks(40));
+        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(4).basicBlazeDamage(7).basicFrozenTicks(40));
     }
 
     public IceSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
