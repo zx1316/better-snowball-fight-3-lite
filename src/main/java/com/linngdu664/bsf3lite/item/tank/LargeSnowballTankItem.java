@@ -29,7 +29,7 @@ public class LargeSnowballTankItem extends SnowballTankItem {
         Item item = pStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
         if (!Items.AIR.equals(item)) {
             String path = BuiltInRegistries.ITEM.getKey(item).getPath();
-            return MutableComponent.create(new TranslatableContents("item.bsf.large_" + path + "_tank", null, new Object[0]));
+            return MutableComponent.create(new TranslatableContents("item.bsf3lite.large_" + path + "_tank", null, new Object[0]));
         }
         return super.getName(pStack);
     }

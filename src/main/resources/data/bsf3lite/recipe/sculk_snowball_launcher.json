@@ -6,24 +6,14 @@
     "E  "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:echo_shard"
-    },
-    "B": {
-      "item": "minecraft:calibrated_sculk_sensor"
-    },
-    "C": {
-      "item": "minecraft:dispenser"
-    },
-    "D": {
-      "item": "minecraft:sculk"
-    },
-    "E": {
-      "item": "minecraft:iron_ingot"
-    }
+    "A": "minecraft:echo_shard",
+    "B": "minecraft:calibrated_sculk_sensor",
+    "C": "minecraft:dispenser",
+    "D": "minecraft:sculk",
+    "E": "minecraft:iron_ingot"
   },
   "result": {
-    "id": "bsf:sculk_snowball_launcher",
+    "id": "bsf3lite:sculk_snowball_launcher",
     "count": 1
   }
 }

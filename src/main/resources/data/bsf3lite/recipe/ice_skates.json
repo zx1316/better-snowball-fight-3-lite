@@ -6,18 +6,12 @@
     " C "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:white_dye"
-    },
-    "B": {
-      "item": "minecraft:leather_boots"
-    },
-    "C": {
-      "item": "minecraft:iron_ingot"
-    }
+    "A": "minecraft:white_dye",
+    "B": "minecraft:leather_boots",
+    "C": "minecraft:iron_ingot"
   },
   "result": {
-    "id": "bsf:ice_skates",
+    "id": "bsf3lite:ice_skates",
     "count": 1
   }
 }

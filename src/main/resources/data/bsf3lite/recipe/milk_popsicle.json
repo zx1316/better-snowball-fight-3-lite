@@ -2,24 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "group": "milk_popsicle",
   "ingredients": [
-    {
-      "item": "bsf:popsicle"
-    },
-    {
-      "item": "bsf:popsicle"
-    },
-    {
-      "item": "bsf:popsicle"
-    },
-    {
-      "item": "bsf:popsicle"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    }
+    "bsf3lite:popsicle",
+    "bsf3lite:popsicle",
+    "bsf3lite:popsicle",
+    "bsf3lite:popsicle",
+    "minecraft:milk_bucket"
   ],
   "result": {
-    "id": "bsf:milk_popsicle",
+    "id": "bsf3lite:milk_popsicle",
     "count": 4
   }
 }

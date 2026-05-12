@@ -6,15 +6,11 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "bsf:smooth_snowball"
-    },
-    "R": {
-      "item": "minecraft:iron_ingot"
-    }
+    "W": "bsf3lite:smooth_snowball",
+    "R": "minecraft:iron_ingot"
   },
   "result": {
-    "id": "bsf:iron_snowball",
+    "id": "bsf3lite:iron_snowball",
     "count": 8
   }
 }

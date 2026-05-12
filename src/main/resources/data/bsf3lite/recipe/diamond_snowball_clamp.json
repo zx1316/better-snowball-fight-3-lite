@@ -6,15 +6,11 @@
     " W "
   ],
   "key": {
-    "W": {
-      "item": "minecraft:stick"
-    },
-    "D": {
-      "item": "minecraft:diamond"
-    }
+    "W": "minecraft:stick",
+    "D": "minecraft:diamond"
   },
   "result": {
-    "id": "bsf:diamond_snowball_clamp",
+    "id": "bsf3lite:diamond_snowball_clamp",
     "count": 1
   }
 }

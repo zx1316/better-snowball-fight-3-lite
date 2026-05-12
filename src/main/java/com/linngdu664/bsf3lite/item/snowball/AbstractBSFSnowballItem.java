@@ -231,7 +231,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
         int idForTank;
         int allowLaunchTypeFlag;
         double machineGunRecoil;
-        double shotgunPushRank;
+        double shotgunPushRank; // currently no use
 
         public SnowballProperties() {
             idForTank = -1;
@@ -255,6 +255,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
             return this;
         }
 
+        // currently no use
         public SnowballProperties shotgunPushRank(double shotgunPushRank) {
             this.shotgunPushRank = shotgunPushRank;
             return this;

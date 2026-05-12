@@ -6,21 +6,13 @@
     "II "
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "D": {
-      "item": "minecraft:dispenser"
-    },
-    "H": {
-      "item": "minecraft:hopper"
-    }
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "D": "minecraft:dispenser",
+    "H": "minecraft:hopper"
   },
   "result": {
-    "id": "bsf:snow_trap_setter",
+    "id": "bsf3lite:snow_trap_setter",
     "count": 1
   }
 }

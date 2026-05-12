@@ -6,27 +6,15 @@
     "EF "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:glow_ink_sac"
-    },
-    "B": {
-      "item": "minecraft:shulker_shell"
-    },
-    "C": {
-      "item": "minecraft:end_crystal"
-    },
-    "D": {
-      "item": "bsf:snowball_cannon"
-    },
-    "E": {
-      "item": "minecraft:repeater"
-    },
-    "F": {
-      "item": "minecraft:soul_lantern"
-    }
+    "A": "minecraft:glow_ink_sac",
+    "B": "minecraft:shulker_shell",
+    "C": "minecraft:end_crystal",
+    "D": "bsf3lite:snowball_cannon",
+    "E": "minecraft:repeater",
+    "F": "minecraft:soul_lantern"
   },
   "result": {
-    "id": "bsf:snowball_machine_gun",
+    "id": "bsf3lite:snowball_machine_gun",
     "count": 1
   }
 }

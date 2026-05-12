@@ -6,21 +6,13 @@
     "IRI"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone_block"
-    },
-    "M": {
-      "item": "minecraft:magma_block"
-    },
-    "B": {
-      "item": "minecraft:ice"
-    }
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_block",
+    "M": "minecraft:magma_block",
+    "B": "minecraft:ice"
   },
   "result": {
-    "id": "bsf:super_power_core",
+    "id": "bsf3lite:super_power_core",
     "count": 1
   }
 }

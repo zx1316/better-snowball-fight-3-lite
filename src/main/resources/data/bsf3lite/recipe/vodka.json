@@ -1,17 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:potato"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:potion"
-    }
+    "minecraft:potato",
+    "minecraft:sugar",
+    "minecraft:potion"
   ],
   "result": {
-    "id": "bsf:vodka"
+    "id": "bsf3lite:vodka"
   }
 }

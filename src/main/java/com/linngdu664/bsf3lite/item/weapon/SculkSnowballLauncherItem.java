@@ -58,7 +58,7 @@ public class SculkSnowballLauncherItem extends AbstractBSFWeaponItem {
                 pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                 if (!itemStack.has(DataComponentRegister.SCULK_SOUND_ID)) {
                     itemStack.set(DataComponentRegister.SCULK_SOUND_ID, -1);
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf.sculk_snowball_launcher", null, new Object[]{}))
+                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
                             .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));
                 }
                 SculkSnowballEntity snowballEntity = new SculkSnowballEntity(pPlayer, pLevel, itemStack.getOrDefault(DataComponentRegister.SCULK_SOUND_ID, -1), itemStack.get(DataComponentRegister.REGION.get()));

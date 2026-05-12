@@ -1,0 +1,110 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "bsf3lite:snowball",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/compacted_snowball_tank"
+        },
+        "threshold": 0
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/cherry_blossom_snowball_tank"
+        },
+        "threshold": 1
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/stone_snowball_tank"
+        },
+        "threshold": 2
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/ice_snowball_tank"
+        },
+        "threshold": 4
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/iron_snowball_tank"
+        },
+        "threshold": 5
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/obsidian_snowball_tank"
+        },
+        "threshold": 7
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/explosive_snowball_tank"
+        },
+        "threshold": 8
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/spectral_snowball_tank"
+        },
+        "threshold": 9
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/powder_snowball_tank"
+        },
+        "threshold": 10
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/frozen_snowball_tank"
+        },
+        "threshold": 11
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/critical_frozen_snowball_tank"
+        },
+        "threshold": 12
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/expansion_snowball_tank"
+        },
+        "threshold": 17
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/reconstruct_snowball_tank"
+        },
+        "threshold": 18
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "bsf3lite:item/icicle_snowball_tank"
+        },
+        "threshold": 31
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "bsf3lite:item/snowball_tank"
+    }
+  }
+}

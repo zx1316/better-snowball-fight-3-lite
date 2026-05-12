@@ -6,23 +6,13 @@
     " E "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:cyan_dye"
-    },
-    "B": {
-      "item": "minecraft:copper_ingot"
-    },
-    "C": {
-      "item": "minecraft:powder_snow_bucket"
-    },
-    "D": {
-      "item": "minecraft:leather_boots"
-    },
-    "E": {
-      "item": "bsf:gravity_core"
-    }
+    "A": "minecraft:cyan_dye",
+    "B": "minecraft:copper_ingot",
+    "C": "minecraft:powder_snow_bucket",
+    "D": "minecraft:leather_boots",
+    "E": "bsf3lite:gravity_core"
   },
   "result": {
-    "id": "bsf:snow_fall_boots"
+    "id": "bsf3lite:snow_fall_boots"
   }
 }

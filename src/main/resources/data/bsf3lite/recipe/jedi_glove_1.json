@@ -6,21 +6,13 @@
     "   "
   ],
   "key": {
-    "N": {
-      "item": "minecraft:netherite_ingot"
-    },
-    "G": {
-      "item": "bsf:glove"
-    },
-    "R": {
-      "item": "bsf:repulsion_core"
-    },
-    "F": {
-      "item": "bsf:gravity_core"
-    }
+    "N": "minecraft:netherite_ingot",
+    "G": "bsf3lite:glove",
+    "R": "bsf3lite:repulsion_core",
+    "F": "bsf3lite:gravity_core"
   },
   "result": {
-    "id": "bsf:jedi_glove",
+    "id": "bsf3lite:jedi_glove",
     "count": 1
   }
 }

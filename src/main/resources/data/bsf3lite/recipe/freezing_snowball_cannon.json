@@ -1,15 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "bsf:super_frozen_core"
-  },
-  "base": {
-    "item": "bsf:snowball_cannon"
-  },
+  "addition": "bsf3lite:super_frozen_core",
+  "base": "bsf3lite:snowball_cannon",
   "result": {
-    "id": "bsf:freezing_snowball_cannon"
+    "id": "bsf3lite:freezing_snowball_cannon"
   },
-  "template": {
-    "item": "bsf:snowball_cannon_upgrade_smithing_template"
-  }
+  "template": "bsf3lite:snowball_cannon_upgrade_smithing_template"
 }

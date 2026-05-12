@@ -6,21 +6,13 @@
     " VN"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:snow_block"
-    },
-    "R": {
-      "item": "bsf:smart_snow_block"
-    },
-    "V": {
-      "item": "minecraft:lever"
-    },
-    "N": {
-      "item": "minecraft:stick"
-    }
+    "W": "minecraft:snow_block",
+    "R": "minecraft:ice",
+    "V": "minecraft:lever",
+    "N": "minecraft:stick"
   },
   "result": {
-    "id": "bsf:snowman_in_hand",
+    "id": "bsf3lite:snowman_in_hand",
     "count": 1
   }
 }

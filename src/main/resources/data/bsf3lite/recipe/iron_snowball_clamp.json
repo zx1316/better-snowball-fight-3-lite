@@ -6,15 +6,11 @@
     " W "
   ],
   "key": {
-    "W": {
-      "item": "minecraft:stick"
-    },
-    "D": {
-      "item": "minecraft:iron_ingot"
-    }
+    "W": "minecraft:stick",
+    "D": "minecraft:iron_ingot"
   },
   "result": {
-    "id": "bsf:iron_snowball_clamp",
+    "id": "bsf3lite:iron_snowball_clamp",
     "count": 1
   }
 }

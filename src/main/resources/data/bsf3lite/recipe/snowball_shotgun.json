@@ -6,30 +6,16 @@
     "G  "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:ender_eye"
-    },
-    "B": {
-      "item": "bsf:super_power_core"
-    },
-    "C": {
-      "item": "bsf:powerful_snowball_cannon"
-    },
-    "D": {
-      "item": "minecraft:lodestone"
-    },
-    "E": {
-      "item": "bsf:super_frozen_core"
-    },
-    "F": {
-      "item": "bsf:freezing_snowball_cannon"
-    },
-    "G": {
-      "item": "minecraft:stone_button"
-    }
+    "A": "minecraft:ender_eye",
+    "B": "bsf3lite:super_power_core",
+    "C": "bsf3lite:powerful_snowball_cannon",
+    "D": "minecraft:lodestone",
+    "E": "bsf3lite:super_frozen_core",
+    "F": "bsf3lite:freezing_snowball_cannon",
+    "G": "minecraft:stone_button"
   },
   "result": {
-    "id": "bsf:snowball_shotgun",
+    "id": "bsf3lite:snowball_shotgun",
     "count": 1
   }
 }

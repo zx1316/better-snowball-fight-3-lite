@@ -6,21 +6,13 @@
     "IA "
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "X": {
-      "item": "minecraft:powder_snow_bucket"
-    },
-    "F": {
-      "item": "minecraft:dispenser"
-    },
-    "A": {
-      "item": "minecraft:stone_button"
-    }
+    "I": "minecraft:iron_ingot",
+    "X": "minecraft:powder_snow_bucket",
+    "F": "minecraft:dispenser",
+    "A": "minecraft:stone_button"
   },
   "result": {
-    "id": "bsf:snowball_cannon",
+    "id": "bsf3lite:snowball_cannon",
     "count": 1
   }
 }

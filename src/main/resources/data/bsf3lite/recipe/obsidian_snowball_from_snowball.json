@@ -6,15 +6,11 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:snowball"
-    },
-    "R": {
-      "item": "minecraft:obsidian"
-    }
+    "W": "minecraft:snowball",
+    "R": "minecraft:obsidian"
   },
   "result": {
-    "id": "bsf:obsidian_snowball",
+    "id": "bsf3lite:obsidian_snowball",
     "count": 8
   }
 }

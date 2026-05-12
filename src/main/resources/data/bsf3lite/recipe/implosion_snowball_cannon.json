@@ -6,27 +6,15 @@
     "FDE"
   ],
   "key": {
-    "A": {
-      "item": "bsf:repulsion_core"
-    },
-    "B": {
-      "item": "minecraft:ice"
-    },
-    "C": {
-      "item": "minecraft:iron_block"
-    },
-    "D": {
-      "item": "minecraft:redstone"
-    },
-    "E": {
-      "item": "minecraft:crying_obsidian"
-    },
-    "F": {
-      "item": "minecraft:diamond"
-    }
+    "A": "bsf3lite:repulsion_core",
+    "B": "minecraft:ice",
+    "C": "minecraft:iron_block",
+    "D": "minecraft:redstone",
+    "E": "minecraft:crying_obsidian",
+    "F": "minecraft:diamond"
   },
   "result": {
-    "id": "bsf:implosion_snowball_cannon",
+    "id": "bsf3lite:implosion_snowball_cannon",
     "count": 1
   }
 }

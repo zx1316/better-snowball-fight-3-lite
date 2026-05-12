@@ -6,15 +6,11 @@
     " W "
   ],
   "key": {
-    "W": {
-      "item": "minecraft:snow_block"
-    },
-    "R": {
-      "item": "minecraft:pufferfish"
-    }
+    "W": "minecraft:snow_block",
+    "R": "minecraft:pufferfish"
   },
   "result": {
-    "id": "bsf:expansion_snowball",
+    "id": "bsf3lite:expansion_snowball",
     "count": 12
   }
 }

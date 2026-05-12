@@ -6,21 +6,13 @@
     "BAB"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:shulker_shell"
-    },
-    "B": {
-      "item": "minecraft:iron_ingot"
-    },
-    "C": {
-      "item": "minecraft:gunpowder"
-    },
-    "D": {
-      "item": "minecraft:end_crystal"
-    }
+    "A": "minecraft:shulker_shell",
+    "B": "minecraft:iron_ingot",
+    "C": "minecraft:gunpowder",
+    "D": "minecraft:end_crystal"
   },
   "result": {
-    "id": "bsf:unstable_core",
+    "id": "bsf3lite:unstable_core",
     "count": 8
   }
 }

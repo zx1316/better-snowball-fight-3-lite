@@ -16,7 +16,6 @@ import com.linngdu664.bsf3lite.registry.DataComponentRegister;
 import com.linngdu664.bsf3lite.registry.EffectRegister;
 import com.linngdu664.bsf3lite.registry.SoundRegister;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -130,8 +129,6 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
         builder.accept(Component.translatable("snowball_shotgun1.tooltip").withStyle(ChatFormatting.GRAY));
-        builder.accept(Component.translatable("snowball_shotgun2.tooltip", Minecraft.getInstance().options.keyShift.getTranslatedKeyMessage()).withStyle(ChatFormatting.DARK_GRAY));
-        builder.accept(Component.translatable("snowball_shotgun3.tooltip").withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("guns1.tooltip").withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("guns2.tooltip", CYCLE_MOVE_AMMO_PREV.getTranslatedKeyMessage(), CYCLE_MOVE_AMMO_NEXT.getTranslatedKeyMessage()).withStyle(ChatFormatting.DARK_GRAY));
     }

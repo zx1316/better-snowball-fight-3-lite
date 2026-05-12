@@ -6,18 +6,12 @@
     " I "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:sugar"
-    },
-    "O": {
-      "item": "minecraft:ice"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "A": "minecraft:sugar",
+    "O": "minecraft:ice",
+    "I": "minecraft:stick"
   },
   "result": {
-    "id": "bsf:popsicle",
+    "id": "bsf3lite:popsicle",
     "count": 4
   }
 }

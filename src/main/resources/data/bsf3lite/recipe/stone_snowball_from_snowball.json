@@ -6,15 +6,11 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:snowball"
-    },
-    "R": {
-      "item": "minecraft:cobblestone"
-    }
+    "W": "minecraft:snowball",
+    "R": "minecraft:cobblestone"
   },
   "result": {
-    "id": "bsf:stone_snowball",
+    "id": "bsf3lite:stone_snowball",
     "count": 8
   }
 }

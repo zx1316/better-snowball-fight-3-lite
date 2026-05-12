@@ -6,12 +6,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:green_stained_glass"
-    }
+    "A": "minecraft:green_stained_glass"
   },
   "result": {
-    "id": "bsf:basin",
+    "id": "bsf3lite:basin",
     "count": 1
   }
 }

@@ -6,27 +6,15 @@
     "CFC"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:honeycomb"
-    },
-    "B": {
-      "item": "minecraft:copper_ingot"
-    },
-    "C": {
-      "item": "minecraft:gold_ingot"
-    },
-    "D": {
-      "item": "minecraft:iron_trapdoor"
-    },
-    "E": {
-      "item": "minecraft:cauldron"
-    },
-    "F": {
-      "item": "minecraft:lodestone"
-    }
+    "A": "minecraft:honeycomb",
+    "B": "minecraft:copper_ingot",
+    "C": "minecraft:gold_ingot",
+    "D": "minecraft:iron_trapdoor",
+    "E": "minecraft:cauldron",
+    "F": "minecraft:lodestone"
   },
   "result": {
-    "id": "bsf:large_snowball_tank",
+    "id": "bsf3lite:large_snowball_tank",
     "count": 1
   }
 }

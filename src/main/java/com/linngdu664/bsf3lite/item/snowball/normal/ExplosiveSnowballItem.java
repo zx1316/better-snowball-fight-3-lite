@@ -5,6 +5,7 @@ import com.linngdu664.bsf3lite.entity.snowball.nomal.ExplosiveSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
+import com.linngdu664.bsf3lite.item.weapon.ImplosionSnowballCannonItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballMachineGunItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballShotgunItem;
@@ -31,7 +32,7 @@ public class ExplosiveSnowballItem extends AbstractBSFSnowballItem implements Pr
     public ExplosiveSnowballItem() {
         super("explosive_snowball", Rarity.UNCOMMON, new SnowballProperties()
                 .idForTank(8)
-                .allowLaunchTypeFlag(AbstractBSFSnowballItem.HAND_TYPE_FLAG | SnowballCannonItem.TYPE_FLAG | SnowballShotgunItem.TYPE_FLAG | SnowballMachineGunItem.TYPE_FLAG)
+                .allowLaunchTypeFlag(AbstractBSFSnowballItem.HAND_TYPE_FLAG | SnowballCannonItem.TYPE_FLAG | SnowballShotgunItem.TYPE_FLAG | SnowballMachineGunItem.TYPE_FLAG | ImplosionSnowballCannonItem.TYPE_FLAG)
                 .machineGunRecoil(0.12)
                 .shotgunPushRank(0.42)
         );

@@ -28,7 +28,7 @@ public class ClientExtensionRegistry {
         IClientItemExtensions weaponExtensions = new IClientItemExtensions() {
             @Override
             public HumanoidModel.ArmPose getArmPose(@NonNull LivingEntity entity, @NonNull InteractionHand hand, @NonNull ItemStack itemStack) {
-                return HumanoidModel.ArmPose.valueOf("BSF_WEAPON");
+                return HumanoidModel.ArmPose.valueOf("BSF3LITE_WEAPON");
             }
         };
         event.registerItem(weaponExtensions, ItemRegister.SNOWBALL_SHOTGUN);

@@ -108,9 +108,9 @@ public class BasinItem extends Item {
         int snowType = pStack.getOrDefault(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 0);
         if (snowType != 0) {
             if (snowType == 1) {
-                return MutableComponent.create(new TranslatableContents("item.bsf.basin_of_snow", null, new Object[0]));
+                return MutableComponent.create(new TranslatableContents("item.bsf3lite.basin_of_snow", null, new Object[0]));
             }
-            return MutableComponent.create(new TranslatableContents("item.bsf.basin_of_powder_snow", null, new Object[0]));
+            return MutableComponent.create(new TranslatableContents("item.bsf3lite.basin_of_powder_snow", null, new Object[0]));
         }
         return super.getName(pStack);
     }
