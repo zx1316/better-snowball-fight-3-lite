@@ -1,0 +1,6 @@
+{
+  "parent": "bsf3lite:item/snowball_cannon",
+  "textures": {
+    "layer0": "bsf3lite:item/snowball_cannon_pulling_2"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "bsf3lite:item/cold_compression_jet_engine",
+  "textures": {
+    "3": "bsf3lite:item/cold_compression_jet_engine_scx_0",
+    "4": "bsf3lite:item/cold_compression_jet_engine_scx_2",
+    "5": "bsf3lite:item/cold_compression_jet_engine_scx_7"
+  }
+}

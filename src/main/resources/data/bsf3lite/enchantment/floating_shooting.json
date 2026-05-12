@@ -1,0 +1,18 @@
+{
+  "description": {
+    "translate": "enchantment.bsf3lite.floating_shooting"
+  },
+  "max_level": 1,
+  "weight": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 0
+  },
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 0
+  },
+  "anvil_cost": 4,
+  "supported_items": "#bsf3lite:enchantable/floating_shooting_weapons",
+  "slots": ["any"]
+}

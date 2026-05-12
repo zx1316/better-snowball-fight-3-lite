@@ -1,0 +1,11 @@
+{
+  "parent": "bsf3lite:custom/repulsive_field_generator_model",
+  "textures": {
+    "0": "bsf3lite:item/repulsive_field_generator",
+    "1": "bsf3lite:item/repulsive_field_generator_1",
+    "2": "bsf3lite:item/repulsive_field_generator_2",
+    "3": "bsf3lite:item/repulsive_field_generator_3",
+    "4": "bsf3lite:item/repulsive_field_generator_4",
+    "particle": "bsf3lite:item/repulsive_field_generator"
+  }
+}

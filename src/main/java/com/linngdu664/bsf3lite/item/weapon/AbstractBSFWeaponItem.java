@@ -9,6 +9,7 @@ import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
 import com.linngdu664.bsf3lite.network.to_server.AmmoTypePayload;
 import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -23,16 +24,19 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 public abstract class AbstractBSFWeaponItem extends Item {
     private final int typeFlag;
     private final LinkedHashSet<Item> launchOrder = new LinkedHashSet<>();   // client only
-    private ItemStack prevAmmoItemStack = Items.AIR.getDefaultInstance();      // client only
-    private ItemStack currentAmmoItemStack = Items.AIR.getDefaultInstance();   // client only
-    private ItemStack nextAmmoItemStack = Items.AIR.getDefaultInstance();      // client only
+//    private ItemStack prevAmmoItemStack = Items.AIR.getDefaultInstance();      // client only
+//    private ItemStack currentAmmoItemStack = Items.AIR.getDefaultInstance();   // client only
+//    private ItemStack nextAmmoItemStack = Items.AIR.getDefaultInstance();      // client only
+
+    private ItemStack prevAmmoItemStack = null;      // client only
+    private ItemStack currentAmmoItemStack = null;   // client only
+    private ItemStack nextAmmoItemStack = null;      // client only
 
     public AbstractBSFWeaponItem(String id, int durability, Rarity rarity, int flag) {
         super(new Properties()
@@ -91,7 +95,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
         if (this == player.getMainHandItem().getItem() || this == player.getOffhandItem().getItem()) {
             Inventory inventory = player.getInventory();
             int k = inventory.getContainerSize();
-            HashMap<Item, Integer> hashMap = new HashMap<>();
+            Object2IntOpenHashMap<Item> hashMap = new Object2IntOpenHashMap<>();
             for (int i = 0; i < k; i++) {
                 ItemStack itemStack = inventory.getItem(i);
                 Item item = itemStack.getItem();
@@ -113,15 +117,15 @@ public abstract class AbstractBSFWeaponItem extends Item {
                 nextAmmoItemStack = Items.AIR.getDefaultInstance();
             } else if (launchOrder.size() == 1) {
                 prevAmmoItemStack = Items.AIR.getDefaultInstance();
-                currentAmmoItemStack = new ItemStack(launchOrder.getFirst(), hashMap.get(launchOrder.getFirst()));
+                currentAmmoItemStack = new ItemStack(launchOrder.getFirst(), hashMap.getOrDefault(launchOrder.getFirst(), 0));
                 nextAmmoItemStack = Items.AIR.getDefaultInstance();
             } else {
-                prevAmmoItemStack = new ItemStack(launchOrder.getLast(), hashMap.get(launchOrder.getLast()));
-                currentAmmoItemStack = new ItemStack(launchOrder.getFirst(), hashMap.get(launchOrder.getFirst()));
+                prevAmmoItemStack = new ItemStack(launchOrder.getLast(), hashMap.getOrDefault(launchOrder.getLast(), 0));
+                currentAmmoItemStack = new ItemStack(launchOrder.getFirst(), hashMap.getOrDefault(launchOrder.getFirst(), 0));
                 Iterator<Item> iterator = launchOrder.iterator();
                 iterator.next();
                 Item nextItem = iterator.next();
-                nextAmmoItemStack = new ItemStack(nextItem, hashMap.get(nextItem));
+                nextAmmoItemStack = new ItemStack(nextItem, hashMap.getOrDefault(nextItem, 0));
             }
             Item newItem = currentAmmoItemStack.getItem();
             if (!newItem.equals(pStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item())) {
@@ -167,14 +171,23 @@ public abstract class AbstractBSFWeaponItem extends Item {
     }
 
     public ItemStack getPrevAmmoItemStack() {
+        if (prevAmmoItemStack == null) {
+            return Items.AIR.getDefaultInstance();
+        }
         return prevAmmoItemStack;
     }
 
     public ItemStack getCurrentAmmoItemStack() {
+        if (currentAmmoItemStack == null) {
+            return Items.AIR.getDefaultInstance();
+        }
         return currentAmmoItemStack;
     }
 
     public ItemStack getNextAmmoItemStack() {
+        if (nextAmmoItemStack == null) {
+            return Items.AIR.getDefaultInstance();
+        }
         return nextAmmoItemStack;
     }
 

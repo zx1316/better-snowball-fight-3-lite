@@ -15,7 +15,6 @@ import com.linngdu664.bsf3lite.registry.EffectRegister;
 import com.linngdu664.bsf3lite.registry.SoundRegister;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -39,15 +38,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_NEXT;
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_PREV;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_PREV;
 
 public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
     public static final int TYPE_FLAG = 64;
@@ -140,15 +138,5 @@ public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
         builder.accept(Component.translatable("implosion_snowball_cannon1.tooltip").withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("guns1.tooltip").withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("guns2.tooltip", CYCLE_MOVE_AMMO_PREV.getTranslatedKeyMessage(), CYCLE_MOVE_AMMO_NEXT.getTranslatedKeyMessage()).withStyle(ChatFormatting.DARK_GRAY));
-    }
-
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            @Override
-            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-                return HumanoidModel.ArmPose.valueOf("BSF_WEAPON");
-            }
-        });
     }
 }

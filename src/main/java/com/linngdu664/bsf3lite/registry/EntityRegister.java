@@ -4,15 +4,9 @@ import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.entity.executor.*;
 import com.linngdu664.bsf3lite.entity.snowball.nomal.*;
 import com.linngdu664.bsf3lite.entity.snowball.special.*;
-import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.*;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -49,31 +43,6 @@ public class EntityRegister {
         return ENTITY_TYPES.register(name, () -> EntityType.Builder.of(pFactory, MobCategory.MISC)
                 .sized(size, size).updateInterval(10).fireImmune()
                 .build(ResourceKey.create(ENTITY_TYPES.getRegistryKey(), Main.makeMyIdentifier(name))));
-    }
-
-    @EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
-    public static class RendererRegister {
-        @SubscribeEvent
-        public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(POWDER_EXECUTOR.get(), NoopRenderer::new);
-            event.registerEntityRenderer(COMPACTED_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(EXPLOSIVE_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(ICE_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(IRON_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(OBSIDIAN_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(POWDER_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(SMOOTH_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(SPECTRAL_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(STONE_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(EXPANSION_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(RECONSTRUCT_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(ICICLE_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(CRITICAL_FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(CHERRY_BLOSSOM_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(SCULK_SNOWBALL.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(DUCK_SNOWBALL.get(), ThrownItemRenderer::new);
-        }
     }
 }
 

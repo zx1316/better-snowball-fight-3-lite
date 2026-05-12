@@ -2,10 +2,10 @@
   "entries": [
     {
       "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
-      "name": "BSF_WEAPON",
-      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "name": "BSF3LITE_WEAPON",
+      "constructor": "(ZZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
       "parameters": {
-        "class": "com/linngdu664/bsf/misc/MyEnumParams",
+        "class": "com/linngdu664/bsf3lite/misc/MyEnumParams",
         "field": "WEAPON_ARM_POSE_ENUM_PROXY"
       }
     }

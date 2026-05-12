@@ -11,6 +11,8 @@ import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
 import com.linngdu664.bsf3lite.item.tool.*;
 import com.linngdu664.bsf3lite.item.weapon.*;
 import com.linngdu664.bsf3lite.misc.BSFToolMaterials;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ToolMaterial;
@@ -60,7 +62,7 @@ public class ItemRegister {
     public static final DeferredItem<Item> REPULSIVE_FIELD_GENERATOR = ITEMS.register("repulsive_field_generator", RepulsiveFieldGeneratorItem::new);
 
 
-    public static final DeferredItem<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
+    public static final DeferredItem<Item> ICE_SKATES = ITEMS.register("ice_skates", IceSkatesItem::new);
     public static final DeferredItem<Item> SNOW_FALL_BOOTS = ITEMS.register("snow_fall_boots", SnowFallBootsItem::new);
     public static final DeferredItem<Item> SNOW_BLOCK_BLENDER = ITEMS.register("snow_block_blender", SnowBlockBlenderItem::new);
     public static final DeferredItem<Item> BASIN = ITEMS.register("basin", BasinItem::new);
@@ -74,16 +76,16 @@ public class ItemRegister {
     public static final DeferredItem<Item> VODKA = ITEMS.register("vodka", VodkaItem::new);
 
 
-    public static final DeferredItem<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("super_power_core"))).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("super_frozen_core"))).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", UnstableCoreItem::new);
-    public static final DeferredItem<Item> REPULSION_CORE = ITEMS.register("repulsion_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final DeferredItem<Item> GRAVITY_CORE = ITEMS.register("gravity_core", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> REPULSION_CORE = ITEMS.register("repulsion_core", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("repulsion_core"))).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> GRAVITY_CORE = ITEMS.register("gravity_core", () -> new Item(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("gravity_core"))).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("snowball_cannon_upgrade_smithing_template", SnowballCannonUpgradeSmithingTemplateItem::new);
     public static final DeferredItem<Item> SNOWMAN_IN_HAND = ITEMS.register("snowman_in_hand", SnowmanInHandItem::new);
 
 
-    public static final DeferredItem<Item> SCULK_SNOWBALL = ITEMS.register("sculk_snowball", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SCULK_SNOWBALL = ITEMS.registerSimpleItem("sculk_snowball");
 
 
     public static final DeferredItem<Item> REGION_TOOL = ITEMS.register("region_tool", RegionToolItem::new);

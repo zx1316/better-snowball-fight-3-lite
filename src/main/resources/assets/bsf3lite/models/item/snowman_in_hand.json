@@ -1,0 +1,7 @@
+{
+  "parent": "bsf3lite:custom/snowman_in_hand_model",
+  "textures": {
+    "0": "bsf3lite:item/snowman_in_hand",
+    "particle": "bsf3lite:item/snowman_in_hand"
+  }
+}

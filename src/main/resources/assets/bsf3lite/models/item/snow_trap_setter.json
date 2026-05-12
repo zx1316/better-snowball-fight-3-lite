@@ -1,0 +1,7 @@
+{
+  "parent": "bsf3lite:custom/snow_trap_setter_model",
+  "textures": {
+    "0": "bsf3lite:item/snow_trap_setter",
+    "particle": "bsf3lite:item/snow_trap_setter"
+  }
+}

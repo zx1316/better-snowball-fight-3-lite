@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_NEXT;
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_PREV;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_PREV;
 
 public class PowerfulSnowballCannonItem extends SnowballCannonItem {
     public PowerfulSnowballCannonItem() {

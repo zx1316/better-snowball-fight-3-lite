@@ -1,0 +1,7 @@
+{
+  "parent": "bsf3lite:item/implosion_snowball_cannon",
+  "textures": {
+    "1": "bsf3lite:item/implosion_snowball_cannon_aura_cooling",
+    "4": "bsf3lite:item/implosion_snowball_cannon_cover_310"
+  }
+}

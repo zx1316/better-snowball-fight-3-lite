@@ -1,0 +1,6 @@
+{
+  "parent": "bsf3lite:item/snowball_tank",
+  "textures": {
+    "layer0": "bsf3lite:item/large_ice_snowball_tank"
+  }
+}

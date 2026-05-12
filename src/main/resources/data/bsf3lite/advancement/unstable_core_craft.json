@@ -1,0 +1,38 @@
+{
+  "parent": "bsf3lite:root",
+  "display": {
+    "icon": {
+      "id": "bsf3lite:unstable_core"
+    },
+    "title": {
+      "translate": "advancements.bsf3lite.unstable_core.title"
+    },
+    "description": {
+      "translate": "advancements.bsf3lite.unstable_core.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_unstable_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bsf3lite:repulsion_core"
+            ]
+          },
+          {
+            "items": [
+              "bsf3lite:gravity_core"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["obtain_unstable_core"]]
+}

@@ -2,7 +2,6 @@ package com.linngdu664.bsf3lite.misc;
 
 import com.google.common.collect.Maps;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAssets;

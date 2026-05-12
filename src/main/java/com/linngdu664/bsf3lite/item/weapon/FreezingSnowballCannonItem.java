@@ -14,8 +14,8 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_NEXT;
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_PREV;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_PREV;
 
 public class FreezingSnowballCannonItem extends SnowballCannonItem {
     public FreezingSnowballCannonItem() {

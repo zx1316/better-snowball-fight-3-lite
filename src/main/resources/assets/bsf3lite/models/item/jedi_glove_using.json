@@ -1,0 +1,6 @@
+{
+  "parent": "bsf3lite:item/glove_using",
+  "textures": {
+    "layer0": "bsf3lite:item/jedi_glove"
+  }
+}

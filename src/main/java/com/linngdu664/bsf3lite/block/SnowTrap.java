@@ -1,8 +1,11 @@
 package com.linngdu664.bsf3lite.block;
 
+import com.linngdu664.bsf3lite.Main;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -34,7 +37,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SnowTrap extends Block {
     public SnowTrap() {
-        super(Properties.ofLegacyCopy(Blocks.SNOW).noLootTable().randomTicks());
+        super(Properties
+                .ofLegacyCopy(Blocks.SNOW)
+                .setId(ResourceKey.create(Registries.BLOCK, Main.makeMyIdentifier("snow_trap")))
+                .noLootTable()
+                .randomTicks());
     }
 
     @Override

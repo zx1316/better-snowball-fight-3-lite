@@ -1,6 +1,9 @@
 package com.linngdu664.bsf3lite.block;
 
+import com.linngdu664.bsf3lite.Main;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,6 +21,7 @@ public class LooseSnowBlock extends Block {
 
     public LooseSnowBlock() {
         super(Properties.ofLegacyCopy(Blocks.SNOW_BLOCK)
+                .setId(ResourceKey.create(Registries.BLOCK, Main.makeMyIdentifier("loose_snow_block")))
                 .noLootTable()
                 .noOcclusion()
                 .strength(0.1f)

@@ -1,24 +1,25 @@
 package com.linngdu664.bsf3lite.particle;
 
-import com.linngdu664.bsf.item.weapon.ImplosionSnowballCannonItem;
-import com.linngdu664.bsf.util.BSFCommonUtil;
-import com.linngdu664.bsf.util.SphereAxisRotationHelper;
+import com.linngdu664.bsf3lite.item.weapon.ImplosionSnowballCannonItem;
+import com.linngdu664.bsf3lite.util.BSFCommonUtil;
+import com.linngdu664.bsf3lite.util.SphereAxisRotationHelper;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-public class ImplosionSnowballCannonParticle extends TextureSheetParticle {
+public class ImplosionSnowballCannonParticle extends SingleQuadParticle {
     private final SpriteSet sprites;
     private final SphereAxisRotationHelper rotationHelper;
     private float speed;
     private Vec3 movingStep;
 
     protected ImplosionSnowballCannonParticle(ClientLevel pLevel, Vec3 center, Vec3 offset, Vec3 axis, float r, float g, float b, SpriteSet pSprites) {
-        super(pLevel, center.x + offset.x, center.y + offset.y, center.z + offset.z);
+        super(pLevel, center.x + offset.x, center.y + offset.y, center.z + offset.z, pSprites.first());
         this.hasPhysics = false;
         this.gravity = 0F;
         this.friction = 0.9F;
@@ -35,8 +36,8 @@ public class ImplosionSnowballCannonParticle extends TextureSheetParticle {
     }
 
     @Override
-    public @NotNull ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected @NonNull Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     @Override
@@ -56,7 +57,6 @@ public class ImplosionSnowballCannonParticle extends TextureSheetParticle {
         scale(0.92f);
     }
 
-
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprite;
 
@@ -65,13 +65,11 @@ public class ImplosionSnowballCannonParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-            RandomSource randomSource = pLevel.getRandom();
+        public @Nullable Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, RandomSource randomSource) {
             float f = randomSource.nextFloat() * 0.6F + 0.4F;
             double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
             double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
             return new ImplosionSnowballCannonParticle(pLevel, new Vec3(pX, pY, pZ), BSFCommonUtil.radRotationToVector(ImplosionSnowballCannonItem.RADIUS, theta, phi), new Vec3(pXSpeed, pYSpeed, pZSpeed).normalize(), f * 0.7F, f * 0.7F, f * 0.9F, this.sprite);
         }
     }
-
 }

@@ -7,11 +7,14 @@ import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
 import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.KeyMappingRegistry;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +49,7 @@ public class ClientForgeEvents {
     public static void onKeyInput(InputEvent.Key event) {
         Minecraft minecraft = Minecraft.getInstance();
         int key = event.getKey();
-        if (minecraft.screen == null && (key == ClientModEvents.CYCLE_MOVE_AMMO_NEXT.getKey().getValue() || key == ClientModEvents.CYCLE_MOVE_AMMO_PREV.getKey().getValue()) && event.getAction() == GLFW.GLFW_PRESS) {
+        if (minecraft.screen == null && (key == KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT.getKey().getValue() || key == KeyMappingRegistry.CYCLE_MOVE_AMMO_PREV.getKey().getValue()) && event.getAction() == GLFW.GLFW_PRESS) {
             Player player = minecraft.player;
             AbstractBSFWeaponItem weaponItem = null;
             if (player.getMainHandItem().getItem() instanceof AbstractBSFWeaponItem item) {
@@ -57,7 +60,7 @@ public class ClientForgeEvents {
             if (weaponItem != null) {
                 LinkedHashSet<Item> launchOrder = weaponItem.getLaunchOrder();
                 if (!launchOrder.isEmpty()) {
-                    if (key == ClientModEvents.CYCLE_MOVE_AMMO_NEXT.getKey().getValue()) {
+                    if (key == KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT.getKey().getValue()) {
                         Item item = launchOrder.getFirst();
                         launchOrder.removeFirst();
                         launchOrder.addLast(item);
@@ -109,8 +112,23 @@ public class ClientForgeEvents {
         if (level == null || minecraft.isPaused()) {
             return;
         }
+        // tick camera
         Camera camera = minecraft.gameRenderer.getMainCamera();
         ScreenshakeHandler.clientTick(camera, null);
         ScreenshakeHandler.clientTick(camera, BSF_RANDOM_SOURCE);
+
+        // tick weapons
+        LocalPlayer player = minecraft.player;
+        if (player == null) {
+            return;
+        }
+        Inventory inventory = player.getInventory();
+        for (int i = 0, size = inventory.getContainerSize(); i < size; i++) {
+            ItemStack itemStack = inventory.getItem(i);
+            // 40 = offhand
+            if (itemStack.getItem() instanceof AbstractBSFWeaponItem weapon) {
+                weapon.inventoryTickInClient(itemStack, player, i);
+            }
+        }
     }
 }

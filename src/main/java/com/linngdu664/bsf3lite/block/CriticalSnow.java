@@ -1,9 +1,12 @@
 package com.linngdu664.bsf3lite.block;
 
+import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.block.entity.CriticalSnowEntity;
 import com.linngdu664.bsf3lite.registry.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -28,7 +31,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class CriticalSnow extends Block implements EntityBlock {
     public CriticalSnow() {
-        super(Properties.ofLegacyCopy(Blocks.SNOW).speedFactor(0.2F).jumpFactor(0.2F).noLootTable());
+        super(Properties
+                .ofLegacyCopy(Blocks.SNOW)
+                .setId(ResourceKey.create(Registries.BLOCK, Main.makeMyIdentifier("critical_snow")))
+                .speedFactor(0.2F)
+                .jumpFactor(0.2F)
+                .noLootTable());
     }
 
     @Nullable

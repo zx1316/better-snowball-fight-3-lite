@@ -172,7 +172,7 @@ public class CreativeTabRegister {
                 output.accept(ItemRegister.JEDI_GLOVE.get());
                 output.accept(ItemRegister.COLD_COMPRESSION_JET_ENGINE.get());
 
-                output.accept(ItemRegister.ICE_SKATES_ITEM.get());
+                output.accept(ItemRegister.ICE_SKATES.get());
                 output.accept(ItemRegister.SNOW_FALL_BOOTS.get());
 
                 output.accept(ItemRegister.POPSICLE.get());
@@ -183,7 +183,6 @@ public class CreativeTabRegister {
                 output.accept(ItemRegister.SUPER_POWER_CORE.get());
                 output.accept(ItemRegister.SUPER_FROZEN_CORE.get());
 
-                output.accept(ItemRegister.TRACKING_CORE.get());
                 output.accept(ItemRegister.REPULSION_CORE.get());
                 output.accept(ItemRegister.GRAVITY_CORE.get());
                 output.accept(ItemRegister.UNSTABLE_CORE.get());

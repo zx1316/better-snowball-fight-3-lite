@@ -12,7 +12,6 @@ import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
 import com.linngdu664.bsf3lite.registry.DataComponentRegister;
 import com.linngdu664.bsf3lite.registry.EffectRegister;
 import com.linngdu664.bsf3lite.registry.SoundRegister;
-import com.linngdu664.bsf3lite.misc.BSFEnchantmentHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -31,8 +29,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_NEXT;
-import static com.linngdu664.bsf3lite.event.ClientModEvents.CYCLE_MOVE_AMMO_PREV;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_NEXT;
+import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMMO_PREV;
 
 public class SnowballCannonItem extends AbstractBSFWeaponItem {
     public static final int TYPE_FLAG = 2;

@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "bsf:loose_snow_block",
-    "bsf:snow_trap",
-    "bsf:critical_snow"
+    "bsf3lite:loose_snow_block",
+    "bsf3lite:snow_trap",
+    "bsf3lite:critical_snow"
   ]
 }

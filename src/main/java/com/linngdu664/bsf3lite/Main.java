@@ -11,7 +11,7 @@ import net.neoforged.fml.config.ModConfig;
 
 @Mod(Main.MODID)
 public class Main {
-    public static final String MODID = "bsf";
+    public static final String MODID = "bsf3lite";
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         BlockRegister.BLOCKS.register(modEventBus);

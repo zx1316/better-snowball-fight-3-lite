@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "bsf:floating_shooting",
-    "bsf:kinetic_energy_storage"
+    "bsf3lite:floating_shooting",
+    "bsf3lite:kinetic_energy_storage"
   ]
 }

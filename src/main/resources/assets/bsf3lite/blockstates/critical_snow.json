@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "bsf3lite:block/critical_snow"
+      },
+      {
+        "model": "bsf3lite:block/critical_snow",
+        "y": 90
+      },
+      {
+        "model": "bsf3lite:block/critical_snow",
+        "y": 180
+      },
+      {
+        "model": "bsf3lite:block/critical_snow",
+        "y": 270
+      }
+    ]
+  }
+}

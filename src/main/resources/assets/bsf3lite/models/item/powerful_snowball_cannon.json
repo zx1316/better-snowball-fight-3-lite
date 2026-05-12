@@ -1,0 +1,28 @@
+{
+  "parent": "bsf3lite:item/snowball_cannon",
+  "textures": {
+    "layer0": "bsf3lite:item/powerful_snowball_cannon"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "pulling": 1
+      },
+      "model": "bsf3lite:item/powerful_snowball_cannon_pulling_0"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 0.65
+      },
+      "model": "bsf3lite:item/powerful_snowball_cannon_pulling_1"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 0.9
+      },
+      "model": "bsf3lite:item/powerful_snowball_cannon_pulling_2"
+    }
+  ]
+}

@@ -6,7 +6,9 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.RandomSource;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public class GeneratorFix extends HugeExplosionParticle {
     protected GeneratorFix(ClientLevel pLevel, double pX, double pY, double pZ, double pQuadSizeMultiplier, SpriteSet pSprites) {
@@ -15,10 +17,12 @@ public class GeneratorFix extends HugeExplosionParticle {
         this.quadSize = 0.3f;
         this.setSpriteFromAge(pSprites);
     }
+
     @Override
-    public int getLightColor(float partialTick) {
+    public int getLightCoords(float a) {
         return 240;
     }
+
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
 
@@ -26,7 +30,8 @@ public class GeneratorFix extends HugeExplosionParticle {
             this.sprites = pSprites;
         }
 
-        public Particle createParticle(@NotNull SimpleParticleType pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+        @Override
+        public @Nullable Particle createParticle(SimpleParticleType simpleParticleType, @NonNull ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, RandomSource randomSource) {
             return new GeneratorFix(pLevel, pX, pY, pZ, pXSpeed, this.sprites);
         }
     }

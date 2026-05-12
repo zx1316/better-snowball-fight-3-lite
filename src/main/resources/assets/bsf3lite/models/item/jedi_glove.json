@@ -1,0 +1,14 @@
+{
+  "parent": "bsf3lite:item/glove",
+  "textures": {
+    "layer0": "bsf3lite:item/jedi_glove"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "using": 1
+      },
+      "model": "bsf3lite:item/jedi_glove_using"
+    }
+  ]
+}

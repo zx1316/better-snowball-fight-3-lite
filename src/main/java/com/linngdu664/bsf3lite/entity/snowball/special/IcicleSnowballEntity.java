@@ -1,5 +1,6 @@
 package com.linngdu664.bsf3lite.entity.snowball.special;
 
+import com.google.common.collect.Lists;
 import com.linngdu664.bsf3lite.block.LooseSnowBlock;
 import com.linngdu664.bsf3lite.client.screenshake.Easing;
 import com.linngdu664.bsf3lite.config.ServerConfig;
@@ -26,6 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -152,10 +154,13 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
     }
 
     private void icicleInit(Level level) {
-        List<Player> nearbyPlayers = level.getNearbyPlayers(TargetingConditions.forNonCombat(), null, getBoundingBox().inflate(100));
-        for (Player player : nearbyPlayers) {
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenshakePayload(20).setEasing(Easing.SINE_IN_OUT).setIntensity(0.5F));
+        AABB area = getBoundingBox().inflate(100);
+        for (Player player : level.players()) {
+            if (area.contains(player.getX(), player.getY(), player.getZ()) && !player.isSpectator()) {
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenshakePayload(20).setEasing(Easing.SINE_IN_OUT).setIntensity(0.5F));
+            }
         }
+
         this.setDeltaMovement(0, 0, 0);
         this.setNoGravity(true);
         RandomSource randomSource = level.getRandom();

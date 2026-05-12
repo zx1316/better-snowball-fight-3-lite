@@ -1,0 +1,33 @@
+{
+  "parent": "bsf3lite:root",
+  "display": {
+    "icon": {
+      "id": "bsf3lite:diamond_snowball_clamp"
+    },
+    "title": {
+      "translate": "advancements.bsf3lite.snowball_clamp_use.title"
+    },
+    "description": {
+      "translate": "advancements.bsf3lite.snowball_clamp_use.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_smooth_snowball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bsf3lite:smooth_snowball"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["obtain_smooth_snowball"]]
+}

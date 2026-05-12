@@ -52,7 +52,7 @@ public class ColdCompressionJetEngineItem extends Item {
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
         BlockPos blockPos1 = new BlockPos((int) owner.getX() - 1, (int) owner.getY(), (int) owner.getZ() - 1);
         if ((level.getBlockState(blockPos1).is(BlockTags.SNOW) || level.getBlockState(blockPos1.below()).is(BlockTags.SNOW)) && itemStack.getDamageValue() > 0 && level.getRandom().nextFloat() < 0.55f) {
-            if (pIsSelected) {
+            if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND)) {
                 itemStack.setDamageValue(Math.max(itemStack.getDamageValue() - 2, 0));
                 PacketDistributor.sendToPlayersTrackingEntityAndSelf(owner, new ForwardRaysParticlesPayload(new ForwardRaysParticlesParas(owner.position().add(-0.5, 0, -0.5), owner.position().add(0.5, 0, 0.5), new Vec3(0, 1, 0), 0.1, 0.15, 4), BSFParticleType.SNOWFLAKE.ordinal()));
             } else {

@@ -37,10 +37,10 @@ public class RegionToolItem extends Item {
             RegionData regionData = itemInHand.getOrDefault(DataComponentRegister.REGION, RegionData.EMPTY);
             if (!player.isShiftKeyDown()) {
                 itemInHand.set(DataComponentRegister.REGION, new RegionData(blockPos, regionData.end()));
-                player.displayClientMessage(Component.literal("start: (" + blockPos.toShortString() + ")"), false);
+                player.sendSystemMessage(Component.literal("start: (" + blockPos.toShortString() + ")"));
             } else {
                 itemInHand.set(DataComponentRegister.REGION, new RegionData(regionData.start(), blockPos));
-                player.displayClientMessage(Component.literal("end: (" + blockPos.toShortString() + ")"), false);
+                player.sendSystemMessage(Component.literal("end: (" + blockPos.toShortString() + ")"));
             }
         }
         return InteractionResult.SUCCESS;
