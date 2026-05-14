@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.stream.LongStream;
 
 public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowballEntity {
     private static final EntityDataAccessor<Boolean> INVISIBLE = SynchedEntityData.defineId(AbstractConstructSnowballEntity.class, EntityDataSerializers.BOOLEAN);
@@ -143,11 +142,10 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
      * @param blockPos blockPos
      */
     protected void placeAndRecordBlock(Level level, BlockPos blockPos) {
-        if (level instanceof ServerLevel) {
-            if (level.getBlockState(blockPos).canBeReplaced()) {
-                level.setBlock(blockPos, BlockRegister.LOOSE_SNOW_BLOCK.get().defaultBlockState(), 3);
-                allBlock.push(blockPos);
-            }
+        if (!level.isClientSide() && level.getBlockState(blockPos).canBeReplaced()) {
+            allBlock.push(blockPos);
+            level.setBlock(blockPos, BlockRegister.LOOSE_SNOW_BLOCK.get().defaultBlockState(), 3);
+            level.playSound(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.SNOW_PLACE, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
     }
 
@@ -160,7 +158,6 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
             }
         }
     }
-
 
     public void startDestroyBlock() {
         inBlockDuration = false;
@@ -179,9 +176,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
         }
     }
 
-
     protected boolean posIsLooseSnow(Level level, BlockPos pos) {
         return level.getBlockState(pos).getBlock().equals(BlockRegister.LOOSE_SNOW_BLOCK.get());
     }
-
 }

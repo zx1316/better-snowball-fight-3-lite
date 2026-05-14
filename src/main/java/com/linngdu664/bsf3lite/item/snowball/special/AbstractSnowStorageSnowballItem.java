@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class AbstractSnowStorageSnowballItem extends AbstractBSFSnowballItem {

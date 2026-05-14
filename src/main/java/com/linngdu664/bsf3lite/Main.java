@@ -3,15 +3,18 @@ package com.linngdu664.bsf3lite;
 import com.linngdu664.bsf3lite.config.ClientConfig;
 import com.linngdu664.bsf3lite.config.ServerConfig;
 import com.linngdu664.bsf3lite.registry.*;
+import com.mojang.logging.LogUtils;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import org.slf4j.Logger;
 
 @Mod(Main.MODID)
 public class Main {
     public static final String MODID = "bsf3lite";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         BlockRegister.BLOCKS.register(modEventBus);

@@ -83,7 +83,7 @@ public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
                         .forEach(p -> {
                             serverLevel.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
                             BlockState snow = Blocks.SNOW.defaultBlockState();
-                            if (snow.canSurvive(pLevel, p) && !(serverLevel.getBlockState(p).getBlock() instanceof LooseSnowBlock)) {
+                            if (snow.canSurvive(serverLevel, p) && !(serverLevel.getBlockState(p).getBlock() instanceof LooseSnowBlock)) {
                                 serverLevel.setBlockAndUpdate(p, snow);
                             }
                             serverLevel.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (serverLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
