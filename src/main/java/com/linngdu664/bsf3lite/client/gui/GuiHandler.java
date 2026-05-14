@@ -2,7 +2,7 @@ package com.linngdu664.bsf3lite.client.gui;
 
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballMachineGunItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -36,8 +36,8 @@ public class GuiHandler {
             if (weaponItem.getTypeFlag() == SnowballMachineGunItem.TYPE_FLAG) {
                 V2I barFrame = new V2I(100, 10);
                 V2I barPos = new V2I(GuiUtil.widthFrameCenter(window, barFrame.x()), GuiUtil.heightFrameRatio(window, barFrame.y(), 0.7));
-                int timer = selectItem.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
-                boolean isCoolDown = selectItem.getOrDefault(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, false);
+                int timer = selectItem.getOrDefault(DataComponentRegistry.MACHINE_GUN_TIMER, 0);
+                boolean isCoolDown = selectItem.getOrDefault(DataComponentRegistry.MACHINE_GUN_IS_COOL_DOWN, false);
                 int padding = 2;
                 BSFGuiTool.renderProgressBar(guiGraphics, barPos, barFrame, padding, 0xffffffff, isCoolDown ? 0xfffc3d49 : 0xffffffff, (float) timer / 360);
             }

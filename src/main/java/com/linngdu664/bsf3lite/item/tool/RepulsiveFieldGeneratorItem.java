@@ -3,8 +3,8 @@ package com.linngdu664.bsf3lite.item.tool;
 import com.linngdu664.bsf3lite.client.screenshake.Easing;
 import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
 import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeInstance;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -42,11 +42,11 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
                 for (Projectile projectile : list) {
                     Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
                     projectile.push(dvVec.x, dvVec.y, dvVec.z);
-                    ((ServerLevel) pLevel).sendParticles(ParticleRegister.GENERATOR_PUSH.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 1, 0, 0, 0, 0);
+                    ((ServerLevel) pLevel).sendParticles(ParticleRegistry.GENERATOR_PUSH.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 1, 0, 0, 0, 0);
                 }
                 pStack.hurtAndBreak(1, player, player.getUsedItemHand());
                 player.awardStat(Stats.ITEM_USED.get(this));
-                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.FIELD_PUSH.get(), SoundSource.PLAYERS, 0.5F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.FIELD_PUSH.get(), SoundSource.PLAYERS, 0.5F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else {
                 ScreenshakeHandler.addScreenshake((new ScreenshakeInstance(5)).setIntensity(0.5f).setEasing(Easing.EXPO_IN_OUT));
             }
@@ -70,19 +70,19 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
             this.releaseUsing(pStack, pLevel, pLivingEntity, pRemainingUseDuration);
         } else {
             if (pRemainingUseDuration == 60) {
-                pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), SoundRegister.FIELD_START.get(), SoundSource.PLAYERS, 0.7F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), SoundRegistry.FIELD_START.get(), SoundSource.PLAYERS, 0.7F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
             List<Projectile> list = pLevel.getEntitiesOfClass(Projectile.class, pLivingEntity.getBoundingBox().inflate(3), p -> BSFCommonUtil.vec3AngleCos(p.position().subtract(pLivingEntity.getEyePosition()), Vec3.directionFromRotation(pLivingEntity.getXRot(), pLivingEntity.getYRot())) > 0.86602540F);
             for (Projectile projectile : list) {
                 if (!projectileVector.contains(projectile) && !pLevel.isClientSide()) {
-                    pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), SoundRegister.FIELD_SNOWBALL_STOP.get(), SoundSource.PLAYERS, 0.7F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                    ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
+                    pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), SoundRegistry.FIELD_SNOWBALL_STOP.get(), SoundSource.PLAYERS, 0.7F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                    ((ServerLevel) pLevel).sendParticles(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
                 }
                 projectileVector.add(projectile);
                 Vec3 dvVec = projectile.getDeltaMovement().scale(-0.8);
                 projectile.push(dvVec.x, dvVec.y, dvVec.z);
                 if (!pLevel.isClientSide()) {
-                    ((ServerLevel) pLevel).sendParticles(ParticleRegister.GENERATOR_FIX.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 1, 0, 0, 0, 0);
+                    ((ServerLevel) pLevel).sendParticles(ParticleRegistry.GENERATOR_FIX.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 1, 0, 0, 0, 0);
                 }
             }
         }

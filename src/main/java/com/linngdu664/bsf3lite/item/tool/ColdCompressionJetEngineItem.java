@@ -8,8 +8,8 @@ import com.linngdu664.bsf3lite.network.to_client.ToggleMovingSoundPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import com.linngdu664.bsf3lite.Main;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -93,18 +93,18 @@ public class ColdCompressionJetEngineItem extends Item {
             pStack.hurtAndBreak(1, (ServerLevel) pLevel, pLivingEntity, p -> {
             });
             if (i == 0) {
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP1.get(), ToggleMovingSoundPayload.PLAY_ONCE));
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.PLAY_LOOP));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP1.get(), ToggleMovingSoundPayload.PLAY_ONCE));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.PLAY_LOOP));
             }
             if (i < STARTUP_DURATION) {
                 Vec3 newPos = particlesPos.add(vec3.reverse());
-                ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), newPos.x, newPos.y, newPos.z, 1, 0, 0, 0, 0.04);
+                ((ServerLevel) pLevel).sendParticles(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), newPos.x, newPos.y, newPos.z, 1, 0, 0, 0, 0.04);
                 return;
             }
             if (i == STARTUP_DURATION) {
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.PLAY_LOOP));
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP3.get(), ToggleMovingSoundPayload.PLAY_ONCE));
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP4.get(), ToggleMovingSoundPayload.PLAY_LOOP));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.PLAY_LOOP));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP3.get(), ToggleMovingSoundPayload.PLAY_ONCE));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pLivingEntity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP4.get(), ToggleMovingSoundPayload.PLAY_LOOP));
                 PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new ForwardConeParticlesPayload(new ForwardConeParticlesParas(particlesPos, vec3.reverse().scale(0.5), 5F, 10, 0.2F, 0), BSFParticleType.SNOWFLAKE.ordinal()));
                 PacketDistributor.sendToPlayer((ServerPlayer) pLivingEntity, new ScreenshakePayload(6).setIntensity(0.7F).setEasing(Easing.EXPO_IN_OUT));       // 服务端发包防止其他人抖动，我也不知道为什么会这样
             } else {
@@ -127,9 +127,9 @@ public class ColdCompressionJetEngineItem extends Item {
     public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
         Level level = entity.level();
         if (!level.isClientSide()) {
-            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP5.get(), ToggleMovingSoundPayload.PLAY_ONCE));
-            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP4.get(), ToggleMovingSoundPayload.STOP_LOOP));
-            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegister.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.STOP_LOOP));
+            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP5.get(), ToggleMovingSoundPayload.PLAY_ONCE));
+            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP4.get(), ToggleMovingSoundPayload.STOP_LOOP));
+            PacketDistributor.sendToPlayersInDimension((ServerLevel) level, new ToggleMovingSoundPayload(entity.getId(), SoundRegistry.COLD_COMPRESSION_JET_ENGINE_STARTUP2.get(), ToggleMovingSoundPayload.STOP_LOOP));
             if (entity instanceof Player player) {
                 player.awardStat(Stats.ITEM_USED.get(this));
             }

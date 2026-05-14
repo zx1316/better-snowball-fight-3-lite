@@ -8,7 +8,7 @@ import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
 import com.linngdu664.bsf3lite.network.to_server.AmmoTypePayload;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -67,7 +67,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
                 if (!itemStack.has(DataComponents.UNBREAKABLE)) {
                     itemStack.setDamageValue(itemStack.getDamageValue() + 1);
                     if (itemStack.getDamageValue() == itemStack.getMaxDamage()) {
-                        itemStack.remove(DataComponentRegister.AMMO_ITEM);
+                        itemStack.remove(DataComponentRegistry.AMMO_ITEM);
                     }
                 }
             } else {
@@ -81,9 +81,9 @@ public abstract class AbstractBSFWeaponItem extends Item {
 
     protected AbstractBSFSnowballEntity ItemToEntity(ItemStack itemStack, Player player, Level level, ILaunchAdjustment launchAdjustment) {
         Item item = itemStack.getItem();
-        RegionData region = itemStack.get(DataComponentRegister.REGION.get());
+        RegionData region = itemStack.get(DataComponentRegistry.REGION.get());
         if (item instanceof SnowballTankItem) {
-            item = itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+            item = itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         }
         if (item instanceof AbstractBSFSnowballItem snowball) {
             return snowball.getCorrespondingEntity(level, player, launchAdjustment, region);
@@ -99,8 +99,8 @@ public abstract class AbstractBSFWeaponItem extends Item {
             for (int i = 0; i < k; i++) {
                 ItemStack itemStack = inventory.getItem(i);
                 Item item = itemStack.getItem();
-                if (item instanceof SnowballTankItem && itemStack.has(DataComponentRegister.AMMO_ITEM)) {
-                    AbstractBSFSnowballItem snowball = (AbstractBSFSnowballItem) itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+                if (item instanceof SnowballTankItem && itemStack.has(DataComponentRegistry.AMMO_ITEM)) {
+                    AbstractBSFSnowballItem snowball = (AbstractBSFSnowballItem) itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
                     if ((typeFlag & snowball.getTypeFlag()) != 0) {
                         hashMap.put(snowball, hashMap.getOrDefault(snowball, 0) + itemStack.getMaxDamage() - itemStack.getDamageValue());
                     }
@@ -128,7 +128,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
                 nextAmmoItemStack = new ItemStack(nextItem, hashMap.getOrDefault(nextItem, 0));
             }
             Item newItem = currentAmmoItemStack.getItem();
-            if (!newItem.equals(pStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item())) {
+            if (!newItem.equals(pStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item())) {
                 ClientPacketDistributor.sendToServer(new AmmoTypePayload(newItem, pSlotId));
             }
         }
@@ -139,7 +139,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
     }
 
     public ItemStack getAmmo(Player player, ItemStack weaponItemStack) {
-        Item ammoItem = weaponItemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item ammoItem = weaponItemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         if (ammoItem == Items.AIR) {
             return null;
         }
@@ -148,7 +148,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
         ItemStack ammoItemStack = null;
         for (int i = 0; i < k; i++) {
             ItemStack itemStack = inventory.getItem(i);
-            if (itemStack.getItem() instanceof SnowballTankItem && itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item().equals(ammoItem) && (ammoItemStack == null || ammoItemStack.getDamageValue() < itemStack.getDamageValue())) {
+            if (itemStack.getItem() instanceof SnowballTankItem && itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item().equals(ammoItem) && (ammoItemStack == null || ammoItemStack.getDamageValue() < itemStack.getDamageValue())) {
                 ammoItemStack = itemStack;
             }
         }

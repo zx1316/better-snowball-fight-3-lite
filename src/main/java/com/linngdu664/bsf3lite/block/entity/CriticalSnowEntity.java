@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.block.entity;
 
-import com.linngdu664.bsf3lite.registry.BlockEntityRegister;
-import com.linngdu664.bsf3lite.registry.BlockRegister;
+import com.linngdu664.bsf3lite.registry.BlockEntityRegistry;
+import com.linngdu664.bsf3lite.registry.BlockRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,7 +21,7 @@ public class CriticalSnowEntity extends BlockEntity {
     private int age;
 
     public CriticalSnowEntity(BlockPos pPos, BlockState pBlockState) {
-        super(BlockEntityRegister.CRITICAL_SNOW.get(), pPos, pBlockState);
+        super(BlockEntityRegistry.CRITICAL_SNOW.get(), pPos, pBlockState);
     }
 
     public static <T> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
@@ -33,7 +33,7 @@ public class CriticalSnowEntity extends BlockEntity {
             } else {
                 criticalSnowEntity.setRemoved();
                 BlockState snow = Blocks.SNOW.defaultBlockState();
-                if (level.getBlockState(pos).canBeReplaced() && snow.canSurvive(level, pos) && !level.getBlockState(pos.below()).getBlock().getName().getString().equals(BlockRegister.LOOSE_SNOW_BLOCK.get().getName().getString())) {
+                if (level.getBlockState(pos).canBeReplaced() && snow.canSurvive(level, pos) && !level.getBlockState(pos.below()).getBlock().getName().getString().equals(BlockRegistry.LOOSE_SNOW_BLOCK.get().getName().getString())) {
                     level.setBlockAndUpdate(pos, snow);
                 } else {
                     level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.item.weapon;
+package com.linngdu664.bsf3lite.item.weapon.cannon;
 
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;

@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.item.tool;
 
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.PowerParticleOption;
@@ -39,7 +39,7 @@ public class JediGloveItem extends GloveItem {
             for (AbstractBSFSnowballEntity snowball : list) {
                 ItemStack itemStack = snowball.getItem();
                 if (snowball.getRegion() != null) {
-                    itemStack.set(DataComponentRegister.REGION.get(), snowball.getRegion());
+                    itemStack.set(DataComponentRegistry.REGION.get(), snowball.getRegion());
                 }
                 player.getInventory().placeItemBackInInventory(itemStack, true);
                 ((ServerLevel) pLevel).sendParticles(particleOption, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);

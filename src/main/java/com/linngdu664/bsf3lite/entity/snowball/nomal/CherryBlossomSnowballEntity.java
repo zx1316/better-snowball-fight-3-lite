@@ -2,8 +2,8 @@ package com.linngdu664.bsf3lite.entity.snowball.nomal;
 
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -20,11 +20,11 @@ public class CherryBlossomSnowballEntity extends AbstractNormalSnowballEntity {
     }
 
     public CherryBlossomSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegister.CHERRY_BLOSSOM_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegister.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
     }
 
     public CherryBlossomSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.CHERRY_BLOSSOM_SNOWBALL.get(), pShooter, pLevel, ItemRegister.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class CherryBlossomSnowballEntity extends AbstractNormalSnowballEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemRegister.CHERRY_BLOSSOM_SNOWBALL.get();
+        return ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.get();
     }
 }

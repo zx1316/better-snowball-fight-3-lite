@@ -3,8 +3,8 @@ package com.linngdu664.bsf3lite.entity.snowball.special;
 import com.linngdu664.bsf3lite.config.ServerConfig;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,7 +25,7 @@ public class ExpansionSnowballEntity extends AbstractConstructSnowballEntity {
     }
 
     public ExpansionSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.EXPANSION_SNOWBALL.get(), pShooter, pLevel, ItemRegister.EXPANSION_SNOWBALL.toStack(), ServerConfig.EXPANSION_SNOWBALL_DURATION.getConfigValue(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.EXPANSION_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.EXPANSION_SNOWBALL.toStack(), ServerConfig.EXPANSION_SNOWBALL_DURATION.getConfigValue(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class ExpansionSnowballEntity extends AbstractConstructSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.EXPANSION_SNOWBALL.get();
+        return ItemRegistry.EXPANSION_SNOWBALL.get();
     }
 }

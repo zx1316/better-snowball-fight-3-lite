@@ -3,9 +3,9 @@ package com.linngdu664.bsf3lite.entity.snowball.nomal;
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,11 +21,11 @@ public class DuckSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public DuckSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegister.DUCK_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegister.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.DUCK_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
     }
 
     public DuckSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.DUCK_SNOWBALL.get(), pShooter, pLevel, ItemRegister.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.DUCK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -34,12 +34,12 @@ public class DuckSnowballEntity extends AbstractBSFSnowballEntity {
         Level level = level();
         if (!level.isClientSide() && !isCaught) {
             discard();
-            level.playSound(null, getX(), getY(), getZ(), SoundRegister.DUCK.get(), SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+            level.playSound(null, getX(), getY(), getZ(), SoundRegistry.DUCK.get(), SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
     }
 
     @Override
     protected Item getDefaultItem() {
-        return ItemRegister.DUCK_SNOWBALL.get();
+        return ItemRegistry.DUCK_SNOWBALL.get();
     }
 }

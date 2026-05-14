@@ -31,9 +31,9 @@ public class ClientExtensionRegistry {
                 return HumanoidModel.ArmPose.valueOf("BSF3LITE_WEAPON");
             }
         };
-        event.registerItem(weaponExtensions, ItemRegister.SNOWBALL_SHOTGUN);
-        event.registerItem(weaponExtensions, ItemRegister.SCULK_SNOWBALL_LAUNCHER);
-        event.registerItem(weaponExtensions, ItemRegister.IMPLOSION_SNOWBALL_CANNON);
+        event.registerItem(weaponExtensions, ItemRegistry.SNOWBALL_SHOTGUN);
+        event.registerItem(weaponExtensions, ItemRegistry.SCULK_SNOWBALL_LAUNCHER);
+        event.registerItem(weaponExtensions, ItemRegistry.IMPLOSION_SNOWBALL_CANNON);
 
         event.registerItem(new IClientItemExtensions() {
             @Override
@@ -46,7 +46,7 @@ public class ClientExtensionRegistry {
                         "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
                         "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
             }
-        }, ItemRegister.ICE_SKATES);
+        }, ItemRegistry.ICE_SKATES);
         event.registerItem(new IClientItemExtensions() {
             @Override
             public Model getHumanoidArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
@@ -58,6 +58,6 @@ public class ClientExtensionRegistry {
                         "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
                         "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
             }
-        }, ItemRegister.SNOW_FALL_BOOTS);
+        }, ItemRegistry.SNOW_FALL_BOOTS);
     }
 }

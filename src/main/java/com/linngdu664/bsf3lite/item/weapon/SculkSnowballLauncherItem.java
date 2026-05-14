@@ -2,9 +2,9 @@ package com.linngdu664.bsf3lite.item.weapon;
 
 import com.linngdu664.bsf3lite.entity.snowball.special.SculkSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
@@ -49,19 +49,19 @@ public class SculkSnowballLauncherItem extends AbstractBSFWeaponItem {
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (pPlayer.hasEffect(EffectRegistry.WEAPON_JAM)) {
             return InteractionResult.FAIL;
         }
         if (!pLevel.isClientSide()) {
             ItemStack stack = getAmmo(pPlayer, itemStack);
             if (stack != null || pPlayer.isCreative()) {
-                pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
-                if (!itemStack.has(DataComponentRegister.SCULK_SOUND_ID)) {
-                    itemStack.set(DataComponentRegister.SCULK_SOUND_ID, -1);
+                pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundRegistry.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
+                if (!itemStack.has(DataComponentRegistry.SCULK_SOUND_ID)) {
+                    itemStack.set(DataComponentRegistry.SCULK_SOUND_ID, -1);
                     itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
                             .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));
                 }
-                SculkSnowballEntity snowballEntity = new SculkSnowballEntity(pPlayer, pLevel, itemStack.getOrDefault(DataComponentRegister.SCULK_SOUND_ID, -1), itemStack.get(DataComponentRegister.REGION.get()));
+                SculkSnowballEntity snowballEntity = new SculkSnowballEntity(pPlayer, pLevel, itemStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1), itemStack.get(DataComponentRegistry.REGION.get()));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 2.0F, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
                 itemStack.hurtAndBreak(1, pPlayer, pUsedHand);

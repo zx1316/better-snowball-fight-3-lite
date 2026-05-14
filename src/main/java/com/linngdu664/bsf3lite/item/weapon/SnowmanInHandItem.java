@@ -7,9 +7,9 @@ import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeInstance;
 import com.linngdu664.bsf3lite.entity.snowball.nomal.SmoothSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -94,7 +94,7 @@ public class SnowmanInHandItem extends Item {
             pStack.setDamageValue(pStack.getDamageValue() - 1);
             if (!pLevel.isClientSide()) {
                 pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), pLivingEntity.getX() + cameraVec.x * 0.5, pLivingEntity.getEyeY() + cameraVec.y * 0.5, pLivingEntity.getZ() + cameraVec.z * 0.5, 1, 0, 0, 0, 0.04);
+                ((ServerLevel) pLevel).sendParticles(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), pLivingEntity.getX() + cameraVec.x * 0.5, pLivingEntity.getEyeY() + cameraVec.y * 0.5, pLivingEntity.getZ() + cameraVec.z * 0.5, 1, 0, 0, 0, 0.04);
             }
         } else if (pStack.getDamageValue() < pStack.getMaxDamage() - 1) {//attack
             if (pLevel.isClientSide()) {
@@ -102,7 +102,7 @@ public class SnowmanInHandItem extends Item {
                 ScreenshakeHandler.addScreenshake((new ScreenshakeInstance(1)).setIntensity(0.5f).setEasing(Easing.ELASTIC_IN));
             } else {
                 for (int i = 0; i < 3; i++) {
-                    SmoothSnowballEntity snowballEntity = new SmoothSnowballEntity(pLivingEntity, pLevel, LAUNCH_ADJUSTMENT, pStack.get(DataComponentRegister.REGION.get()));     // harmless
+                    SmoothSnowballEntity snowballEntity = new SmoothSnowballEntity(pLivingEntity, pLevel, LAUNCH_ADJUSTMENT, pStack.get(DataComponentRegistry.REGION.get()));     // harmless
                     if (pLivingEntity.isShiftKeyDown()) {
                         snowballEntity.shootFromRotation(pLivingEntity, pLivingEntity.getXRot(), pLivingEntity.getYRot(), 0, 1, 10.0F);
                     } else {
@@ -127,7 +127,7 @@ public class SnowmanInHandItem extends Item {
 
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        if (pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (pPlayer.hasEffect(EffectRegistry.WEAPON_JAM)) {
             return InteractionResult.FAIL;
         }
         pPlayer.startUsingItem(pUsedHand);

@@ -4,8 +4,8 @@ import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.network.to_client.ForwardConeParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -52,18 +52,18 @@ public class BasinItem extends Item {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext pContext) {
         ItemStack itemStack = pContext.getItemInHand();
-        int snowType = itemStack.getOrDefault(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 0);
+        int snowType = itemStack.getOrDefault(DataComponentRegistry.BASIN_SNOW_TYPE, (byte) 0);
         if (snowType == 0) {
             Player player = pContext.getPlayer();
             Level level = pContext.getLevel();
             Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
             if (player != null) {
                 if (block.equals(Blocks.SNOW_BLOCK) || block.equals(Blocks.SNOW)) {
-                    itemStack.set(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 1);
+                    itemStack.set(DataComponentRegistry.BASIN_SNOW_TYPE, (byte) 1);
                     player.awardStat(Stats.ITEM_USED.get(this));
                     return InteractionResult.SUCCESS;
                 } else if (block.equals(Blocks.POWDER_SNOW)) {
-                    itemStack.set(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 2);
+                    itemStack.set(DataComponentRegistry.BASIN_SNOW_TYPE, (byte) 2);
                     player.awardStat(Stats.ITEM_USED.get(this));
                     return InteractionResult.SUCCESS;
                 }
@@ -74,7 +74,7 @@ public class BasinItem extends Item {
 
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        int snowType = itemStack.getOrDefault(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 0);
+        int snowType = itemStack.getOrDefault(DataComponentRegistry.BASIN_SNOW_TYPE, (byte) 0);
         if (snowType == 0) {
             return InteractionResult.PASS;
         }
@@ -95,7 +95,7 @@ public class BasinItem extends Item {
                 addEffectsToLivingEntities(list, pPlayer, pLevel, p -> p < 4F ? 240 : (int) (-4F * p * p * p + 49F * p * p - 200F * p + 512F), p -> p < 3.0F ? 3 : (p < 6.0F ? 2 : 1), 30);
             }
             if (!pPlayer.getAbilities().instabuild) {
-                itemStack.remove(DataComponentRegister.BASIN_SNOW_TYPE);
+                itemStack.remove(DataComponentRegistry.BASIN_SNOW_TYPE);
             }
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.POWDER_SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             pPlayer.awardStat(Stats.ITEM_USED.get(this));
@@ -105,7 +105,7 @@ public class BasinItem extends Item {
 
     @Override
     public @NotNull Component getName(ItemStack pStack) {
-        int snowType = pStack.getOrDefault(DataComponentRegister.BASIN_SNOW_TYPE, (byte) 0);
+        int snowType = pStack.getOrDefault(DataComponentRegistry.BASIN_SNOW_TYPE, (byte) 0);
         if (snowType != 0) {
             if (snowType == 1) {
                 return MutableComponent.create(new TranslatableContents("item.bsf3lite.basin_of_snow", null, new Object[0]));
@@ -193,7 +193,7 @@ public class BasinItem extends Item {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, (int) (t * 0.5), amp));
                 livingEntity.hurt(pLevel.damageSources().playerAttack(pPlayer), Float.MIN_NORMAL);
             }
-            livingEntity.addEffect(new MobEffectInstance(EffectRegister.WEAPON_JAM, jamTime, 0));
+            livingEntity.addEffect(new MobEffectInstance(EffectRegistry.WEAPON_JAM, jamTime, 0));
         }
     }
 }

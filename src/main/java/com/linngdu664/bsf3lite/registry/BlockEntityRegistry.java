@@ -8,9 +8,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class BlockEntityRegister {
+public class BlockEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Main.MODID);
 
     public static final Supplier<BlockEntityType<CriticalSnowEntity>> CRITICAL_SNOW = BLOCK_ENTITIES.register("critical_snow",
-            () -> new BlockEntityType<>(CriticalSnowEntity::new, false, BlockRegister.CRITICAL_SNOW.get()));
+            () -> new BlockEntityType<>(CriticalSnowEntity::new, false, BlockRegistry.CRITICAL_SNOW.get()));
 }

@@ -3,8 +3,8 @@ package com.linngdu664.bsf3lite.entity.snowball.special;
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SpellParticleOption;
@@ -33,11 +33,11 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public SpectralSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegister.SPECTRAL_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegister.SPECTRAL_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.SPECTRAL_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.SPECTRAL_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
     }
 
     public SpectralSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.SPECTRAL_SNOWBALL.get(), pShooter, pLevel, ItemRegister.SPECTRAL_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.SPECTRAL_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.SPECTRAL_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -81,6 +81,6 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.SPECTRAL_SNOWBALL.get();
+        return ItemRegistry.SPECTRAL_SNOWBALL.get();
     }
 }

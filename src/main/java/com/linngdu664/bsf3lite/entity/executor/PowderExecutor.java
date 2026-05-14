@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.entity.executor;
 
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +23,7 @@ public class PowderExecutor extends AbstractExecutor {
         super.tick();
         Level level = level();
         if (!level.isClientSide()) {
-            ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
+            ((ServerLevel) level).sendParticles(ParticleRegistry.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
         }
     }
 

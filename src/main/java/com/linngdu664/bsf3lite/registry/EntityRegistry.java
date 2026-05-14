@@ -10,7 +10,7 @@ import net.minecraft.world.entity.*;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class EntityRegister {
+public class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, Main.MODID);
 
    public static final DeferredHolder<EntityType<?>, EntityType<PowderExecutor>> POWDER_EXECUTOR = executorRegister(PowderExecutor::new, "powder_executor", 0.25F);

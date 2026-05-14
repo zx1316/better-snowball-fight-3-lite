@@ -8,9 +8,9 @@ import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.network.to_client.ForwardRaysParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.BlockRegister;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.BlockRegistry;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -44,11 +44,11 @@ public class CriticalFrozenSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public CriticalFrozenSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegister.CRITICAL_FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegister.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60), region);
+        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60), region);
     }
 
     public CriticalFrozenSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.CRITICAL_FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegister.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60).applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CriticalFrozenSnowballEntity extends AbstractBSFSnowballEntity {
                 BlockState ice = Blocks.ICE.defaultBlockState();
                 BlockState basalt = Blocks.BASALT.defaultBlockState();
                 BlockState air = Blocks.AIR.defaultBlockState();
-                BlockState newBlock = BlockRegister.CRITICAL_SNOW.get().defaultBlockState();
+                BlockState newBlock = BlockRegistry.CRITICAL_SNOW.get().defaultBlockState();
                 for (int i = (int) (blockPos.getX() - frozenRange); i <= (int) (blockPos.getX() + frozenRange); i++) {
                     for (int j = (int) (blockPos.getY() - frozenRange); j <= (int) (blockPos.getY() + frozenRange); j++) {
                         for (int k = (int) (blockPos.getZ() - frozenRange); k <= (int) (blockPos.getZ() + frozenRange); k++) {
@@ -120,6 +120,6 @@ public class CriticalFrozenSnowballEntity extends AbstractBSFSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.CRITICAL_FROZEN_SNOWBALL.get();
+        return ItemRegistry.CRITICAL_FROZEN_SNOWBALL.get();
     }
 }

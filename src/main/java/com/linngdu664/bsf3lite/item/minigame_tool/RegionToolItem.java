@@ -2,7 +2,7 @@ package com.linngdu664.bsf3lite.item.minigame_tool;
 
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,7 @@ public class RegionToolItem extends Item {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("region_tool")))
                 .stacksTo(1)
-                .component(DataComponentRegister.REGION, RegionData.EMPTY));
+                .component(DataComponentRegistry.REGION, RegionData.EMPTY));
     }
 
     @Override
@@ -34,12 +34,12 @@ public class RegionToolItem extends Item {
         Level level = context.getLevel();
         if (!level.isClientSide()) {
             BlockPos blockPos = context.getClickedPos();
-            RegionData regionData = itemInHand.getOrDefault(DataComponentRegister.REGION, RegionData.EMPTY);
+            RegionData regionData = itemInHand.getOrDefault(DataComponentRegistry.REGION, RegionData.EMPTY);
             if (!player.isShiftKeyDown()) {
-                itemInHand.set(DataComponentRegister.REGION, new RegionData(blockPos, regionData.end()));
+                itemInHand.set(DataComponentRegistry.REGION, new RegionData(blockPos, regionData.end()));
                 player.sendSystemMessage(Component.literal("start: (" + blockPos.toShortString() + ")"));
             } else {
-                itemInHand.set(DataComponentRegister.REGION, new RegionData(regionData.start(), blockPos));
+                itemInHand.set(DataComponentRegistry.REGION, new RegionData(regionData.start(), blockPos));
                 player.sendSystemMessage(Component.literal("end: (" + blockPos.toShortString() + ")"));
             }
         }
@@ -51,14 +51,14 @@ public class RegionToolItem extends Item {
         if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND)) {
             ItemStack offhandItem = player.getOffhandItem();
             ItemStack mainHandItem = player.getMainHandItem();
-            offhandItem.set(DataComponentRegister.REGION, mainHandItem.getOrDefault(DataComponentRegister.REGION, RegionData.EMPTY));
+            offhandItem.set(DataComponentRegistry.REGION, mainHandItem.getOrDefault(DataComponentRegistry.REGION, RegionData.EMPTY));
         }
         return InteractionResult.SUCCESS;
     }
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
-        RegionData region = itemStack.getOrDefault(DataComponentRegister.REGION.get(), RegionData.EMPTY);
+        RegionData region = itemStack.getOrDefault(DataComponentRegistry.REGION.get(), RegionData.EMPTY);
         builder.accept(Component.translatable(
                 "scoring_device_region.tooltip",
                 region.start().getX(),

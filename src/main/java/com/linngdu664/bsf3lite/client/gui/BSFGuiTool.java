@@ -150,13 +150,13 @@ public class BSFGuiTool {
 
     public static class GuiTexture {
         public Identifier texture;
-        public int holeWidth;
-        public int holeHeight;
+        public int wholeWidth;
+        public int wholeHeight;
 
-        public GuiTexture(String path, int holeWidth, int holeHeight) {
+        public GuiTexture(String path, int wholeWidth, int wholeHeight) {
             this.texture = Main.makeMyIdentifier(path);
-            this.holeWidth = holeWidth;
-            this.holeHeight = holeHeight;
+            this.wholeWidth = wholeWidth;
+            this.wholeHeight = wholeHeight;
         }
     }
 
@@ -176,7 +176,7 @@ public class BSFGuiTool {
         }
 
         public V2I render(GuiGraphicsExtractor guiGraphics, int x, int y) {
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED_PREMULTIPLIED_ALPHA, guiTexture.texture, x, y, widthOffset, heightOffset, width, height, guiTexture.holeWidth, guiTexture.holeHeight);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED_PREMULTIPLIED_ALPHA, guiTexture.texture, x, y, widthOffset, heightOffset, width, height, guiTexture.wholeWidth, guiTexture.wholeHeight);
             return new V2I(x, y);
         }
 

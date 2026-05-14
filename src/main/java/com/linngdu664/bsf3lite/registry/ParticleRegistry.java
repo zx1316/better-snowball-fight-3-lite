@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
-public class ParticleRegister {
+public class ParticleRegistry {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(Registries.PARTICLE_TYPE, Main.MODID);
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SHORT_TIME_SNOWFLAKE = PARTICLES.register("short_time_snowflake", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> BIG_LONG_TIME_SNOWFLAKE = PARTICLES.register("big_long_time_snowflake", () -> new SimpleParticleType(false));
@@ -23,10 +23,10 @@ public class ParticleRegister {
 
     @SubscribeEvent
     public static void registerParticleProvider(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), ShortTimeSnowflake.Provider::new);
-        event.registerSpriteSet(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), BigLongTimeSnowflake.Provider::new);
-        event.registerSpriteSet(ParticleRegister.GENERATOR_FIX.get(), GeneratorFix.Provider::new);
-        event.registerSpriteSet(ParticleRegister.GENERATOR_PUSH.get(), GeneratorPush.Provider::new);
-        event.registerSpriteSet(ParticleRegister.IMPLOSION_SNOWBALL_CANNON.get(), ImplosionSnowballCannonParticle.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), ShortTimeSnowflake.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.BIG_LONG_TIME_SNOWFLAKE.get(), BigLongTimeSnowflake.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.GENERATOR_FIX.get(), GeneratorFix.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.GENERATOR_PUSH.get(), GeneratorPush.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.IMPLOSION_SNOWBALL_CANNON.get(), ImplosionSnowballCannonParticle.Provider::new);
     }
 }

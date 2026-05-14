@@ -2,9 +2,9 @@ package com.linngdu664.bsf3lite.entity.snowball.special;
 
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.core.particles.ShriekParticleOption;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -24,12 +24,12 @@ public class SculkSnowballEntity extends AbstractBSFSnowballEntity {
 
     public SculkSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicPunch(2));
-        this.setItem(new ItemStack(ItemRegister.SCULK_SNOWBALL.get()));
+        this.setItem(new ItemStack(ItemRegistry.SCULK_SNOWBALL.get()));
         this.soundId = -1;
     }
 
     public SculkSnowballEntity(LivingEntity pShooter, Level pLevel, int soundId, RegionData region) {
-        super(EntityRegister.SCULK_SNOWBALL.get(), pShooter, pLevel, ItemRegister.SCULK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicPunch(2), region);
+        super(EntityRegistry.SCULK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.SCULK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicPunch(2), region);
         this.soundId = soundId;
     }
 
@@ -55,15 +55,15 @@ public class SculkSnowballEntity extends AbstractBSFSnowballEntity {
             ((ServerLevel) level).sendParticles(new ShriekParticleOption(5), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(new ShriekParticleOption(10), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
             if (soundId == -1) {
-                level.playSound(null, getX(), getY(), getZ(), SoundRegister.MEME[level.getRandom().nextInt(0, 64)].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[level.getRandom().nextInt(0, 64)].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
             } else {
-                level.playSound(null, getX(), getY(), getZ(), SoundRegister.MEME[soundId].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[soundId].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
             }
         }
     }
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.COMPACTED_SNOWBALL.get();
+        return ItemRegistry.COMPACTED_SNOWBALL.get();
     }
 }

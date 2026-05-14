@@ -10,6 +10,12 @@ import com.linngdu664.bsf3lite.item.tank.LargeSnowballTankItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
 import com.linngdu664.bsf3lite.item.tool.*;
 import com.linngdu664.bsf3lite.item.weapon.*;
+import com.linngdu664.bsf3lite.item.weapon.cannon.FreezingSnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.cannon.PowerfulSnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.rifle.FreezingSnowballRifle;
+import com.linngdu664.bsf3lite.item.weapon.rifle.PowerfulSnowballRifle;
+import com.linngdu664.bsf3lite.item.weapon.rifle.SnowballRifleItem;
 import com.linngdu664.bsf3lite.misc.BSFToolMaterials;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -20,7 +26,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @SuppressWarnings("unused")
-public class ItemRegister {
+public class ItemRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Main.MODID);
 
     public static final DeferredItem<Item> SMOOTH_SNOWBALL = ITEMS.register("smooth_snowball", SmoothSnowballItem::new);
@@ -55,6 +61,9 @@ public class ItemRegister {
     public static final DeferredItem<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", PowerfulSnowballCannonItem::new);
     public static final DeferredItem<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", FreezingSnowballCannonItem::new);
     public static final DeferredItem<Item> IMPLOSION_SNOWBALL_CANNON = ITEMS.register("implosion_snowball_cannon", ImplosionSnowballCannonItem::new);
+    public static final DeferredItem<Item> SNOWBALL_RIFLE = ITEMS.register("snowball_rifle", SnowballRifleItem::new);
+    public static final DeferredItem<Item> POWERFUL_SNOWBALL_RIFLE = ITEMS.register("powerful_snowball_rifle", PowerfulSnowballRifle::new);
+    public static final DeferredItem<Item> FREEZING_SNOWBALL_RIFLE = ITEMS.register("freezing_snowball_rifle", FreezingSnowballRifle::new);
     public static final DeferredItem<Item> SNOWBALL_MACHINE_GUN = ITEMS.register("snowball_machine_gun", SnowballMachineGunItem::new);
     public static final DeferredItem<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
     public static final DeferredItem<Item> GLOVE = ITEMS.register("glove", GloveItem::new);

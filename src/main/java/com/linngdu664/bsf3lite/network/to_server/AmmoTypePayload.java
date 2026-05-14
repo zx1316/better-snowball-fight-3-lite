@@ -3,7 +3,7 @@ package com.linngdu664.bsf3lite.network.to_server;
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -39,7 +39,7 @@ public record AmmoTypePayload(Item ammo, int slot) implements CustomPacketPayloa
             Player sender = context.player();
             ItemStack itemStack = sender.getInventory().getItem(payload.slot);
             if (itemStack.getItem() instanceof AbstractBSFWeaponItem) {
-                itemStack.set(DataComponentRegister.AMMO_ITEM, new ItemData(payload.ammo));
+                itemStack.set(DataComponentRegistry.AMMO_ITEM, new ItemData(payload.ammo));
             }
         });
     }

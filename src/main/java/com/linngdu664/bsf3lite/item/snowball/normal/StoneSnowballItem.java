@@ -5,10 +5,10 @@ import com.linngdu664.bsf3lite.entity.snowball.nomal.StoneSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballMachineGunItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballShotgunItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -50,7 +50,7 @@ public class StoneSnowballItem extends AbstractBSFSnowballItem implements Projec
 
     @Override
     public @NotNull Projectile asProjectile(@NotNull Level level, @NotNull Position position, @NotNull ItemStack itemStack, @NotNull Direction direction) {
-        StoneSnowballEntity snowball = new StoneSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegister.REGION));
+        StoneSnowballEntity snowball = new StoneSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegistry.REGION));
         snowball.setItem(itemStack);
         return snowball;
     }

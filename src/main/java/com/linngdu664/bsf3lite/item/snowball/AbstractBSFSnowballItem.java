@@ -7,10 +7,10 @@ import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
-import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballMachineGunItem;
 import com.linngdu664.bsf3lite.item.weapon.SnowballShotgunItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -86,20 +86,20 @@ public abstract class AbstractBSFSnowballItem extends Item {
         if (!(offhand.getItem() instanceof SnowballTankItem)) {
             return false;
         }
-        Item item = offhand.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item item = offhand.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         int offHandDamage = offhand.getDamageValue();
         int offHandMaxDamage = offhand.getMaxDamage();
-        RegionData mainHandRegion = mainHand.get(DataComponentRegister.REGION);
-        RegionData offHandRegion = offhand.get(DataComponentRegister.REGION);
+        RegionData mainHandRegion = mainHand.get(DataComponentRegistry.REGION);
+        RegionData offHandRegion = offhand.get(DataComponentRegistry.REGION);
         if (!(this.equals(item) && offHandDamage != 0 && Objects.equals(mainHandRegion, offHandRegion)) && offHandDamage != offHandMaxDamage) {
             return false;
         }
         if (offHandDamage == offHandMaxDamage) {
-            offhand.set(DataComponentRegister.AMMO_ITEM, new ItemData(this));
+            offhand.set(DataComponentRegistry.AMMO_ITEM, new ItemData(this));
             if (mainHandRegion != null) {
-                offhand.set(DataComponentRegister.REGION, mainHandRegion);
+                offhand.set(DataComponentRegistry.REGION, mainHandRegion);
             } else {
-                offhand.remove(DataComponentRegister.REGION);
+                offhand.remove(DataComponentRegistry.REGION);
             }
         }
         if (offHandDamage < count) {
@@ -121,7 +121,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
         if (!storageInTank(pPlayer)) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide()) {
-                AbstractBSFSnowballEntity snowballEntity = getCorrespondingEntity(pLevel, pPlayer, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegister.REGION.get()));
+                AbstractBSFSnowballEntity snowballEntity = getCorrespondingEntity(pLevel, pPlayer, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegistry.REGION.get()));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, velocity * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }

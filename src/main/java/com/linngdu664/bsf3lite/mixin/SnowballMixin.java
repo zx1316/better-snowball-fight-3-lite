@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.mixin;
 
 import com.linngdu664.bsf3lite.item.tool.GloveItem;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -43,7 +43,7 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
         super.tick();
         Level level = level();
         if (level.isClientSide()) {
-            level.addParticle(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), xo, yo + 0.1, zo, 0, 0, 0);
+            level.addParticle(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), xo, yo + 0.1, zo, 0, 0, 0);
         }
     }
 

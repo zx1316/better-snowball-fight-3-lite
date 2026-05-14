@@ -3,7 +3,7 @@ package com.linngdu664.bsf3lite.item.tool;
 import com.linngdu664.bsf3lite.network.to_client.ForwardRaysParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.BlockRegister;
+import com.linngdu664.bsf3lite.registry.BlockRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,7 @@ public class SnowTrapSetterItem extends AbstractBSFEnhanceableToolItem {
             if (!pLevel.getBlockState(blockPos).getBlock().equals(Blocks.SNOW)) {
                 player.stopUsingItem();
             } else if (!pLevel.isClientSide() && pRemainingUseDuration == 1) {
-                pLevel.setBlockAndUpdate(blockPos, BlockRegister.SNOW_TRAP.get().defaultBlockState());
+                pLevel.setBlockAndUpdate(blockPos, BlockRegistry.SNOW_TRAP.get().defaultBlockState());
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pStack.hurtAndBreak(1, player, player.getUsedItemHand());
                 PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, new ForwardRaysParticlesPayload(new ForwardRaysParticlesParas(blockPos.getCenter().add(-0.5, -0.4, -0.5), blockPos.getCenter().add(0.5, -0.4, 0.5), new Vec3(0, 1, 0), 0.1, 0.3, 5), BSFParticleType.SNOWFLAKE.ordinal()));

@@ -1,9 +1,9 @@
 package com.linngdu664.bsf3lite.network.to_server;
 
 import com.linngdu664.bsf3lite.Main;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.MutableComponent;
@@ -28,14 +28,14 @@ public record SculkSnowballLauncherSwitchSoundPayload(boolean isIncrease) implem
         context.enqueueWork(() -> {
             Player sender = context.player();
             ItemStack itemStack = sender.getItemInHand(InteractionHand.MAIN_HAND);
-            if (itemStack.getItem().equals(ItemRegister.SCULK_SNOWBALL_LAUNCHER.get())) {
-                int soundId = itemStack.getOrDefault(DataComponentRegister.SCULK_SOUND_ID, -1);
+            if (itemStack.getItem().equals(ItemRegistry.SCULK_SNOWBALL_LAUNCHER.get())) {
+                int soundId = itemStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1);
                 if (payload.isIncrease) {
-                    soundId = soundId + 1 == SoundRegister.MEME_SOUND_AMOUNT ? -1 : soundId + 1;
+                    soundId = soundId + 1 == SoundRegistry.MEME_SOUND_AMOUNT ? -1 : soundId + 1;
                 } else {
-                    soundId = soundId == -1 ? SoundRegister.MEME_SOUND_AMOUNT - 1 : soundId - 1;
+                    soundId = soundId == -1 ? SoundRegistry.MEME_SOUND_AMOUNT - 1 : soundId - 1;
                 }
-                itemStack.set(DataComponentRegister.SCULK_SOUND_ID, soundId);
+                itemStack.set(DataComponentRegistry.SCULK_SOUND_ID, soundId);
                 if (soundId == -1) {
                     itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf.sculk_snowball_launcher", null, new Object[]{}))
                             .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));

@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.item.weapon;
+package com.linngdu664.bsf3lite.item.weapon.cannon;
 
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
@@ -6,12 +6,13 @@ import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
+import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
 import com.linngdu664.bsf3lite.network.to_client.ForwardConeParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -39,7 +40,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
         super("snowball_cannon", 514, Rarity.UNCOMMON, TYPE_FLAG);
     }
 
-    public SnowballCannonItem(String id, Rarity rarity) {
+    protected SnowballCannonItem(String id, Rarity rarity) {
         super(id, 514, rarity, TYPE_FLAG);
     }
 
@@ -113,14 +114,18 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
                         // add push
                         Item item = itemStack.getItem();
                         if (item instanceof SnowballTankItem) {
-                            item = itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+                            item = itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
                         }
-                        double pushRank = -0.05 * (double) velocity * (double) f * (1 + (((AbstractBSFSnowballItem) item).getMachineGunRecoil() - 0.1) * 4);
+                        // v * f 为 2.6 时，值为 -0.5 * recoil
+                        // 即常数为 -0.5 / 2.6 = -0.1923
+                        double pushRank = -0.1923 * (double) velocity * (double) f * ((AbstractBSFSnowballItem) item).getMachineGunRecoil();
+
+//                        double pushRank = -0.05 * (double) velocity * (double) f * (1 + (((AbstractBSFSnowballItem) item).getMachineGunRecoil() - 0.1) * 4);
                         player.push(pushRank * cameraVec.x, pushRank * cameraVec.y, pushRank * cameraVec.z);
                     } else {
                         // add particles
                         PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, new ForwardConeParticlesPayload(new ForwardConeParticlesParas(player.getEyePosition(), cameraVec, 4.5F, 90, 1.5F, 0.1), BSFParticleType.SNOWFLAKE.ordinal()));
-                        pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                        pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     }
                     consumeAmmo(itemStack, player);
                     player.awardStat(Stats.ITEM_USED.get(this));
@@ -133,7 +138,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
 
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
-        if (!pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (!pPlayer.hasEffect(EffectRegistry.WEAPON_JAM)) {
             pPlayer.startUsingItem(pHand);
             return InteractionResult.CONSUME;
         }

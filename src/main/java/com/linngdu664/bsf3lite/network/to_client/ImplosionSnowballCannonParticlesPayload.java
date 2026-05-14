@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.network.to_client;
 
 import com.linngdu664.bsf3lite.Main;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,7 +27,7 @@ public record ImplosionSnowballCannonParticlesPayload(double px, double py, doub
         context.enqueueWork(() -> {
             Level level = context.player().level();
             for (int i = 0; i < 20; i++) {
-                level.addParticle(ParticleRegister.IMPLOSION_SNOWBALL_CANNON.get(), payload.px, payload.py, payload.pz, payload.dx, payload.dy, payload.dz);
+                level.addParticle(ParticleRegistry.IMPLOSION_SNOWBALL_CANNON.get(), payload.px, payload.py, payload.pz, payload.dx, payload.dy, payload.dz);
             }
         });
     }

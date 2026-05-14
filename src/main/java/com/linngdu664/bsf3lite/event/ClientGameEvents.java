@@ -5,9 +5,9 @@ import com.linngdu664.bsf3lite.client.gui.GuiHandler;
 import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
 import com.linngdu664.bsf3lite.item.tool.ColdCompressionJetEngineItem;
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
-import com.linngdu664.bsf3lite.item.weapon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.registry.KeyMappingRegistry;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -41,7 +41,7 @@ public class ClientGameEvents {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         ItemStack itemStack = player.getMainHandItem();
-        if (itemStack.is(ItemRegister.SCULK_SNOWBALL_LAUNCHER.get()) && player.isShiftKeyDown()) {
+        if (itemStack.is(ItemRegistry.SCULK_SNOWBALL_LAUNCHER.get()) && player.isShiftKeyDown()) {
             ClientPacketDistributor.sendToServer(new SculkSnowballLauncherSwitchSoundPayload(event.getScrollDeltaY() > 0));
             event.setCanceled(true);
         }
@@ -108,7 +108,7 @@ public class ClientGameEvents {
                 } else {
                     f1 *= f1;
                 }
-                if (itemStack.is(ItemRegister.POWERFUL_SNOWBALL_CANNON.get())) {
+                if (itemStack.is(ItemRegistry.POWERFUL_SNOWBALL_CANNON.get())) {
                     f *= 1.0F - f1 * 0.5F;
                 } else {
                     f *= 1.0F - f1 * 0.3F;

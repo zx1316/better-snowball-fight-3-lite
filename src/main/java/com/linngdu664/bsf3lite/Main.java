@@ -17,16 +17,16 @@ public class Main {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
-        BlockRegister.BLOCKS.register(modEventBus);
-        BlockEntityRegister.BLOCK_ENTITIES.register(modEventBus);
-        DataComponentRegister.DATA_COMPONENTS.register(modEventBus);
-        ItemRegister.ITEMS.register(modEventBus);
-        SoundRegister.SOUNDS.register(modEventBus);
-        ParticleRegister.PARTICLES.register(modEventBus);
-        EffectRegister.EFFECTS.register(modEventBus);
-        EntityRegister.ENTITY_TYPES.register(modEventBus);
-        CreativeTabRegister.CREATIVE_TABS.register(modEventBus);
-        TriggerTypeRegister.TRIGGER_TYPES.register(modEventBus);
+        BlockRegistry.BLOCKS.register(modEventBus);
+        BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
+        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
+        ItemRegistry.ITEMS.register(modEventBus);
+        SoundRegistry.SOUNDS.register(modEventBus);
+        ParticleRegistry.PARTICLES.register(modEventBus);
+        EffectRegistry.EFFECTS.register(modEventBus);
+        EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        CreativeTabRegistry.CREATIVE_TABS.register(modEventBus);
+        TriggerTypeRegistry.TRIGGER_TYPES.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);

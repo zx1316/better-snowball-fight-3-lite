@@ -3,7 +3,7 @@ package com.linngdu664.bsf3lite.item.tank;
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
@@ -44,7 +44,7 @@ public class SnowballTankItem extends Item {
         if (!pPlayer.getOffhandItem().isEmpty()) {
             return InteractionResult.PASS;
         }
-        Item item = itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item item = itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         if (Items.AIR.equals(item)) {
             return InteractionResult.PASS;
         }
@@ -56,18 +56,18 @@ public class SnowballTankItem extends Item {
                 int k = maxDamage - damageValue;
                 if (!pPlayer.getAbilities().instabuild && !itemStack.has(DataComponents.UNBREAKABLE)) {
                     itemStack.setDamageValue(maxDamage);
-                    itemStack.remove(DataComponentRegister.AMMO_ITEM);
+                    itemStack.remove(DataComponentRegistry.AMMO_ITEM);
                 }
                 for (int i = 0; i < k / 16; i++) {
                     ItemStack stack = new ItemStack(item, 16);
-                    if (itemStack.has(DataComponentRegister.REGION)) {
-                        stack.set(DataComponentRegister.REGION, itemStack.get(DataComponentRegister.REGION));
+                    if (itemStack.has(DataComponentRegistry.REGION)) {
+                        stack.set(DataComponentRegistry.REGION, itemStack.get(DataComponentRegistry.REGION));
                     }
                     inventory.placeItemBackInInventory(stack, true);
                 }
                 ItemStack stack = new ItemStack(item, k % 16);
-                if (itemStack.has(DataComponentRegister.REGION)) {
-                    stack.set(DataComponentRegister.REGION, itemStack.get(DataComponentRegister.REGION));
+                if (itemStack.has(DataComponentRegistry.REGION)) {
+                    stack.set(DataComponentRegistry.REGION, itemStack.get(DataComponentRegistry.REGION));
                 }
                 inventory.placeItemBackInInventory(stack, true);
             } else {
@@ -75,8 +75,8 @@ public class SnowballTankItem extends Item {
                     itemStack.setDamageValue(damageValue + 16);
                 }
                 ItemStack stack = new ItemStack(item, 16);
-                if (itemStack.has(DataComponentRegister.REGION)) {
-                    stack.set(DataComponentRegister.REGION, itemStack.get(DataComponentRegister.REGION));
+                if (itemStack.has(DataComponentRegistry.REGION)) {
+                    stack.set(DataComponentRegistry.REGION, itemStack.get(DataComponentRegistry.REGION));
                 }
                 inventory.placeItemBackInInventory(stack, true);
             }
@@ -87,7 +87,7 @@ public class SnowballTankItem extends Item {
 
     @Override
     public @NotNull Component getName(ItemStack pStack) {
-        Item item = pStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item item = pStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         if (!Items.AIR.equals(item)) {
             String path = BuiltInRegistries.ITEM.getKey(item).getPath();
             return MutableComponent.create(new TranslatableContents("item.bsf3lite." + path + "_tank", null, new Object[0]));
@@ -97,7 +97,7 @@ public class SnowballTankItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
-        Item item = itemStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item item = itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         if (item instanceof AbstractBSFSnowballItem snowballItem) {
             snowballItem.generateWeaponTips(builder);
             snowballItem.addMainTips(builder);

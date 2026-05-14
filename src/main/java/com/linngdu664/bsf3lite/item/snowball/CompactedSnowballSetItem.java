@@ -4,7 +4,7 @@ import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.entity.snowball.nomal.CompactedSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,6 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class CompactedSnowballSetItem extends Item {
@@ -91,9 +90,9 @@ public class CompactedSnowballSetItem extends Item {
                 }
             };
             float slowdownRate = (float) Math.exp(-0.005 * pPlayer.getTicksFrozen());
-            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
-            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
-            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegister.REGION.get()));
+            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegistry.REGION.get()));
+            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegistry.REGION.get()));
+            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, launchAdjustment, itemStack.get(DataComponentRegistry.REGION.get()));
             snowballEntity1.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);
             snowballEntity2.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);
             snowballEntity3.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, slowdownRate, 10.0F);

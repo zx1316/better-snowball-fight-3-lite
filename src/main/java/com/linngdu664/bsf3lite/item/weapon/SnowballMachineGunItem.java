@@ -5,10 +5,10 @@ import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -82,15 +82,15 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         ammo = getAmmo(pPlayer, stack);
-        if (ammo != null && !pPlayer.hasEffect(EffectRegister.WEAPON_JAM) && !stack.getOrDefault(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, false)) {
-            Item ammoItem = ammo.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        if (ammo != null && !pPlayer.hasEffect(EffectRegistry.WEAPON_JAM) && !stack.getOrDefault(DataComponentRegistry.MACHINE_GUN_IS_COOL_DOWN, false)) {
+            Item ammoItem = ammo.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
             recoil = ((AbstractBSFSnowballItem) ammoItem).getMachineGunRecoil();
-            isExplosive = ammoItem.equals(ItemRegister.EXPLOSIVE_SNOWBALL.get());
-            int timer = stack.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
+            isExplosive = ammoItem.equals(ItemRegistry.EXPLOSIVE_SNOWBALL.get());
+            int timer = stack.getOrDefault(DataComponentRegistry.MACHINE_GUN_TIMER, 0);
             if (isExplosive) {
-                stack.set(DataComponentRegister.MACHINE_GUN_TIMER, (timer / 6 + 1) * 6);     // ceil to multiple of 6
+                stack.set(DataComponentRegistry.MACHINE_GUN_TIMER, (timer / 6 + 1) * 6);     // ceil to multiple of 6
             } else {
-                stack.set(DataComponentRegister.MACHINE_GUN_TIMER, (timer / 3 + 1) * 3);     // ceil to multiple of 3
+                stack.set(DataComponentRegistry.MACHINE_GUN_TIMER, (timer / 3 + 1) * 3);     // ceil to multiple of 3
             }
             pPlayer.startUsingItem(pUsedHand);
             return InteractionResult.CONSUME;
@@ -101,13 +101,13 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     @Override
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
         if (pLivingEntity instanceof Player player) {
-            int timer = pStack.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
+            int timer = pStack.getOrDefault(DataComponentRegistry.MACHINE_GUN_TIMER, 0);
             if (timer >= 360) {
-                player.playSound(SoundRegister.MACHINE_GUN_COOLING.get(), 3.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                pStack.set(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, true);
+                player.playSound(SoundRegistry.MACHINE_GUN_COOLING.get(), 3.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                pStack.set(DataComponentRegistry.MACHINE_GUN_IS_COOL_DOWN, true);
                 this.releaseUsing(pStack, pLevel, player, pRemainingUseDuration);
                 return;
-            } else if (ammo == null || ammo.isEmpty() || !ammo.has(DataComponentRegister.AMMO_ITEM) || player.hasEffect(EffectRegister.WEAPON_JAM)) {
+            } else if (ammo == null || ammo.isEmpty() || !ammo.has(DataComponentRegistry.AMMO_ITEM) || player.hasEffect(EffectRegistry.WEAPON_JAM)) {
                 this.releaseUsing(pStack, pLevel, player, pRemainingUseDuration);
                 return;
             }
@@ -122,7 +122,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
                     AbstractBSFSnowballEntity snowballEntity = ItemToEntity(ammo, player, pLevel, getLaunchAdjustment(1, ammo.getItem()));
                     BSFShootFromRotation(snowballEntity, pitch, yaw, 2.6F, 1.0F);
                     pLevel.addFreshEntity(snowballEntity);
-                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                     // add particles
                     ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
                     // handle ammo consume and damage weapon.
@@ -134,7 +134,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
             if (pitch > -90.0F && pLevel.isClientSide() && (!isExplosive || timer % 36 < 18)) {
                 player.setXRot(pitch - (float) recoil);
             }
-            pStack.set(DataComponentRegister.MACHINE_GUN_TIMER, isExplosive ? timer + 6 : timer + 3);
+            pStack.set(DataComponentRegistry.MACHINE_GUN_TIMER, isExplosive ? timer + 6 : timer + 3);
         }
     }
 
@@ -163,13 +163,13 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
 
     private void tickTimer(ItemStack itemStack, Player player) {
         if (!itemStack.equals(player.getUseItem())) {
-            int timer = itemStack.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
+            int timer = itemStack.getOrDefault(DataComponentRegistry.MACHINE_GUN_TIMER, 0);
             if (timer > 0) {
                 if (timer > 2) {
-                    itemStack.set(DataComponentRegister.MACHINE_GUN_TIMER, timer - 2);
+                    itemStack.set(DataComponentRegistry.MACHINE_GUN_TIMER, timer - 2);
                 } else {
-                    itemStack.set(DataComponentRegister.MACHINE_GUN_TIMER, 0);
-                    itemStack.set(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, false);
+                    itemStack.set(DataComponentRegistry.MACHINE_GUN_TIMER, 0);
+                    itemStack.set(DataComponentRegistry.MACHINE_GUN_IS_COOL_DOWN, false);
                 }
             }
         }

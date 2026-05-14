@@ -5,9 +5,9 @@ import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.tool.GloveItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
-import com.linngdu664.bsf3lite.registry.TriggerTypeRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
+import com.linngdu664.bsf3lite.registry.TriggerTypeRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -27,7 +27,6 @@ import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
@@ -148,7 +147,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
                 if (getOwner() instanceof LivingEntity owner) {
                     owner.setLastHurtMob(entity);
                     if (owner instanceof ServerPlayer serverPlayer) {
-                        TriggerTypeRegister.SNOWBALL_DAMAGE_TRIGGER.get().trigger(serverPlayer, this, hurt);
+                        TriggerTypeRegistry.SNOWBALL_DAMAGE_TRIGGER.get().trigger(serverPlayer, this, hurt);
                     }
                 }
             }
@@ -210,7 +209,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         // Spawn trace particles
         Level level = level();
         if (level.isClientSide()) {
-            level.addParticle(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), vec3.x, vec3.y + 0.1, vec3.z, 0, 0, 0);
+            level.addParticle(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), vec3.x, vec3.y + 0.1, vec3.z, 0, 0, 0);
         }
     }
 
@@ -250,7 +249,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
                 if (!level.isClientSide()) {
                     ItemStack stack = new ItemStack(getDefaultItem());
                     if (aliveRange != null) {
-                        stack.set(DataComponentRegister.REGION, aliveRange);
+                        stack.set(DataComponentRegistry.REGION, aliveRange);
                     }
                     player.getInventory().placeItemBackInInventory(stack);
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);

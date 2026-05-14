@@ -2,7 +2,7 @@ package com.linngdu664.bsf3lite.item.snowball.normal;
 
 import com.linngdu664.bsf3lite.entity.snowball.nomal.DuckSnowballEntity;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -34,7 +34,7 @@ public class DuckSnowballItem extends AbstractBSFSnowballItem implements Project
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide()) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
-            DuckSnowballEntity snowballEntity = new DuckSnowballEntity(pPlayer, pLevel, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegister.REGION.get()));
+            DuckSnowballEntity snowballEntity = new DuckSnowballEntity(pPlayer, pLevel, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegistry.REGION.get()));
             snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.25F * getSnowballSlowdownRate(pPlayer), 1.0F);
             pLevel.addFreshEntity(snowballEntity);
             if (!pPlayer.getAbilities().instabuild) {
@@ -48,7 +48,7 @@ public class DuckSnowballItem extends AbstractBSFSnowballItem implements Project
 
     @Override
     public @NotNull Projectile asProjectile(@NotNull Level level, @NotNull Position position, @NotNull ItemStack itemStack, @NotNull Direction direction) {
-        DuckSnowballEntity snowball = new DuckSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegister.REGION));
+        DuckSnowballEntity snowball = new DuckSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegistry.REGION));
         snowball.setItem(itemStack);
         return snowball;
     }

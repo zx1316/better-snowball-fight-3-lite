@@ -2,8 +2,8 @@ package com.linngdu664.bsf3lite.item.snowball.normal;
 
 import com.linngdu664.bsf3lite.entity.snowball.nomal.SmoothSnowballEntity;
 import com.linngdu664.bsf3lite.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -36,7 +36,7 @@ public class SmoothSnowballItem extends AbstractBSFSnowballItem implements Proje
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide()) {
-                SmoothSnowballEntity snowballEntity = new SmoothSnowballEntity(pPlayer, pLevel, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegister.REGION.get()));
+                SmoothSnowballEntity snowballEntity = new SmoothSnowballEntity(pPlayer, pLevel, getLaunchAdjustment(getSnowballDamageRate(pPlayer)), itemStack.get(DataComponentRegistry.REGION.get()));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.25F * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
@@ -44,9 +44,9 @@ public class SmoothSnowballItem extends AbstractBSFSnowballItem implements Proje
                 itemStack.shrink(1);
             }
         } else if (pPlayer.getMainHandItem().isEmpty()) {
-            ItemStack stack = new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get());
-            if (itemStack.has(DataComponentRegister.REGION.get())) {
-                stack.set(DataComponentRegister.REGION.get(), itemStack.get(DataComponentRegister.REGION.get()));
+            ItemStack stack = new ItemStack(ItemRegistry.COMPACTED_SNOWBALL.get());
+            if (itemStack.has(DataComponentRegistry.REGION.get())) {
+                stack.set(DataComponentRegistry.REGION.get(), itemStack.get(DataComponentRegistry.REGION.get()));
             }
             pPlayer.getInventory().placeItemBackInInventory(stack, true);
             if (!pPlayer.getAbilities().instabuild) {
@@ -60,7 +60,7 @@ public class SmoothSnowballItem extends AbstractBSFSnowballItem implements Proje
 
     @Override
     public @NotNull Projectile asProjectile(@NotNull Level level, @NotNull Position position, @NotNull ItemStack itemStack, @NotNull Direction direction) {
-        SmoothSnowballEntity snowball = new SmoothSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegister.REGION));
+        SmoothSnowballEntity snowball = new SmoothSnowballEntity(level, position.x(), position.y(), position.z(), itemStack.get(DataComponentRegistry.REGION));
         snowball.setItem(itemStack);
         return snowball;
     }

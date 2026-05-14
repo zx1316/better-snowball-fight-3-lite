@@ -2,7 +2,7 @@ package com.linngdu664.bsf3lite.item.tank;
 
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.item.component.ItemData;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -26,7 +26,7 @@ public class LargeSnowballTankItem extends SnowballTankItem {
 
     @Override
     public @NotNull Component getName(ItemStack pStack) {
-        Item item = pStack.getOrDefault(DataComponentRegister.AMMO_ITEM, ItemData.EMPTY).item();
+        Item item = pStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item();
         if (!Items.AIR.equals(item)) {
             String path = BuiltInRegistries.ITEM.getKey(item).getPath();
             return MutableComponent.create(new TranslatableContents("item.bsf3lite.large_" + path + "_tank", null, new Object[0]));

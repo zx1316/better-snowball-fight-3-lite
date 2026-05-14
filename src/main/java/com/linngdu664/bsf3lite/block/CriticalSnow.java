@@ -2,7 +2,7 @@ package com.linngdu664.bsf3lite.block;
 
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.block.entity.CriticalSnowEntity;
-import com.linngdu664.bsf3lite.registry.BlockEntityRegister;
+import com.linngdu664.bsf3lite.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -48,7 +48,7 @@ public class CriticalSnow extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return pBlockEntityType == BlockEntityRegister.CRITICAL_SNOW.get() ? CriticalSnowEntity::tick : null;
+        return pBlockEntityType == BlockEntityRegistry.CRITICAL_SNOW.get() ? CriticalSnowEntity::tick : null;
     }
 
     @Override

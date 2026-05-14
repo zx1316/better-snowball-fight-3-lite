@@ -5,8 +5,8 @@ import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.EntityRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.EntityRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -39,11 +39,11 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public FrozenSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegister.FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegister.FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60), region);
+        super(EntityRegistry.FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60), region);
     }
 
     public FrozenSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegister.FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegister.FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60).applyAdjustment(launchAdjustment), region);
     }
 
     @Override
@@ -113,6 +113,6 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.FROZEN_SNOWBALL.get();
+        return ItemRegistry.FROZEN_SNOWBALL.get();
     }
 }

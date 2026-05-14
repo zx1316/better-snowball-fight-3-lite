@@ -21,23 +21,23 @@ public class RendererRegistry {
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityRegister.POWDER_EXECUTOR.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntityRegister.COMPACTED_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.EXPLOSIVE_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.ICE_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.IRON_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.OBSIDIAN_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.POWDER_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.SMOOTH_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.SPECTRAL_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.STONE_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.EXPANSION_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.RECONSTRUCT_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.ICICLE_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.CRITICAL_FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.CHERRY_BLOSSOM_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.SCULK_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.DUCK_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.POWDER_EXECUTOR.get(), NoopRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.COMPACTED_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.EXPLOSIVE_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.ICE_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.IRON_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.OBSIDIAN_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.POWDER_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SMOOTH_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SPECTRAL_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.STONE_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.EXPANSION_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.RECONSTRUCT_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.ICICLE_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SCULK_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.DUCK_SNOWBALL.get(), ThrownItemRenderer::new);
     }
 }

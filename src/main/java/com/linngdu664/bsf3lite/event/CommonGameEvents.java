@@ -5,9 +5,9 @@ import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.misc.SnowFallBootsItem;
 import com.linngdu664.bsf3lite.item.snowball.normal.SmoothSnowballItem;
 import com.linngdu664.bsf3lite.item.tank.SnowballTankItem;
-import com.linngdu664.bsf3lite.registry.DataComponentRegister;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.ItemRegister;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.misc.BSFEnchantmentHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -63,7 +63,7 @@ public class CommonGameEvents {
     public static void onLivingUseItemTick(LivingEntityUseItemEvent.Tick event) {
         LivingEntity livingEntity = event.getEntity();
         ItemStack itemStack = event.getItem();
-        if (itemStack.has(DataComponentRegister.REGION) && !itemStack.get(DataComponentRegister.REGION).inRegion(event.getEntity().getOnPos())) {
+        if (itemStack.has(DataComponentRegistry.REGION) && !itemStack.get(DataComponentRegistry.REGION).inRegion(event.getEntity().getOnPos())) {
             event.setCanceled(true);
             return;
         }
@@ -80,7 +80,7 @@ public class CommonGameEvents {
     public static void onPlayerRightClickItem(PlayerInteractEvent.RightClickItem event) {
         ItemStack itemStack = event.getItemStack();
         Item item = itemStack.getItem();
-        if (itemStack.has(DataComponentRegister.REGION.get()) && !item.equals(ItemRegister.REGION_TOOL.get()) && !itemStack.get(DataComponentRegister.REGION.get()).inRegion(event.getEntity().position())) {
+        if (itemStack.has(DataComponentRegistry.REGION.get()) && !item.equals(ItemRegistry.REGION_TOOL.get()) && !itemStack.get(DataComponentRegistry.REGION.get()).inRegion(event.getEntity().position())) {
             event.setCanceled(true);
         }
     }
@@ -89,7 +89,7 @@ public class CommonGameEvents {
     public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemStack itemStack = event.getItemStack();
         Item item = itemStack.getItem();
-        if (itemStack.has(DataComponentRegister.REGION.get()) && !item.equals(ItemRegister.REGION_TOOL.get()) && !itemStack.get(DataComponentRegister.REGION.get()).inRegion(event.getHitVec().getLocation())) {
+        if (itemStack.has(DataComponentRegistry.REGION.get()) && !item.equals(ItemRegistry.REGION_TOOL.get()) && !itemStack.get(DataComponentRegistry.REGION.get()).inRegion(event.getHitVec().getLocation())) {
             event.setCanceled(true);
         }
     }
@@ -97,8 +97,8 @@ public class CommonGameEvents {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack itemStack = event.getItemStack();
-        if (!itemStack.getItem().equals(ItemRegister.REGION_TOOL.get()) && itemStack.has(DataComponentRegister.REGION.get())) {
-            RegionData region = event.getItemStack().get(DataComponentRegister.REGION.get());
+        if (!itemStack.getItem().equals(ItemRegistry.REGION_TOOL.get()) && itemStack.has(DataComponentRegistry.REGION.get())) {
+            RegionData region = event.getItemStack().get(DataComponentRegistry.REGION.get());
             List<Component> list = event.getToolTip();
             list.add(Component.translatable(
                     "region_limit.tooltip",
@@ -132,7 +132,7 @@ public class CommonGameEvents {
                     target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 2));
                     target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 150, 1));
                 }
-                target.addEffect(new MobEffectInstance(EffectRegister.WEAPON_JAM, 80, 0));
+                target.addEffect(new MobEffectInstance(EffectRegistry.WEAPON_JAM, 80, 0));
                 ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, target.getX(), target.getEyeY(), target.getZ(), 16, 0, 0, 0, 0);
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, target.getX(), target.getEyeY(), target.getZ(), 16, 0, 0, 0, 0.04);
                 if (target instanceof Blaze) {
@@ -150,7 +150,7 @@ public class CommonGameEvents {
                     target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 1));
                     target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 1));
                 }
-                target.addEffect(new MobEffectInstance(EffectRegister.WEAPON_JAM, 40, 0));
+                target.addEffect(new MobEffectInstance(EffectRegistry.WEAPON_JAM, 40, 0));
                 if (!player.getAbilities().instabuild) {
                     player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
                 }
@@ -204,7 +204,7 @@ public class CommonGameEvents {
             lootTable.addPool(LootPool.lootPool()
                     .setRolls(ConstantValue.exactly(1.0F))
                     .setBonusRolls(ConstantValue.exactly(0.0F))
-                    .add(LootItem.lootTableItem(ItemRegister.SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE.get()))
+                    .add(LootItem.lootTableItem(ItemRegistry.SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE.get()))
                     .build());
             event.setTable(lootTable);
         } else if (event.getName().equals(Identifier.withDefaultNamespace("chests/pillager_outpost"))) {
@@ -212,7 +212,7 @@ public class CommonGameEvents {
             lootTable.addPool(LootPool.lootPool()
                     .setRolls(BinomialDistributionGenerator.binomial(2, 0.4F))
                     .setBonusRolls(ConstantValue.exactly(0.0F))
-                    .add(LootItem.lootTableItem(ItemRegister.SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE.get()))
+                    .add(LootItem.lootTableItem(ItemRegistry.SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE.get()))
                     .build());
             event.setTable(lootTable);
         }
@@ -223,7 +223,7 @@ public class CommonGameEvents {
         Player player = event.getEntity();
         ItemStack shoes = player.getItemBySlot(EquipmentSlot.FEET);
         AttributeMap attributes = player.getAttributes();
-        if (!shoes.isEmpty() && shoes.getItem().equals(ItemRegister.ICE_SKATES.get()) && player.isSprinting() && player.onGround()) {
+        if (!shoes.isEmpty() && shoes.getItem().equals(ItemRegistry.ICE_SKATES.get()) && player.isSprinting() && player.onGround()) {
             Level level = player.level();
             BlockPos pos = player.blockPosition().below();
             if (level.getBlockState(pos).is(BlockTags.ICE)) {

@@ -11,8 +11,8 @@ import com.linngdu664.bsf3lite.network.to_client.ImplosionSnowballCannonParticle
 import com.linngdu664.bsf3lite.network.to_client.ToggleMovingSoundPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
-import com.linngdu664.bsf3lite.registry.SoundRegister;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
+import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -62,7 +62,7 @@ public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (pPlayer.hasEffect(EffectRegister.WEAPON_JAM)) {
+        if (pPlayer.hasEffect(EffectRegistry.WEAPON_JAM)) {
             return InteractionResult.FAIL;
         }
         ItemStack stack = getAmmo(pPlayer, itemStack);
@@ -70,7 +70,7 @@ public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
             Vec3 cameraVec = pPlayer.getViewVector(1);
             if (!pLevel.isClientSide()) {
                 ServerLevel serverLevel = (ServerLevel) pLevel;
-                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pPlayer.getId(), SoundRegister.IMPLOSION_SNOWBALL_CANNON.get(), ToggleMovingSoundPayload.PLAY_ONCE));
+                PacketDistributor.sendToPlayersInDimension((ServerLevel) pLevel, new ToggleMovingSoundPayload(pPlayer.getId(), SoundRegistry.IMPLOSION_SNOWBALL_CANNON.get(), ToggleMovingSoundPayload.PLAY_ONCE));
                 Vec3 eyePosition = pPlayer.getEyePosition();
                 for (double l = 0; l < DISTANCE; l += 0.5) {
                     Vec3 paPos = eyePosition.add(cameraVec.scale(l));

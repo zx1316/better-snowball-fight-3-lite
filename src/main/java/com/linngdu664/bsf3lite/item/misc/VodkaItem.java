@@ -1,7 +1,7 @@
 package com.linngdu664.bsf3lite.item.misc;
 
 import com.linngdu664.bsf3lite.Main;
-import com.linngdu664.bsf3lite.registry.EffectRegister;
+import com.linngdu664.bsf3lite.registry.EffectRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class VodkaItem extends Item {
@@ -37,12 +36,12 @@ public class VodkaItem extends Item {
         if (pEntityLiving instanceof Player player) {
             if (!pLevel.isClientSide()) {
                 int t = 0;
-                if (pEntityLiving.hasEffect(EffectRegister.COLD_RESISTANCE)) {
-                    t = pEntityLiving.getEffect(EffectRegister.COLD_RESISTANCE).getDuration();
+                if (pEntityLiving.hasEffect(EffectRegistry.COLD_RESISTANCE)) {
+                    t = pEntityLiving.getEffect(EffectRegistry.COLD_RESISTANCE).getDuration();
                     pEntityLiving.setRemainingFireTicks(pEntityLiving.getRemainingFireTicks() + 60);
                 }
                 pEntityLiving.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100 + t));
-                pEntityLiving.addEffect(new MobEffectInstance(EffectRegister.COLD_RESISTANCE, 600));
+                pEntityLiving.addEffect(new MobEffectInstance(EffectRegistry.COLD_RESISTANCE, 600));
                 pEntityLiving.addEffect(new MobEffectInstance(MobEffects.SPEED, 600));
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, pStack);
             }

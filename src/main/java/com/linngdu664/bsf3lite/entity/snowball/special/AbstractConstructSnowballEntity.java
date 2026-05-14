@@ -2,8 +2,8 @@ package com.linngdu664.bsf3lite.entity.snowball.special;
 
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.item.component.RegionData;
-import com.linngdu664.bsf3lite.registry.BlockRegister;
-import com.linngdu664.bsf3lite.registry.ParticleRegister;
+import com.linngdu664.bsf3lite.registry.BlockRegistry;
+import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -144,7 +144,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
     protected void placeAndRecordBlock(Level level, BlockPos blockPos) {
         if (!level.isClientSide() && level.getBlockState(blockPos).canBeReplaced()) {
             allBlock.push(blockPos);
-            level.setBlock(blockPos, BlockRegister.LOOSE_SNOW_BLOCK.get().defaultBlockState(), 3);
+            level.setBlock(blockPos, BlockRegistry.LOOSE_SNOW_BLOCK.get().defaultBlockState(), 3);
             level.playSound(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.SNOW_PLACE, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
     }
@@ -154,7 +154,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
         if (!inBlockDuration) {
             Level level = level();
             if (level.isClientSide()) {
-                level.addParticle(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), vec3.x, vec3.y + 0.1, vec3.z, 0, 0, 0);
+                level.addParticle(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), vec3.x, vec3.y + 0.1, vec3.z, 0, 0, 0);
             }
         }
     }
@@ -177,6 +177,6 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
     }
 
     protected boolean posIsLooseSnow(Level level, BlockPos pos) {
-        return level.getBlockState(pos).getBlock().equals(BlockRegister.LOOSE_SNOW_BLOCK.get());
+        return level.getBlockState(pos).getBlock().equals(BlockRegistry.LOOSE_SNOW_BLOCK.get());
     }
 }
