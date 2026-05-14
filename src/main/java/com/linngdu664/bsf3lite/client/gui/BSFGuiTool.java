@@ -28,7 +28,7 @@ public class BSFGuiTool {
     /**
      * 渲染进度条
      *
-     * @param guiGraphics
+     * @param guiGraphics GuiGraphicsExtractor
      * @param pos         进度条位置(取点左上角)
      * @param frame       进度条长宽
      * @param padding     内外框间隔

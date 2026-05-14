@@ -3,6 +3,7 @@ package com.linngdu664.bsf3lite.item.weapon;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.snowball.normal.IceSnowballItem;
+import com.linngdu664.bsf3lite.item.snowball.special.CriticalFrozenSnowballItem;
 import com.linngdu664.bsf3lite.item.snowball.special.FrozenSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -47,7 +48,7 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
 
             @Override
             public float adjustBlazeDamage(float blazeDamage) {
-                if (snowball instanceof IceSnowballItem || snowball instanceof FrozenSnowballItem) {
+                if (snowball instanceof IceSnowballItem || snowball instanceof FrozenSnowballItem || snowball instanceof CriticalFrozenSnowballItem) {
                     return blazeDamage + 4;
                 }
                 return blazeDamage + 1;

@@ -27,6 +27,7 @@ import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
@@ -121,30 +122,34 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
                 return;
             }
 
+            Vec3 vel = getDeltaMovement();
+
             // Damage entity
             float hurt = entity instanceof Blaze ? properties.blazeDamage : properties.damage;
-            entity.hurt(level.damageSources().thrown(this, this.getOwner()), hurt);
-
-            // Handle frozen and weakness effects
-            if (properties.frozenTicks > 0 && !(entity instanceof SnowGolem)) {
-                if (entity.getTicksFrozen() < properties.frozenTicks) {
-                    entity.setTicksFrozen(properties.frozenTicks);
+            float relVel = (float) vel.subtract(entity.getDeltaMovement()).length();
+            hurt *= 0.5f + 0.375f * relVel;
+            if (entity.hurtOrSimulate(level.damageSources().thrown(this, this.getOwner()), hurt)) {
+                // Handle frozen and weakness effects
+                if (properties.frozenTicks > 0 && !(entity instanceof SnowGolem)) {
+                    if (entity.getTicksFrozen() < properties.frozenTicks) {
+                        entity.setTicksFrozen(properties.frozenTicks);
+                    }
+                    entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 1));
                 }
-                entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 1));
-            }
-            if (properties.weaknessTicks > 0) {
-                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, properties.weaknessTicks, 1));
-            }
+                if (properties.weaknessTicks > 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, properties.weaknessTicks, 1));
+                }
 
-            // Push entity
-            if (entity.isPushable()) {
-                Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * properties.punch, 0.0, 0.1 * properties.punch);
-                entity.push(vec3d.x, 0.0, vec3d.z);
-            }
-            if (getOwner() instanceof LivingEntity owner) {
-                owner.setLastHurtMob(entity);
-                if (owner instanceof ServerPlayer serverPlayer) {
-                    TriggerTypeRegister.SNOWBALL_DAMAGE_TRIGGER.get().trigger(serverPlayer, this, hurt);
+                // Push entity
+                if (entity.isPushable()) {
+                    Vec3 vec3d = vel.multiply(0.1 * properties.punch, 0.0, 0.1 * properties.punch);
+                    entity.push(vec3d.x, 0.0, vec3d.z);
+                }
+                if (getOwner() instanceof LivingEntity owner) {
+                    owner.setLastHurtMob(entity);
+                    if (owner instanceof ServerPlayer serverPlayer) {
+                        TriggerTypeRegister.SNOWBALL_DAMAGE_TRIGGER.get().trigger(serverPlayer, this, hurt);
+                    }
                 }
             }
         }
