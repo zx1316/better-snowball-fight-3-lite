@@ -17,6 +17,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -148,14 +151,25 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     @Override
     public void inventoryTickInClient(ItemStack pStack, @NotNull Player player, int pSlotId) {
         super.inventoryTickInClient(pStack, player, pSlotId);
-        if (!pStack.equals(player.getUseItem())) {
-            int timer = pStack.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
+        tickTimer(pStack, player);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
+        if (owner instanceof Player player) {
+            tickTimer(itemStack, player);
+        }
+    }
+
+    private void tickTimer(ItemStack itemStack, Player player) {
+        if (!itemStack.equals(player.getUseItem())) {
+            int timer = itemStack.getOrDefault(DataComponentRegister.MACHINE_GUN_TIMER, 0);
             if (timer > 0) {
                 if (timer > 2) {
-                    pStack.set(DataComponentRegister.MACHINE_GUN_TIMER, timer - 2);
+                    itemStack.set(DataComponentRegister.MACHINE_GUN_TIMER, timer - 2);
                 } else {
-                    pStack.set(DataComponentRegister.MACHINE_GUN_TIMER, 0);
-                    pStack.set(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, false);
+                    itemStack.set(DataComponentRegister.MACHINE_GUN_TIMER, 0);
+                    itemStack.set(DataComponentRegister.MACHINE_GUN_IS_COOL_DOWN, false);
                 }
             }
         }

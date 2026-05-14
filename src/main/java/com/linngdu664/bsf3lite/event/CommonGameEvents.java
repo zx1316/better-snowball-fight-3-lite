@@ -55,7 +55,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.List;
 
 @EventBusSubscriber(modid = Main.MODID)
-public class GamePlayEvents {
+public class CommonGameEvents {
     private static final AttributeModifier SKATES_SPEED_BUFF = new AttributeModifier(Main.makeMyIdentifier("skates_speed"), 0.15, AttributeModifier.Operation.ADD_VALUE);
     private static final AttributeModifier SKATES_SPEED_DEBUFF = new AttributeModifier(Main.makeMyIdentifier("skates_speed"), -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 

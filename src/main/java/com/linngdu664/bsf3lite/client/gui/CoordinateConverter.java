@@ -55,7 +55,7 @@ public class CoordinateConverter {
     }
 
     public List<Vec2> convert(List<Vec3> points, int guiWidth, int guiHeight) {
-        ArrayList<Vec2> arrayList = new ArrayList<>();
+        ArrayList<Vec2> arrayList = new ArrayList<>(points.size());
         for (Vec3 vec3 : points) {
             arrayList.add(convert(vec3, guiWidth, guiHeight, 0, 0));
         }
@@ -63,7 +63,7 @@ public class CoordinateConverter {
     }
 
     public List<Vec2> convert(List<Vec3> points, int guiWidth, int guiHeight, int widthProtect, int heightProtect) {
-        ArrayList<Vec2> arrayList = new ArrayList<>();
+        ArrayList<Vec2> arrayList = new ArrayList<>(points.size());
         for (Vec3 vec3 : points) {
             arrayList.add(convert(vec3, guiWidth, guiHeight, widthProtect, heightProtect));
         }

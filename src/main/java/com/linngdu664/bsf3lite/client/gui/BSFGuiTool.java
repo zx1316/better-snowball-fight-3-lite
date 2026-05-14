@@ -2,75 +2,28 @@ package com.linngdu664.bsf3lite.client.gui;
 
 import com.linngdu664.bsf3lite.Main;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 
-import java.util.List;
-
+/**
+ * Gui window utils and floating coords render tools
+ * Note: Text and item floating coords should use pose translate and methods in GuiGraphicsExtractor
+ */
 public class BSFGuiTool {
     public static final GuiTexture SNOWBALL_FRAME = new GuiTexture("textures/gui/snowball_frame.png", 23, 62);
-    public static final GuiTexture TWEAKER_FRAME = new GuiTexture("textures/gui/tweaker_frame.png", 114, 106);
     public static final GuiImage SNOWBALL_SLOT_FRAME_GUI = new GuiImage(SNOWBALL_FRAME, 0, 0, 23, 62);
-    public static final GuiImage TWEAKER_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 1, 0, 22, 82);
-    public static final GuiImage TWEAKER_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 24, 0, 22, 102);
-    public static final GuiImage TWEAKER_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 0, 82, 24, 24);
-    public static final GuiImage GOLEM_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 47, 0, 22, 82);
-    public static final GuiImage GOLEM_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 70, 0, 22, 102);
-    public static final GuiImage GOLEM_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 46, 82, 24, 24);
-    public static final GuiImage SETTER_ARROW_GUI = new GuiImage(TWEAKER_FRAME, 92, 1, 8, 20);
-    public static final GuiImage ADVANCE_MODE_GUI = new GuiImage(TWEAKER_FRAME, 92, 60, 22, 22);
-    public static final GuiImage EQUIPMENT_SLOT_FRAME_GUI = new GuiImage(TWEAKER_FRAME, 92, 84, 22, 22);
-
-    public static int heightFrameCenter(Window window, int height) {
-        return heightFrameRatio(window, height, 0.5);
-    }
-
-    public static int heightFrameRatio(Window window, int height, double heightRatio) {
-        return (int) ((window.getHeight() / window.getGuiScale() - height) * heightRatio);
-    }
-    /*
-        x width horizontal
-        y height vertical
-     */
-
-    public static int heightWinRatio(Window window, double heightRatio) {
-        return heightFrameRatio(window, 0, heightRatio);
-    }
-
-    public static int widthFrameCenter(Window window, int width) {
-        return widthFrameRatio(window, width, 0.5);
-    }
-
-    public static int widthFrameRatio(Window window, int width, double widthRatio) {
-        return (int) ((window.getWidth() / window.getGuiScale() - width) * widthRatio);
-    }
-
-    public static int widthWinRatio(Window window, double widthRatio) {
-        return widthFrameRatio(window, 0, widthRatio);
-    }
-
-    public static V2I v2IRatio(Window window, int width, int height, double widthRatio, double heightRatio) {
-        return v2IRatio(window, width, height, widthRatio, heightRatio, 0, 0);
-    }
-
-    public static V2I v2IRatio(Window window, int width, int height, double widthRatio, double heightRatio, int xOffset, int yOffset) {
-        return new V2I(widthFrameRatio(window, width, widthRatio) + xOffset, heightFrameRatio(window, height, heightRatio) + yOffset);
-    }
-
-    public static V2I v2IRatio(Window window, double widthRatio, double heightRatio) {
-        return new V2I((int) (window.getWidth() * widthRatio / window.getGuiScale()), (int) (window.getHeight() * heightRatio / window.getGuiScale()));
-    }
+//    public static final GuiTexture TWEAKER_FRAME = new GuiTexture("textures/gui/tweaker_frame.png", 114, 106);
+//    public static final GuiImage TWEAKER_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 1, 0, 22, 82);
+//    public static final GuiImage TWEAKER_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 24, 0, 22, 102);
+//    public static final GuiImage TWEAKER_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 0, 82, 24, 24);
+//    public static final GuiImage GOLEM_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 47, 0, 22, 82);
+//    public static final GuiImage GOLEM_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 70, 0, 22, 102);
+//    public static final GuiImage GOLEM_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 46, 82, 24, 24);
+//    public static final GuiImage SETTER_ARROW_GUI = new GuiImage(TWEAKER_FRAME, 92, 1, 8, 20);
+//    public static final GuiImage ADVANCE_MODE_GUI = new GuiImage(TWEAKER_FRAME, 92, 60, 22, 22);
+//    public static final GuiImage EQUIPMENT_SLOT_FRAME_GUI = new GuiImage(TWEAKER_FRAME, 92, 84, 22, 22);
 
     /**
      * 渲染进度条
@@ -84,10 +37,10 @@ public class BSFGuiTool {
      * @param percent     进度条进度(0-1)
      */
     public static void renderProgressBar(GuiGraphicsExtractor guiGraphics, V2I pos, V2I frame, int padding, int frameColor, int innerColor, float percent) {
-        guiGraphics.fill(pos.x + 1, pos.y + 1, pos.x + frame.x - 1, pos.y + frame.y - 1, 0x80000000);
-        guiGraphics.outline(pos.x, pos.y, frame.x, frame.y, frameColor);
-        int innerW = (int) ((frame.x - padding - padding) * percent);
-        guiGraphics.fill(pos.x + padding, pos.y + padding, pos.x + padding + innerW, pos.y + frame.y - padding, innerColor);
+        guiGraphics.fill(pos.x() + 1, pos.y() + 1, pos.x() + frame.x() - 1, pos.y() + frame.y() - 1, 0x80000000);
+        guiGraphics.outline(pos.x(), pos.y(), frame.x(), frame.y(), frameColor);
+        int innerW = (int) ((frame.x() - padding - padding) * percent);
+        guiGraphics.fill(pos.x() + padding, pos.y() + padding, pos.x() + padding + innerW, pos.y() + frame.y() - padding, innerColor);
     }
 /*
     public static Vec2 renderHackBox(GuiGraphicsExtractor guiGraphics, CoordinateConverter converter, Window window, LivingEntity livingEntity, int frameColor, float particleTick) {
@@ -156,86 +109,44 @@ public class BSFGuiTool {
         FormattedCharSequence formattedcharsequence = msg.getVisualOrderText();
         guiGraphics.drawString(font, formattedcharsequence, framePoint.x - font.width(formattedcharsequence), framePoint.y + 7, color, true);
     }*/
-/*
+
     public static void renderLineTool(GuiGraphicsExtractor guiGraphics, Vec2 p1, Vec2 p2, float d, int color, boolean isDown, float padding, int padColor) {
         Vec2 ad = p2.add(p1.negated());
         Vec2 v1 = ad.scale(d / ad.length());
         Vec2 v2 = new Vec2(-v1.y, v1.x);
         if (isDown) {
             Vec2 v2s = v2.scale(padding);
-            renderFillTool(guiGraphics, p1, p1.add(v2), p2.add(v2), p2, padColor);
-            renderFillTool(guiGraphics, p1, p1.add(v2s), p2.add(v2s), p2, color);
+            GuiUtil.fill(guiGraphics, p1, p1.add(v2), p2.add(v2), p2, padColor);
+            GuiUtil.fill(guiGraphics, p1, p1.add(v2s), p2.add(v2s), p2, color);
         } else {
             v2 = v2.negated();
             p2 = p2.add(v2.negated());
             Vec2 v2s = v2.scale(1 - padding);
-            renderFillTool(guiGraphics, p1.add(v2), p1, p2, p2.add(v2), color);
-            renderFillTool(guiGraphics, p1.add(v2s), p1, p2, p2.add(v2s), padColor);
+            GuiUtil.fill(guiGraphics, p1.add(v2), p1, p2, p2.add(v2), color);
+            GuiUtil.fill(guiGraphics, p1.add(v2s), p1, p2, p2.add(v2s), padColor);
         }
-
-    }*/
-/*
-    public static void renderFillTool(GuiGraphicsExtractor guiGraphics, Vec2 a, Vec2 b, Vec2 c, Vec2 d, int pColor) {
-        Matrix4f matrix4f = guiGraphics.pose.last().pose();
-
-        VertexConsumer vertexconsumer = guiGraphics.bufferSource.getBuffer(RenderType.gui());
-        vertexconsumer.addVertex(matrix4f, a.x, a.y, 0).setColor(pColor);
-        vertexconsumer.addVertex(matrix4f, b.x, b.y, 0).setColor(pColor);
-        vertexconsumer.addVertex(matrix4f, c.x, c.y, 0).setColor(pColor);
-        vertexconsumer.addVertex(matrix4f, d.x, d.y, 0).setColor(pColor);
-        guiGraphics.flushIfUnmanaged();
-    }*/
-/*
-    public static void renderFillSquareTool(GuiGraphicsExtractor guiGraphics, Vec2 a, Vec2 b, int pColor) {
-        renderFillTool(guiGraphics, a, new Vec2(a.x, b.y), b, new Vec2(b.x, a.y), pColor);
-    }*/
-
-    public static boolean isInScreen(Vec2 point, Window window) {
-        return point.x > 0 && point.y > 0 && point.x < window.getGuiScaledWidth() && point.y < window.getGuiScaledHeight();
     }
-/*
-    public static void renderOutline(GuiGraphicsExtractor guiGraphics, float x, float y, float width, float height, int color) {
-        fill(guiGraphics, x, y, x + width, y + 1, color);
-        fill(guiGraphics, x, y + height - 1, x + width, y + height, color);
-        fill(guiGraphics, x, y + 1, x + 1, y + height - 1, color);
-        fill(guiGraphics, x + width - 1, y + 1, x + width, y + height - 1, color);
-    }*/
-/*
-    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color) {
-        fill(guiGraphics, x, y, x2, y + 1, color);
-        fill(guiGraphics, x, y2 - 1, x2, y2, color);
-        fill(guiGraphics, x, y + 1, x + 1, y2 - 1, color);
-        fill(guiGraphics, x2 - 1, y + 1, x2, y2 - 1, color);
-    }*/
-/*
-    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color, float width) {
-        fill(guiGraphics, x, y, x2, y + width, color);
-        fill(guiGraphics, x, y2 - width, x2, y2, color);
-        fill(guiGraphics, x, y + width, x + width, y2 - width, color);
-        fill(guiGraphics, x2 - width, y + width, x2, y2 - width, color);
-    }*/
-/*
-    public static void fill(GuiGraphicsExtractor guiGraphics, float minX, float minY, float maxX, float maxY, int color) {
-        Matrix4f matrix4f = guiGraphics.pose.last().pose();
-        float j;
-        if (minX < maxX) {
-            j = minX;
-            minX = maxX;
-            maxX = j;
-        }
 
-        if (minY < maxY) {
-            j = minY;
-            minY = maxY;
-            maxY = j;
-        }
-        VertexConsumer vertexconsumer = guiGraphics.bufferSource.getBuffer(RenderType.gui());
-        vertexconsumer.addVertex(matrix4f, minX, minY, 0).setColor(color);
-        vertexconsumer.addVertex(matrix4f, minX, maxY, 0).setColor(color);
-        vertexconsumer.addVertex(matrix4f, maxX, maxY, 0).setColor(color);
-        vertexconsumer.addVertex(matrix4f, maxX, minY, 0).setColor(color);
-        guiGraphics.flushIfUnmanaged();
-    }*/
+    public static void renderOutline(GuiGraphicsExtractor guiGraphics, float x, float y, float width, float height, int color) {
+        GuiUtil.fill(guiGraphics, x, y, x + width, y + 1, color);
+        GuiUtil.fill(guiGraphics, x, y + height - 1, x + width, y + height, color);
+        GuiUtil.fill(guiGraphics, x, y + 1, x + 1, y + height - 1, color);
+        GuiUtil.fill(guiGraphics, x + width - 1, y + 1, x + width, y + height - 1, color);
+    }
+
+    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color) {
+        GuiUtil.fill(guiGraphics, x, y, x2, y + 1, color);
+        GuiUtil.fill(guiGraphics, x, y2 - 1, x2, y2, color);
+        GuiUtil.fill(guiGraphics, x, y + 1, x + 1, y2 - 1, color);
+        GuiUtil.fill(guiGraphics, x2 - 1, y + 1, x2, y2 - 1, color);
+    }
+
+    public static void renderOutlineCoordinate(GuiGraphicsExtractor guiGraphics, float x, float y, float x2, float y2, int color, float width) {
+        GuiUtil.fill(guiGraphics, x, y, x2, y + width, color);
+        GuiUtil.fill(guiGraphics, x, y2 - width, x2, y2, color);
+        GuiUtil.fill(guiGraphics, x, y + width, x + width, y2 - width, color);
+        GuiUtil.fill(guiGraphics, x2 - width, y + width, x2, y2 - width, color);
+    }
 
     public static class GuiTexture {
         public Identifier texture;
@@ -270,11 +181,11 @@ public class BSFGuiTool {
         }
 
         public V2I renderCenterVertically(GuiGraphicsExtractor guiGraphics, Window window, int x) {
-            return render(guiGraphics, x, heightFrameCenter(window, this.height));
+            return render(guiGraphics, x, GuiUtil.heightFrameCenter(window, this.height));
         }
 
         public V2I renderCenterHorizontally(GuiGraphicsExtractor guiGraphics, Window window, int y) {
-            return render(guiGraphics, widthFrameCenter(window, this.width), y);
+            return render(guiGraphics, GuiUtil.widthFrameCenter(window, this.width), y);
         }
 
         public V2I renderRatio(GuiGraphicsExtractor guiGraphics, Window window, double widthRatio, double heightRatio) {
@@ -282,43 +193,16 @@ public class BSFGuiTool {
         }
 
         public V2I renderRatio(GuiGraphicsExtractor guiGraphics, Window window, double widthRatio, double heightRatio, int xOffset, int yOffset) {
-            return render(guiGraphics, widthFrameRatio(window, this.width, widthRatio) + xOffset, heightFrameRatio(window, this.height, heightRatio) + yOffset);
+            return render(guiGraphics, GuiUtil.widthFrameRatio(window, this.width, widthRatio) + xOffset, GuiUtil.heightFrameRatio(window, this.height, heightRatio) + yOffset);
         }
     }
 
-    public static class V2I {
-        public int x;
-        public int y;
-
-        public V2I(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public void set(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Vec2 getVec2() {
-            return new Vec2(this.x, this.y);
-        }
-
-        @Override
-        public String toString() {
-            return "V2I{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
-        }
-    }
-
-    public static class VarObj {
-        public Component tLocatorComponent;
-        public Component sLocatorComponent;
-        public Component tStatusComponent;
-        public Component sStatusComponent;
-        public BSFGuiTool.V2I locateV2I;
-        public BSFGuiTool.V2I statusV2I;
-    }
+//    public static class VarObj {
+//        public Component tLocatorComponent;
+//        public Component sLocatorComponent;
+//        public Component tStatusComponent;
+//        public Component sStatusComponent;
+//        public BSFGuiTool.V2I locateV2I;
+//        public BSFGuiTool.V2I statusV2I;
+//    }
 }

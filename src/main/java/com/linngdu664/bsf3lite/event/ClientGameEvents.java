@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.event;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.client.gui.GuiHandler;
 import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
 import com.linngdu664.bsf3lite.item.tool.ColdCompressionJetEngineItem;
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
@@ -10,6 +11,7 @@ import com.linngdu664.bsf3lite.registry.ItemRegister;
 import com.linngdu664.bsf3lite.registry.KeyMappingRegistry;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -24,14 +26,14 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedHashSet;
 
-
 @EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
-public class ClientForgeEvents {
+public class ClientGameEvents {
     public static final RandomSource BSF_RANDOM_SOURCE = RandomSource.create();
 
     @SubscribeEvent
@@ -73,6 +75,23 @@ public class ClientForgeEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onRenderGui(RenderGuiEvent.Post event) {
+        Minecraft instance = Minecraft.getInstance();
+        if (instance.options.hideGui) {
+            return;
+        }
+        Player player = instance.player;
+        ItemStack mainHandItem = player.getMainHandItem();
+        ItemStack offHandItem = player.getOffhandItem();
+        GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
+//        guiGraphics.pose().pushPose();
+//        guiGraphics.pose().translate(0F, 0F, 4932F);        // 显示在原版gui的上方
+        //gui队列
+        GuiHandler.itemInHandBSFWeapon(guiGraphics, mainHandItem, offHandItem);
+//        guiGraphics.pose().popPose();
     }
 
     @SubscribeEvent
