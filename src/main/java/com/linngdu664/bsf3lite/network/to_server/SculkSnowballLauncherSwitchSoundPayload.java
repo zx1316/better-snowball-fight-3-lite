@@ -37,10 +37,10 @@ public record SculkSnowballLauncherSwitchSoundPayload(boolean isIncrease) implem
                 }
                 itemStack.set(DataComponentRegistry.SCULK_SOUND_ID, soundId);
                 if (soundId == -1) {
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf.sculk_snowball_launcher", null, new Object[]{}))
+                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
                             .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));
                 } else {
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf.sculk_snowball_launcher", null, new Object[]{}))
+                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
                             .append(": ").append(MutableComponent.create(new TranslatableContents("sound_id.tip", null, new Object[]{String.valueOf(soundId)}))));
                 }
             }

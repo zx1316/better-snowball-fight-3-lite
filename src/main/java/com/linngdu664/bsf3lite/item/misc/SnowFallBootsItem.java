@@ -24,6 +24,6 @@ public class SnowFallBootsItem extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
         builder.accept(Component.translatable("snow_fall_boots.tooltip").withStyle(ChatFormatting.GRAY));
-        builder.accept(Component.translatable("snow_fall_boots1.tooltip", Component.translatable("enchantment.bsf.kinetic_energy_storage")).withStyle(ChatFormatting.GRAY));
+        builder.accept(Component.translatable("snow_fall_boots1.tooltip", Component.translatable("enchantment.bsf3lite.kinetic_energy_storage")).withStyle(ChatFormatting.GRAY));
     }
 }
