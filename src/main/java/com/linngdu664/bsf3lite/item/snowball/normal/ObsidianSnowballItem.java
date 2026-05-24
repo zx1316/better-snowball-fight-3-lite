@@ -40,7 +40,7 @@ public class ObsidianSnowballItem extends AbstractBSFSnowballItem implements Pro
 
     @Override
     public @NotNull InteractionResult use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        return throwOrStorage(pPlayer, pLevel, pUsedHand, 0.7F, 0);
+        return throwOrStorage(pPlayer, pLevel, pUsedHand, 0.75F, 0);
     }
 
     @Override

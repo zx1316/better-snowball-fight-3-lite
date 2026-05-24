@@ -60,7 +60,6 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
         ci.cancel();
     }
 
-//    @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z")
     @Inject(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"), cancellable = true)
     private void injectedBeforeInvokeHurtOnHitEntity(EntityHitResult pResult, CallbackInfo ci, @Local Entity entity) {
         Level level = level();

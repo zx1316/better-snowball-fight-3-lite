@@ -52,6 +52,6 @@ public class PowerfulSnowballRifle extends SnowballRifleItem {
 
     @Override
     public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
-        return launch(level, player, usedHand, 3.47F);
+        return launch(level, player, usedHand, 3.467F);
     }
 }
