@@ -26,8 +26,8 @@ public class ServerConfig extends BSFConfig {
             builder.comment("The life span of icicle snowball in tick. Default value: 80.")
                     .defineInRange("icicleSnowballDuration", 80, 0, Integer.MAX_VALUE));
     public static ConfigValueHolder<Boolean> SHOOTING_INERTIA = new ConfigValueHolder(Main.MODID, "server/shootingInertia", (builder) ->
-            builder.comment("Default value: false.")
-                    .define("shootingInertia", false));
+            builder.comment("Default value: true.")
+                    .define("shootingInertia", true));
 
     static {
         Pair<ServerConfig, ModConfigSpec> specPair = (new ModConfigSpec.Builder()).configure(ServerConfig::new);
