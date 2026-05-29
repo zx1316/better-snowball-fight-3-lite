@@ -30,7 +30,7 @@ public class UnstableCoreItem extends Item {
     public UnstableCoreItem() {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("unstable_core")))
-                .rarity(Rarity.EPIC));
+                .rarity(Rarity.RARE));
     }
 
     @Override

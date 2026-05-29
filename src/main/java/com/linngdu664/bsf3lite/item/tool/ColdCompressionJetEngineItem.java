@@ -44,7 +44,7 @@ public class ColdCompressionJetEngineItem extends Item {
         super(new Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("cold_compression_jet_engine")))
                 .stacksTo(1)
-                .rarity(Rarity.RARE)
+                .rarity(Rarity.EPIC)
                 .durability(400));
     }
 

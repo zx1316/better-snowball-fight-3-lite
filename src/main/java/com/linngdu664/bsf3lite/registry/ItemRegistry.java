@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.registry;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.item.block.SmartSnowBlockItem;
 import com.linngdu664.bsf3lite.item.minigame_tool.RegionToolItem;
 import com.linngdu664.bsf3lite.item.misc.*;
 import com.linngdu664.bsf3lite.item.snowball.CompactedSnowballSetItem;
@@ -95,6 +96,12 @@ public class ItemRegistry {
 
 
     public static final DeferredItem<Item> SCULK_SNOWBALL = ITEMS.registerSimpleItem("sculk_snowball");
+
+
+    public static final DeferredItem<Item> SMART_SNOW_BLOCK = ITEMS.register("smart_snow_block", SmartSnowBlockItem::new);
+    public static final DeferredItem<Item> SNOW_GOLEM_MODE_TWEAKER = ITEMS.register("snow_golem_mode_tweaker", SnowGolemModeTweakerItem::new);
+    public static final DeferredItem<Item> CREATIVE_SNOW_GOLEM_TOOL = ITEMS.register("creative_snow_golem_tool", CreativeSnowGolemToolItem::new);
+    public static final DeferredItem<Item> SNOW_GOLEM_CONTAINER = ITEMS.register("snow_golem_container", SnowGolemContainer::new);
 
 
     public static final DeferredItem<Item> REGION_TOOL = ITEMS.register("region_tool", RegionToolItem::new);

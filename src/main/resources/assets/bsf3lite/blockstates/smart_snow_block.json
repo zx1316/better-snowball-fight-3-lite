@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bsf3lite:block/smart_snow_block"
+    },
+    "facing=east": {
+      "model": "bsf3lite:block/smart_snow_block",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bsf3lite:block/smart_snow_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bsf3lite:block/smart_snow_block",
+      "y": 270
+    }
+  }
+}

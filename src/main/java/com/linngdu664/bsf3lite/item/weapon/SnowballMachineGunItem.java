@@ -40,7 +40,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     private boolean isExplosive;
 
     public SnowballMachineGunItem() {
-        super("snowball_machine_gun", 1919, Rarity.EPIC, TYPE_FLAG);
+        super("snowball_machine_gun", 1919, Rarity.RARE, TYPE_FLAG);
     }
 
     @Override

@@ -30,8 +30,7 @@ public class SnowballTankItem extends Item {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("snowball_tank")))
                 .stacksTo(1)
-                .durability(96)
-                .rarity(Rarity.UNCOMMON));
+                .durability(96));
     }
 
     protected SnowballTankItem(Properties properties) {

@@ -21,5 +21,7 @@ public class NetworkRegistry {
 
         registrar.playToServer(AmmoTypePayload.TYPE, AmmoTypePayload.STREAM_CODEC, AmmoTypePayload::handleDataInServer);
         registrar.playToServer(SculkSnowballLauncherSwitchSoundPayload.TYPE, SculkSnowballLauncherSwitchSoundPayload.STREAM_CODEC, SculkSnowballLauncherSwitchSoundPayload::handleDataInServer);
+        registrar.playToServer(SwitchTweakerStatusModePayload.TYPE, SwitchTweakerStatusModePayload.STREAM_CODEC, SwitchTweakerStatusModePayload::handleDataInServer);
+        registrar.playToServer(SwitchTweakerTargetModePayload.TYPE, SwitchTweakerTargetModePayload.STREAM_CODEC, SwitchTweakerTargetModePayload::handleDataInServer);
     }
 }

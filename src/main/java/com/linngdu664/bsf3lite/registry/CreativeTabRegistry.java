@@ -182,6 +182,11 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.MILK_POPSICLE.get());
                 output.accept(ItemRegistry.VODKA.get());
 
+                output.accept(ItemRegistry.SMART_SNOW_BLOCK.get());
+                output.accept(ItemRegistry.SNOW_GOLEM_CONTAINER.get());
+                output.accept(ItemRegistry.SNOW_GOLEM_MODE_TWEAKER.get());
+                output.accept(ItemRegistry.CREATIVE_SNOW_GOLEM_TOOL.get());
+
                 output.accept(ItemRegistry.SNOWBALL_CANNON_UPGRADE_SMITHING_TEMPLATE.get());
                 output.accept(ItemRegistry.SUPER_POWER_CORE.get());
                 output.accept(ItemRegistry.SUPER_FROZEN_CORE.get());

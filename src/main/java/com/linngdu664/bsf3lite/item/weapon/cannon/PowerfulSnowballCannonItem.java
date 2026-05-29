@@ -20,7 +20,7 @@ import static com.linngdu664.bsf3lite.registry.KeyMappingRegistry.CYCLE_MOVE_AMM
 
 public class PowerfulSnowballCannonItem extends SnowballCannonItem {
     public PowerfulSnowballCannonItem() {
-        super("powerful_snowball_cannon", Rarity.RARE);
+        super("powerful_snowball_cannon", Rarity.UNCOMMON);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.item.tool;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.entity.golem.AbstractBSFSnowGolemEntity;
 import com.linngdu664.bsf3lite.network.to_client.ForwardConeParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
@@ -132,7 +133,7 @@ public class BasinItem extends Item {
      * @param level  The attacker's level.
      * @return Both rVec and rVec1 are blocked by solid block: false. Otherwise: true.
      */
-    public boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+    public static boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
         double offsetX = 0.25 * rVec.z * Mth.invSqrt(BSFCommonUtil.lengthSqr(rVec.x, rVec.z));
         double offsetZ = 0.25 * rVec.x * Mth.invSqrt(BSFCommonUtil.lengthSqr(rVec.x, rVec.z));
         double x = player.getX();
@@ -169,7 +170,7 @@ public class BasinItem extends Item {
         return true;
     }
 
-    private int detectBlock(Level level, double offsetX, double offsetZ, double x, double y, double z) {
+    private static int detectBlock(Level level, double offsetX, double offsetZ, double x, double y, double z) {
         int k = 0;
         for (int j = -1; j <= 1; j++) {
             BlockPos blockPos = new BlockPos(Mth.floor(x - offsetX * j), Mth.floor(y), Mth.floor(z + offsetZ * j));
@@ -181,9 +182,9 @@ public class BasinItem extends Item {
         return k;
     }
 
-    private void addEffectsToLivingEntities(List<LivingEntity> list, Player pPlayer, Level pLevel, Function<Float, Integer> tFunc, Function<Float, Integer> ampFunc, int jamTime) {
+    private static void addEffectsToLivingEntities(List<LivingEntity> list, Player pPlayer, Level pLevel, Function<Float, Integer> tFunc, Function<Float, Integer> ampFunc, int jamTime) {
         for (LivingEntity livingEntity : list) {
-            if (!(livingEntity instanceof SnowGolem)) {
+            if (!(livingEntity instanceof AbstractBSFSnowGolemEntity) && !(livingEntity instanceof SnowGolem)) {
                 float r = pPlayer.distanceTo(livingEntity);
                 int t = tFunc.apply(r);
                 int amp = ampFunc.apply(r);

@@ -6,6 +6,7 @@ import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -42,5 +43,20 @@ public class DataComponentRegistry {
             DATA_COMPONENTS.registerComponentType(
                     "region",
                     builder -> builder.persistent(RegionData.CODEC).networkSynchronized(RegionData.STREAM_CODEC)
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Byte>> TWEAKER_STATUS_MODE =
+            DATA_COMPONENTS.registerComponentType(
+                    "tweaker_status_mode",
+                    builder -> builder.persistent(Codec.BYTE).networkSynchronized(ByteBufCodecs.BYTE)
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Byte>> TWEAKER_TARGET_MODE =
+            DATA_COMPONENTS.registerComponentType(
+                    "tweaker_target_mode",
+                    builder -> builder.persistent(Codec.BYTE).networkSynchronized(ByteBufCodecs.BYTE)
+            );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CompoundTag>> SNOW_GOLEM_DATA =
+            DATA_COMPONENTS.registerComponentType(
+                    "snow_golem_data",
+                    builder -> builder.persistent(CompoundTag.CODEC).networkSynchronized(ByteBufCodecs.COMPOUND_TAG)
             );
 }

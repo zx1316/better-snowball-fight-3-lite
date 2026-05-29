@@ -16,7 +16,6 @@ public class IceSkatesItem extends Item {
     public IceSkatesItem() {
         super(new Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("ice_skates")))
-                .rarity(Rarity.UNCOMMON)
                 .humanoidArmor(BSFArmorMaterials.ICE_SKATES, ArmorType.BOOTS)
                 .repairable(Items.LEATHER_BOOTS));
     }

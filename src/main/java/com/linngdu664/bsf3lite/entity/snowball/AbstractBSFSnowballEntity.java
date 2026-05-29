@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.entity.snowball;
 
 import com.linngdu664.bsf3lite.config.ServerConfig;
+import com.linngdu664.bsf3lite.entity.golem.AbstractBSFSnowGolemEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
 import com.linngdu664.bsf3lite.item.component.RegionData;
@@ -129,7 +130,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
             hurt *= 0.5f + 0.375f * relVel;
             if (entity.hurtOrSimulate(level.damageSources().thrown(this, this.getOwner()), hurt)) {
                 // Handle frozen and weakness effects
-                if (properties.frozenTicks > 0 && !(entity instanceof SnowGolem)) {
+                if (properties.frozenTicks > 0 && !(entity instanceof AbstractBSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
                     if (entity.getTicksFrozen() < properties.frozenTicks) {
                         entity.setTicksFrozen(properties.frozenTicks);
                     }

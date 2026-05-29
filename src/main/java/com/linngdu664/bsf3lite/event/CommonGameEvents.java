@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.event;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.entity.golem.AbstractBSFSnowGolemEntity;
 import com.linngdu664.bsf3lite.item.component.RegionData;
 import com.linngdu664.bsf3lite.item.misc.SnowFallBootsItem;
 import com.linngdu664.bsf3lite.item.snowball.normal.SmoothSnowballItem;
@@ -124,7 +125,7 @@ public class CommonGameEvents {
         if (!level.isClientSide() && !player.isSpectator() && entity instanceof LivingEntity target) {
             Item item = player.getMainHandItem().getItem();
             if (item instanceof SolidBucketItem) {
-                if (!(target instanceof SnowGolem)) {
+                if (!(target instanceof AbstractBSFSnowGolemEntity) && !(target instanceof SnowGolem)) {
                     if (target.getTicksFrozen() < 240) {
                         target.setTicksFrozen(240);
                     }
@@ -143,7 +144,7 @@ public class CommonGameEvents {
                     player.getInventory().placeItemBackInInventory(new ItemStack(Items.BUCKET), true);
                 }
             } else if (item instanceof SnowballItem || item instanceof SmoothSnowballItem) {
-                if (!(target instanceof SnowGolem)) {
+                if (!(target instanceof AbstractBSFSnowGolemEntity) && !(target instanceof SnowGolem)) {
                     if (target.getTicksFrozen() < 180) {
                         target.setTicksFrozen(180);
                     }

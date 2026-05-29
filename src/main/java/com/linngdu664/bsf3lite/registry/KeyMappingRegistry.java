@@ -10,8 +10,8 @@ import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class KeyMappingRegistry {
-    public static final KeyMapping CYCLE_MOVE_AMMO_NEXT = new KeyMapping("key.bsf.ammo_switch_next", GLFW.GLFW_KEY_H, KeyMapping.Category.MISC);
-    public static final KeyMapping CYCLE_MOVE_AMMO_PREV = new KeyMapping("key.bsf.ammo_switch_prev", GLFW.GLFW_KEY_G, KeyMapping.Category.MISC);
+    public static final KeyMapping CYCLE_MOVE_AMMO_NEXT = new KeyMapping("key.bsf3lite.ammo_switch_next", GLFW.GLFW_KEY_H, KeyMapping.Category.MISC);
+    public static final KeyMapping CYCLE_MOVE_AMMO_PREV = new KeyMapping("key.bsf3lite.ammo_switch_prev", GLFW.GLFW_KEY_G, KeyMapping.Category.MISC);
 
     @SubscribeEvent
     public static void registerKeyBindings(RegisterKeyMappingsEvent event) {

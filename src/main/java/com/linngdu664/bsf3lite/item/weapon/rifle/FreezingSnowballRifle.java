@@ -10,7 +10,7 @@ import net.minecraft.world.item.Rarity;
 
 public class FreezingSnowballRifle extends SnowballRifleItem {
     public FreezingSnowballRifle() {
-        super("freezing_snowball_rifle", Rarity.RARE);
+        super("freezing_snowball_rifle", Rarity.UNCOMMON);
     }
 
     @Override

@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 public class SnowTrapSetterItem extends AbstractBSFEnhanceableToolItem {
     public SnowTrapSetterItem() {
-        super("snow_trap_setter", Rarity.UNCOMMON, 1000, Items.IRON_INGOT);
+        super("snow_trap_setter", Rarity.COMMON, 1000, Items.IRON_INGOT);
     }
 
     @Override

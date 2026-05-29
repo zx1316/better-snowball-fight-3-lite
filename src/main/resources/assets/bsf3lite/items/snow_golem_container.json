@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "bsf3lite:has_golem",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "bsf3lite:item/snow_golem_container"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "bsf3lite:item/snow_golem_container_1"
+    }
+  }
+}

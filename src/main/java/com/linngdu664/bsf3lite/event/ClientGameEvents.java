@@ -1,12 +1,16 @@
 package com.linngdu664.bsf3lite.event;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.client.gui.CoordinateConverter;
 import com.linngdu664.bsf3lite.client.gui.GuiHandler;
+import com.linngdu664.bsf3lite.client.gui.util.HudContext;
 import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
 import com.linngdu664.bsf3lite.item.tool.ColdCompressionJetEngineItem;
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
 import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
+import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerStatusModePayload;
+import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerTargetModePayload;
 import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.registry.KeyMappingRegistry;
 import net.minecraft.client.Camera;
@@ -16,10 +20,15 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -28,6 +37,7 @@ import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedHashSet;
@@ -43,6 +53,12 @@ public class ClientGameEvents {
         ItemStack itemStack = player.getMainHandItem();
         if (itemStack.is(ItemRegistry.SCULK_SNOWBALL_LAUNCHER.get()) && player.isShiftKeyDown()) {
             ClientPacketDistributor.sendToServer(new SculkSnowballLauncherSwitchSoundPayload(event.getScrollDeltaY() > 0));
+            event.setCanceled(true);
+        } else if (itemStack.is(ItemRegistry.SNOW_GOLEM_MODE_TWEAKER.get()) && minecraft.options.keyShift.isDown()) {
+            ClientPacketDistributor.sendToServer(new SwitchTweakerTargetModePayload(event.getScrollDeltaY() < 0));
+            event.setCanceled(true);
+        } else if (itemStack.is(ItemRegistry.SNOW_GOLEM_MODE_TWEAKER.get()) && minecraft.options.keySprint.isDown()) {
+            ClientPacketDistributor.sendToServer(new SwitchTweakerStatusModePayload(event.getScrollDeltaY() < 0));
             event.setCanceled(true);
         }
     }
@@ -87,11 +103,23 @@ public class ClientGameEvents {
         ItemStack mainHandItem = player.getMainHandItem();
         ItemStack offHandItem = player.getOffhandItem();
         GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
-//        guiGraphics.pose().pushPose();
-//        guiGraphics.pose().translate(0F, 0F, 4932F);        // 显示在原版gui的上方
+        HitResult pick = instance.hitResult;
+        HitResult.Type pickType = pick.getType();
+        float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(true);
+        CoordinateConverter converter = new CoordinateConverter(partialTick);
+        HudContext hudCtx = new HudContext();
+
         //gui队列
         GuiHandler.itemInHandBSFWeapon(guiGraphics, mainHandItem, offHandItem);
-//        guiGraphics.pose().popPose();
+        if (pickType == HitResult.Type.ENTITY) {
+            Entity entity1 = ((EntityHitResult) pick).getEntity();
+            GuiHandler.pickEntityBSFSnowGolem(guiGraphics, converter, entity1, partialTick, hudCtx);
+            GuiHandler.pickEntityBSFDummy(guiGraphics, entity1);
+        }
+        if (!player.isSpectator()) {
+            GuiHandler.itemInHandSnowGolemModeTweaker(guiGraphics, mainHandItem, offHandItem, hudCtx);
+        }
+        GuiHandler.specialModeText(guiGraphics, hudCtx);
     }
 
     @SubscribeEvent

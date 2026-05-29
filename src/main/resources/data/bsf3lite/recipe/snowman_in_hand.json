@@ -7,7 +7,7 @@
   ],
   "key": {
     "W": "minecraft:snow_block",
-    "R": "minecraft:ice",
+    "R": "bsf3lite:smart_snow_block",
     "V": "minecraft:lever",
     "N": "minecraft:stick"
   },

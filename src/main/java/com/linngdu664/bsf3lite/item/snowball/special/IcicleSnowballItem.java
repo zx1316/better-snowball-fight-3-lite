@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 public class IcicleSnowballItem extends AbstractSnowStorageSnowballItem {
     public IcicleSnowballItem() {
-        super("icicle_snowball", Rarity.EPIC, new SnowballProperties().idForTank(31));
+        super("icicle_snowball", Rarity.RARE, new SnowballProperties().idForTank(31));
     }
 
     @Override

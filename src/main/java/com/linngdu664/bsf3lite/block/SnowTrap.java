@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.block;
 
 import com.linngdu664.bsf3lite.Main;
+import com.linngdu664.bsf3lite.entity.golem.AbstractBSFSnowGolemEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -93,8 +94,8 @@ public class SnowTrap extends Block {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
-        if (entity instanceof LivingEntity livingEntity && level instanceof ServerLevel serverLevel) {
-            if (!(livingEntity instanceof SnowGolem)) {
+        if (entity instanceof LivingEntity livingEntity && !level.isClientSide()) {
+            if (!(livingEntity instanceof AbstractBSFSnowGolemEntity) && !(livingEntity instanceof SnowGolem)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 4));
                 if (livingEntity.getTicksFrozen() < 200) {
                     livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 160);
@@ -104,9 +105,9 @@ public class SnowTrap extends Block {
             double x = pos.getX() + 0.5;
             double y = pos.getY() + 0.5;
             double z = pos.getZ() + 0.5;
-            serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, x, y, z, 200, 0, 0, 0, 0.32);
-            serverLevel.playSound(null, x, y, z, SoundEvents.PLAYER_HURT_FREEZE, SoundSource.NEUTRAL, 1.0F, 1.0F / (serverLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-            serverLevel.playSound(null, x, y, z, SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, x, y, z, 200, 0, 0, 0, 0.32);
+            level.playSound(null, x, y, z, SoundEvents.PLAYER_HURT_FREEZE, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+            level.playSound(null, x, y, z, SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
     }
 

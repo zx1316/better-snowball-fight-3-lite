@@ -20,6 +20,7 @@ public class ParticleRegistry {
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> GENERATOR_FIX = PARTICLES.register("generator_fix", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> GENERATOR_PUSH = PARTICLES.register("generator_push", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> IMPLOSION_SNOWBALL_CANNON = PARTICLES.register("implosion_snowball_cannon", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SNOW_GOLEM_EQUIP_PARTICLE = PARTICLES.register("snow_golem_equip", () -> new SimpleParticleType(false));
 
     @SubscribeEvent
     public static void registerParticleProvider(RegisterParticleProvidersEvent event) {
@@ -28,5 +29,6 @@ public class ParticleRegistry {
         event.registerSpriteSet(ParticleRegistry.GENERATOR_FIX.get(), GeneratorFix.Provider::new);
         event.registerSpriteSet(ParticleRegistry.GENERATOR_PUSH.get(), GeneratorPush.Provider::new);
         event.registerSpriteSet(ParticleRegistry.IMPLOSION_SNOWBALL_CANNON.get(), ImplosionSnowballCannonParticle.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.SNOW_GOLEM_EQUIP_PARTICLE.get(), SnowGolemEquipParticle.Provider::new);
     }
 }

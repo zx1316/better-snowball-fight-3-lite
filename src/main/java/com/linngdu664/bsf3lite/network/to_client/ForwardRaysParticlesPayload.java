@@ -11,8 +11,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
-public record ForwardRaysParticlesPayload(ForwardRaysParticlesParas paras,
-                                          int particleType) implements CustomPacketPayload {
+public record ForwardRaysParticlesPayload(ForwardRaysParticlesParas paras, int particleType) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<ForwardRaysParticlesPayload> TYPE = new CustomPacketPayload.Type<>(Main.makeMyIdentifier("forward_rays_particles"));
     public static final StreamCodec<ByteBuf, ForwardRaysParticlesPayload> STREAM_CODEC = StreamCodec.composite(
             ForwardRaysParticlesParas.STREAM_CODEC, ForwardRaysParticlesPayload::paras,

@@ -56,7 +56,7 @@ public class ImplosionSnowballCannonItem extends AbstractBSFWeaponItem {
     public static final double RECOIL = 0.5;
 
     public ImplosionSnowballCannonItem() {
-        super("implosion_snowball_cannon", 1000, Rarity.EPIC, TYPE_FLAG);
+        super("implosion_snowball_cannon", 1000, Rarity.RARE, TYPE_FLAG);
     }
 
     @Override

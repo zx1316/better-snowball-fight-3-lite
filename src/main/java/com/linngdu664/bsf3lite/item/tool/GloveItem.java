@@ -22,7 +22,7 @@ public class GloveItem extends AbstractBSFEnhanceableToolItem {
     private final int cd;
 
     public GloveItem() {
-        super("glove", Rarity.UNCOMMON, 114);
+        super("glove", Rarity.COMMON, 114);
         this.cd = 6;
     }
 

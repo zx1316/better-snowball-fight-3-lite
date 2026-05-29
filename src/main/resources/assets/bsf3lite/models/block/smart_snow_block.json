@@ -1,0 +1,8 @@
+{
+  "parent": "bsf3lite:custom/smart_snow_block",
+  "textures": {
+    "all": "bsf3lite:block/smart_snow_block",
+    "particle": "bsf3lite:block/smart_snow_block",
+    "0": "bsf3lite:block/smart_snow_block"
+  }
+}

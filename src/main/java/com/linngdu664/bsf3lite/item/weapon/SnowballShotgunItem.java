@@ -41,7 +41,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     public static final int TYPE_FLAG = 8;
 
     public SnowballShotgunItem() {
-        super("snowball_shotgun", 1145, Rarity.EPIC, TYPE_FLAG);
+        super("snowball_shotgun", 1145, Rarity.RARE, TYPE_FLAG);
     }
 
     @Override

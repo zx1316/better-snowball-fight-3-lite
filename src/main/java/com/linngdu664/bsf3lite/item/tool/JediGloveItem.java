@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 public class JediGloveItem extends GloveItem {
     public JediGloveItem() {
-        super("jedi_glove", Rarity.EPIC, 514, 12);
+        super("jedi_glove", Rarity.UNCOMMON, 514, 12);
     }
 
     @Override

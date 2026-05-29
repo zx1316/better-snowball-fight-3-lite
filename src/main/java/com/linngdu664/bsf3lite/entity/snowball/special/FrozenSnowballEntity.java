@@ -1,6 +1,7 @@
 package com.linngdu664.bsf3lite.entity.snowball.special;
 
 import com.linngdu664.bsf3lite.block.entity.CriticalSnowEntity;
+import com.linngdu664.bsf3lite.entity.golem.AbstractBSFSnowGolemEntity;
 import com.linngdu664.bsf3lite.entity.snowball.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf3lite.entity.snowball.util.ILaunchAdjustment;
 import com.linngdu664.bsf3lite.entity.snowball.util.LaunchFrom;
@@ -86,7 +87,7 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
                         }
                     }
                 }
-                List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, new AABB(location, location).inflate(4), p -> !(p instanceof SnowGolem) && !(p instanceof Player player && player.isSpectator()) && distanceToSqr(p) < frozenRange * frozenRange);
+                List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, new AABB(location, location).inflate(4), p -> !(p instanceof AbstractBSFSnowGolemEntity) && !(p instanceof SnowGolem) && !(p instanceof Player player && player.isSpectator()) && distanceToSqr(p) < frozenRange * frozenRange);
                 for (LivingEntity entity : list) {
                     int frozenTicks = getFrozenTicks();
                     if (frozenTicks > 0) {

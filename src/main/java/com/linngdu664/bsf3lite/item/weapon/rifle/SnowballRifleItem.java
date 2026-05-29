@@ -30,7 +30,7 @@ public class SnowballRifleItem extends AbstractBSFWeaponItem {
     public static final int TYPE_FLAG = 2;
 
     public SnowballRifleItem() {
-        super("snowball_rifle", 514, Rarity.UNCOMMON, TYPE_FLAG);
+        super("snowball_rifle", 514, Rarity.COMMON, TYPE_FLAG);
     }
 
     protected SnowballRifleItem(String id, Rarity rarity) {

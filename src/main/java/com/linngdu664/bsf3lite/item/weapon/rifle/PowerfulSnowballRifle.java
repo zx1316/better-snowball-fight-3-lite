@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PowerfulSnowballRifle extends SnowballRifleItem {
     public PowerfulSnowballRifle() {
-        super("powerful_snowball_rifle", Rarity.RARE);
+        super("powerful_snowball_rifle", Rarity.UNCOMMON);
     }
 
     @Override

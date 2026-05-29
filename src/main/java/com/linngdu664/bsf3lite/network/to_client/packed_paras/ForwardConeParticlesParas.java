@@ -6,8 +6,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public record ForwardConeParticlesParas(Vec3 eyePos, Vec3 sightVec, float r, float aStep, float rStep,
-                                        double loweredVision) {
+public record ForwardConeParticlesParas(Vec3 eyePos, Vec3 sightVec, float r, float aStep, float rStep, double loweredVision) {
     public static final StreamCodec<ByteBuf, ForwardConeParticlesParas> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public void encode(@NotNull ByteBuf byteBuf, @NotNull ForwardConeParticlesParas paras) {

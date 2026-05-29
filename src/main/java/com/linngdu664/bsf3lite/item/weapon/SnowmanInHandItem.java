@@ -76,7 +76,7 @@ public class SnowmanInHandItem extends Item {
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("snowman_in_hand")))
                 .stacksTo(1)
                 .durability(256)
-                .rarity(Rarity.EPIC)
+                .rarity(Rarity.RARE)
                 .enchantable(25));
     }
 

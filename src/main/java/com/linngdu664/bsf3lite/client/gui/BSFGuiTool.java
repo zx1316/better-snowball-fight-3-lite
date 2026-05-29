@@ -1,10 +1,12 @@
 package com.linngdu664.bsf3lite.client.gui;
 
-import com.linngdu664.bsf3lite.Main;
-import com.mojang.blaze3d.platform.Window;
+import com.linngdu664.bsf3lite.client.gui.util.TextureOption;
+import com.linngdu664.bsf3lite.client.gui.util.V2I;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 
 /**
@@ -12,19 +14,6 @@ import net.minecraft.world.phys.Vec2;
  * Note: Text and item floating coords should use pose translate and methods in GuiGraphicsExtractor
  */
 public class BSFGuiTool {
-    public static final GuiTexture SNOWBALL_FRAME = new GuiTexture("textures/gui/snowball_frame.png", 23, 62);
-    public static final GuiImage SNOWBALL_SLOT_FRAME_GUI = new GuiImage(SNOWBALL_FRAME, 0, 0, 23, 62);
-//    public static final GuiTexture TWEAKER_FRAME = new GuiTexture("textures/gui/tweaker_frame.png", 114, 106);
-//    public static final GuiImage TWEAKER_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 1, 0, 22, 82);
-//    public static final GuiImage TWEAKER_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 24, 0, 22, 102);
-//    public static final GuiImage TWEAKER_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 0, 82, 24, 24);
-//    public static final GuiImage GOLEM_LOCATOR_GUI = new GuiImage(TWEAKER_FRAME, 47, 0, 22, 82);
-//    public static final GuiImage GOLEM_STATUS_GUI = new GuiImage(TWEAKER_FRAME, 70, 0, 22, 102);
-//    public static final GuiImage GOLEM_SELECTOR_GUI = new GuiImage(TWEAKER_FRAME, 46, 82, 24, 24);
-//    public static final GuiImage SETTER_ARROW_GUI = new GuiImage(TWEAKER_FRAME, 92, 1, 8, 20);
-//    public static final GuiImage ADVANCE_MODE_GUI = new GuiImage(TWEAKER_FRAME, 92, 60, 22, 22);
-//    public static final GuiImage EQUIPMENT_SLOT_FRAME_GUI = new GuiImage(TWEAKER_FRAME, 92, 84, 22, 22);
-
     /**
      * 渲染进度条
      *
@@ -93,8 +82,8 @@ public class BSFGuiTool {
      * @param font          字体
      * @param msg           装备描述
      */
-    /*public static void renderEquipIntroduced(GuiGraphicsExtractor guiGraphics, Vec2 equipPoint, Vec2 framePoint, int lineXDistance, int color, ItemStack itemStack, Font font, Component msg) {
-        Vec2 linkPoint = new Vec2(framePoint.x + EQUIPMENT_SLOT_FRAME_GUI.width, framePoint.y + (float) EQUIPMENT_SLOT_FRAME_GUI.height / 2);
+    public static void renderEquipIntroduced(GuiGraphicsExtractor guiGraphics, Vec2 equipPoint, Vec2 framePoint, int lineXDistance, int color, ItemStack itemStack, Font font, Component msg) {
+        Vec2 linkPoint = new Vec2(framePoint.x + Textures.EQUIPMENT_SLOT_FRAME_GUI.width(), framePoint.y + (float) Textures.EQUIPMENT_SLOT_FRAME_GUI.height() / 2);
         Vec2 xPoint = new Vec2(equipPoint.x - lineXDistance, linkPoint.y);
         if (xPoint.x < linkPoint.x) {
             xPoint = linkPoint;
@@ -104,11 +93,11 @@ public class BSFGuiTool {
         renderLineTool(guiGraphics, linkPoint, xPoint, d, color, true, 0.3f, 0xff000000);
         renderFillSquareTool(guiGraphics, equipPoint.add(new Vec2(-2f, -1f)), equipPoint.add(new Vec2(2f, 3f)), 0xff000000);
         renderFillSquareTool(guiGraphics, equipPoint.add(new Vec2(-1f, 0)), equipPoint.add(new Vec2(1f, 2f)), color);
-        EQUIPMENT_SLOT_FRAME_GUI.render(guiGraphics, (int) framePoint.x, (int) framePoint.y);
-        guiGraphics.renderItem(itemStack, (int) (framePoint.x + 3), (int) (framePoint.y + 3));
+        Textures.EQUIPMENT_SLOT_FRAME_GUI.render(guiGraphics, TextureOption.DEFAULT, (int) framePoint.x, (int) framePoint.y);
+        guiGraphics.item(itemStack, (int) (framePoint.x + 3), (int) (framePoint.y + 3));
         FormattedCharSequence formattedcharsequence = msg.getVisualOrderText();
-        guiGraphics.drawString(font, formattedcharsequence, framePoint.x - font.width(formattedcharsequence), framePoint.y + 7, color, true);
-    }*/
+        guiGraphics.text(font, formattedcharsequence, (int) (framePoint.x - font.width(formattedcharsequence)), (int) (framePoint.y + 7), color, true);
+    }
 
     public static void renderLineTool(GuiGraphicsExtractor guiGraphics, Vec2 p1, Vec2 p2, float d, int color, boolean isDown, float padding, int padColor) {
         Vec2 ad = p2.add(p1.negated());
@@ -125,6 +114,10 @@ public class BSFGuiTool {
             GuiUtil.fill(guiGraphics, p1.add(v2), p1, p2, p2.add(v2), color);
             GuiUtil.fill(guiGraphics, p1.add(v2s), p1, p2, p2.add(v2s), padColor);
         }
+    }
+
+    public static void renderFillSquareTool(GuiGraphicsExtractor guiGraphics, Vec2 a, Vec2 b, int pColor) {
+        GuiUtil.fill(guiGraphics, a.x, a.y, b.x, b.y, pColor);
     }
 
     public static void renderOutline(GuiGraphicsExtractor guiGraphics, float x, float y, float width, float height, int color) {
@@ -147,62 +140,4 @@ public class BSFGuiTool {
         GuiUtil.fill(guiGraphics, x, y + width, x + width, y2 - width, color);
         GuiUtil.fill(guiGraphics, x2 - width, y + width, x2, y2 - width, color);
     }
-
-    public static class GuiTexture {
-        public Identifier texture;
-        public int wholeWidth;
-        public int wholeHeight;
-
-        public GuiTexture(String path, int wholeWidth, int wholeHeight) {
-            this.texture = Main.makeMyIdentifier(path);
-            this.wholeWidth = wholeWidth;
-            this.wholeHeight = wholeHeight;
-        }
-    }
-
-    public static class GuiImage {
-        public GuiTexture guiTexture;
-        public int widthOffset;
-        public int heightOffset;
-        public int width;
-        public int height;
-
-        public GuiImage(GuiTexture texture, int widthOffset, int heightOffset, int width, int height) {
-            this.guiTexture = texture;
-            this.widthOffset = widthOffset;
-            this.heightOffset = heightOffset;
-            this.width = width;
-            this.height = height;
-        }
-
-        public V2I render(GuiGraphicsExtractor guiGraphics, int x, int y) {
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED_PREMULTIPLIED_ALPHA, guiTexture.texture, x, y, widthOffset, heightOffset, width, height, guiTexture.wholeWidth, guiTexture.wholeHeight);
-            return new V2I(x, y);
-        }
-
-        public V2I renderCenterVertically(GuiGraphicsExtractor guiGraphics, Window window, int x) {
-            return render(guiGraphics, x, GuiUtil.heightFrameCenter(window, this.height));
-        }
-
-        public V2I renderCenterHorizontally(GuiGraphicsExtractor guiGraphics, Window window, int y) {
-            return render(guiGraphics, GuiUtil.widthFrameCenter(window, this.width), y);
-        }
-
-        public V2I renderRatio(GuiGraphicsExtractor guiGraphics, Window window, double widthRatio, double heightRatio) {
-            return renderRatio(guiGraphics, window, widthRatio, heightRatio, 0, 0);
-        }
-
-        public V2I renderRatio(GuiGraphicsExtractor guiGraphics, Window window, double widthRatio, double heightRatio, int xOffset, int yOffset) {
-            return render(guiGraphics, GuiUtil.widthFrameRatio(window, this.width, widthRatio) + xOffset, GuiUtil.heightFrameRatio(window, this.height, heightRatio) + yOffset);
-        }
-    }
-
-//    public static class VarObj {
-//        public Component tLocatorComponent;
-//        public Component sLocatorComponent;
-//        public Component tStatusComponent;
-//        public Component sStatusComponent;
-//        public BSFGuiTool.V2I locateV2I;
-//        public BSFGuiTool.V2I statusV2I;
-//    }
 }

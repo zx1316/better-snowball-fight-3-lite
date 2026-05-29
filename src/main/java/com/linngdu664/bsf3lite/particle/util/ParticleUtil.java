@@ -57,7 +57,7 @@ public class ParticleUtil {
     }
 
     public static void spawnForwardRaysParticles(Level pLevel, ParticleOptions particleOptions, ForwardRaysParticlesParas paras) {
-        spawnForwardRaysParticles(pLevel, particleOptions, paras.pos1(), paras.pos2(), paras.vec(), paras.vMin(), paras.vMax(), paras.num());
+        spawnForwardRaysParticles(pLevel, particleOptions, paras.pos1(), paras.pos2(), paras.velDirection(), paras.vMin(), paras.vMax(), paras.num());
     }
 
     /**
@@ -68,19 +68,20 @@ public class ParticleUtil {
      * @param particleOptions The type of the particle.
      * @param pos1            Cuboid vertex 1
      * @param pos2            Cuboid vertex 2
-     * @param vec             Velocity vector
+     * @param velDirection    Velocity vector
      * @param vMin            Speed minimum
      * @param vMax            Speed maximum
      * @param num             Number of particles
      */
-    public static void spawnForwardRaysParticles(Level pLevel, ParticleOptions particleOptions, Vec3 pos1, Vec3 pos2, Vec3 vec, double vMin, double vMax, int num) {
+    public static void spawnForwardRaysParticles(Level pLevel, ParticleOptions particleOptions, Vec3 pos1, Vec3 pos2, Vec3 velDirection, double vMin, double vMax, int num) {
         double dx, dy, dz;
         RandomSource randomSource = pLevel.getRandom();
+        Vec3 normalizedV = velDirection.normalize();
         for (int i = 0; i < num; i++) {
             dx = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.x, pos2.x);
             dy = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.y, pos2.y);
             dz = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.z, pos2.z);
-            Vec3 v = vec.normalize().scale(BSFCommonUtil.randDouble(randomSource, vMin, vMax));
+            Vec3 v = normalizedV.scale(BSFCommonUtil.randDouble(randomSource, vMin, vMax));
             pLevel.addParticle(particleOptions, dx, dy, dz, v.x, v.y, v.z);
         }
     }
@@ -90,20 +91,21 @@ public class ParticleUtil {
      * @param particleOptions The type of the particle.
      * @param pos1            Cuboid vertex 1
      * @param pos2            Cuboid vertex 2
-     * @param vec             Velocity vector
+     * @param velDirection    Velocity vector
      * @param inertia         inertia vector
      * @param vMin            Speed minimum
      * @param vMax            Speed maximum
      * @param num             Number of particles
      */
-    public static void spawnForwardRaysParticles(Level pLevel, ParticleOptions particleOptions, Vec3 pos1, Vec3 pos2, Vec3 vec, Vec3 inertia, double vMin, double vMax, int num) {
+    public static void spawnForwardRaysParticles(Level pLevel, ParticleOptions particleOptions, Vec3 pos1, Vec3 pos2, Vec3 velDirection, Vec3 inertia, double vMin, double vMax, int num) {
         double dx, dy, dz;
         RandomSource randomSource = pLevel.getRandom();
+        Vec3 normalizedV = velDirection.normalize();
         for (int i = 0; i < num; i++) {
             dx = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.x, pos2.x);
             dy = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.y, pos2.y);
             dz = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.z, pos2.z);
-            Vec3 v = vec.normalize().scale(BSFCommonUtil.randDouble(randomSource, vMin, vMax)).add(inertia);
+            Vec3 v = normalizedV.scale(BSFCommonUtil.randDouble(randomSource, vMin, vMax)).add(inertia);
             pLevel.addParticle(particleOptions, dx, dy, dz, v.x, v.y, v.z);
         }
     }
