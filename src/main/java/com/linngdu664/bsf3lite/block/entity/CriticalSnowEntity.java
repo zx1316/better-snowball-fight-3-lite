@@ -2,7 +2,6 @@ package com.linngdu664.bsf3lite.block.entity;
 
 import com.linngdu664.bsf3lite.registry.BlockEntityRegistry;
 import com.linngdu664.bsf3lite.registry.BlockRegistry;
-import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +16,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.NonNull;
 
 public class CriticalSnowEntity extends BlockEntity {
-    private int targetAge = BSFCommonUtil.staticRandInt(100, 140);
+    private int targetAge;
     private int age;
 
     public CriticalSnowEntity(BlockPos pPos, BlockState pBlockState) {
@@ -25,8 +24,11 @@ public class CriticalSnowEntity extends BlockEntity {
     }
 
     public static <T> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
-        if (!level.isClientSide()) {
-            CriticalSnowEntity criticalSnowEntity = (CriticalSnowEntity) blockEntity;
+        if (!level.isClientSide() && blockEntity instanceof CriticalSnowEntity criticalSnowEntity) {
+            if (criticalSnowEntity.targetAge <= 0) {
+                criticalSnowEntity.targetAge = level.getRandom().nextInt(100, 140);
+                criticalSnowEntity.setChanged();
+            }
             if (criticalSnowEntity.age < criticalSnowEntity.targetAge) {
                 criticalSnowEntity.age++;
                 criticalSnowEntity.setChanged();
@@ -56,14 +58,14 @@ public class CriticalSnowEntity extends BlockEntity {
     @Override
     protected void loadAdditional(@NonNull ValueInput input) {
         super.loadAdditional(input);
-        age = input.getIntOr("age", 0);
-        targetAge = input.getIntOr("target_age", 0);
+        age = input.getIntOr("Age", 0);
+        targetAge = input.getIntOr("TargetAge", 0);
     }
 
     @Override
     protected void saveAdditional(@NonNull ValueOutput output) {
         super.saveAdditional(output);
-        output.putInt("age", age);
-        output.putInt("target_age", targetAge);
+        output.putInt("Age", age);
+        output.putInt("TargetAge", targetAge);
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -28,7 +29,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
     protected int strafingTime = -1;
     protected boolean strafingClockwise;
     protected boolean strafingBackwards;
-    protected Vec3 lastPos;
+    protected @NotNull Vec3 lastPos = Vec3.ZERO;
 
     public HostileGolemRangedAttackGoal(AbstractBSFSnowGolemEntity golem, double pSpeedModifier, int pAttackInterval, float pAttackRadius) {
         this.golem = golem;
@@ -41,9 +42,9 @@ public class HostileGolemRangedAttackGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        LivingEntity livingEntity = golem.getTarget();
-        if (livingEntity != null && livingEntity.isAlive()) {
-            lastPos = golem.getTarget().getEyePosition();
+        LivingEntity target = golem.getTarget();
+        if (target != null && target.isAlive()) {
+            lastPos = target.getEyePosition();
             return true;
         }
         return false;
@@ -68,6 +69,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
         return true;
     }
 
+    // todo 末影龙
     protected boolean canShoot(LivingEntity pTarget) {
         ItemStack weapon = golem.getWeapon();
         if (weapon.isEmpty() || golem.hasEffect(EffectRegistry.WEAPON_JAM)) {

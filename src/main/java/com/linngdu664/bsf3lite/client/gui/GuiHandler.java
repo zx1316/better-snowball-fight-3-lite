@@ -76,7 +76,7 @@ public class GuiHandler {
             if (weapon != ItemStack.EMPTY) {
                 list.add(new Pair<>(entityPosition.add(entity.getMiddleModelForward(partialTick, 4).scale(0.7).add(0, 1.3, 0)), v2 -> {
                     V2I v2IRatio = GuiUtil.v2IRatio(window, Textures.EQUIPMENT_SLOT_FRAME_GUI.width(), Textures.EQUIPMENT_SLOT_FRAME_GUI.height(), 0.3, 0.3);
-                    BSFGuiTool.renderEquipIntroduced(guiGraphics, v2, v2IRatio.toVec2f(), GuiUtil.widthWinRatio(window, 0.1), 0xffffffff, weapon, instance.font, Component.translatable("weapon.tip"));
+                    BSFGuiTool.renderEquipmentInfo(guiGraphics, v2, v2IRatio.toVec2f(), GuiUtil.widthWinRatio(window, 0.1), 0xffffffff, weapon, instance.font, Component.translatable("weapon.tip"));
                     float percent = (float) (weapon.getMaxDamage() - weapon.getDamageValue()) / weapon.getMaxDamage();
                     BSFGuiTool.renderProgressBar(guiGraphics, new V2I(v2IRatio.x() - 4, v2IRatio.y() + 23), new V2I(30, 6), 2, 0xffffffff, percent > 0.3 ? 0xff85e900 : 0xfffc3d49, percent);
                 }));
@@ -85,7 +85,7 @@ public class GuiHandler {
             if (ammo != ItemStack.EMPTY) {
                 list.add(new Pair<>(entityPosition.add(viewVector0Y.scale(-0.3).add(0, 1.2, 0)), v2 -> {
                     V2I v2IRatio = GuiUtil.v2IRatio(window, Textures.EQUIPMENT_SLOT_FRAME_GUI.width(), Textures.EQUIPMENT_SLOT_FRAME_GUI.height(), 0.3, 0.5);
-                    BSFGuiTool.renderEquipIntroduced(guiGraphics, v2, v2IRatio.toVec2f(), GuiUtil.widthWinRatio(window, 0.07), 0xffffffff, ammo, instance.font, Component.translatable("snowball.tip"));
+                    BSFGuiTool.renderEquipmentInfo(guiGraphics, v2, v2IRatio.toVec2f(), GuiUtil.widthWinRatio(window, 0.07), 0xffffffff, ammo, instance.font, Component.translatable("snowball.tip"));
                     float percent = (float) (ammo.getMaxDamage() - ammo.getDamageValue()) / ammo.getMaxDamage();
                     BSFGuiTool.renderProgressBar(guiGraphics, new V2I(v2IRatio.x() - 4, v2IRatio.y() + 23), new V2I(30, 6), 2, 0xffffffff, percent > 0.3 ? 0xff85e900 : 0xfffc3d49, percent);
                 }));

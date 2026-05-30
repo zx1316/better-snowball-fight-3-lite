@@ -40,7 +40,6 @@ public class SmartSnowBlockItem extends BlockItem {
             builder.accept(Component.translatable("smart_snow_block3.tooltip").withStyle(ChatFormatting.GRAY));
             builder.accept(Component.translatable("smart_snow_block4.tooltip").withStyle(ChatFormatting.GRAY));
             builder.accept(Component.translatable("smart_snow_block5.tooltip").withStyle(ChatFormatting.GRAY));
-            builder.accept(Component.translatable("smart_snow_block6.tooltip").withStyle(ChatFormatting.GRAY));
             builder.accept(Component.translatable("smart_snow_block7.tooltip").withStyle(ChatFormatting.BLUE));
             builder.accept(Component.translatable("smart_snow_block8.tooltip").withStyle(ChatFormatting.GRAY));
             builder.accept(Component.translatable("smart_snow_block9.tooltip").withStyle(ChatFormatting.BLUE));

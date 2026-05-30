@@ -15,10 +15,10 @@ public record FloatColoredRectangleRenderState(RenderPipeline pipeline, TextureS
     }
 
     public void buildVertices(VertexConsumer vertexConsumer) {
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x0(), this.y0()).setColor(this.col1());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x0(), this.y1()).setColor(this.col2());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x1(), this.y1()).setColor(this.col2());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x1(), this.y0()).setColor(this.col1());
+        vertexConsumer.addVertexWith2DPose(pose, x0, y0).setColor(col1);
+        vertexConsumer.addVertexWith2DPose(pose, x0, y1).setColor(col2);
+        vertexConsumer.addVertexWith2DPose(pose, x1, y1).setColor(col2);
+        vertexConsumer.addVertexWith2DPose(pose, x1, y0).setColor(col1);
     }
 
     private static @Nullable ScreenRectangle getBounds(float x0, float y0, float x1, float y1, Matrix3x2fc pose, @Nullable ScreenRectangle scissorArea) {

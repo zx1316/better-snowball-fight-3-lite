@@ -15,10 +15,10 @@ public record FloatBlitRenderState(RenderPipeline pipeline, TextureSetup texture
     }
 
     public void buildVertices(VertexConsumer vertexConsumer) {
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x0(), this.y0()).setUv(this.u0(), this.v0()).setColor(this.color());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x0(), this.y1()).setUv(this.u0(), this.v1()).setColor(this.color());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x1(), this.y1()).setUv(this.u1(), this.v1()).setColor(this.color());
-        vertexConsumer.addVertexWith2DPose(this.pose(), this.x1(), this.y0()).setUv(this.u1(), this.v0()).setColor(this.color());
+        vertexConsumer.addVertexWith2DPose(pose, x0, y0).setUv(u0, v0).setColor(color);
+        vertexConsumer.addVertexWith2DPose(pose, x0, y1).setUv(u0, v1).setColor(color);
+        vertexConsumer.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(color);
+        vertexConsumer.addVertexWith2DPose(pose, x1, y0).setUv(u1, v0).setColor(color);
     }
 
     private static @Nullable ScreenRectangle getBounds(float x0, float y0, float x1, float y1, Matrix3x2f pose, @Nullable ScreenRectangle scissorArea) {

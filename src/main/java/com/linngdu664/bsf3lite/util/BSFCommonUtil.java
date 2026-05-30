@@ -12,12 +12,9 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class BSFCommonUtil {
-    private static final Random random = new Random();
-
     // Calculate the cosine of the angle between 2 vectors.
     public static double vec2AngleCos(double x1, double y1, double x2, double y2) {
         return Mth.invSqrt(lengthSqr(x1, y1)) * Mth.invSqrt(lengthSqr(x2, y2)) * (x1 * x2 + y1 * y2);
@@ -66,13 +63,6 @@ public class BSFCommonUtil {
     }
 
     /**
-     * 不要在能获取到RandomSource对象时用这个方法！
-     */
-    public static int staticRandInt(int a, int b) {
-        return random.nextInt(a, b);
-    }
-
-    /**
      * @param r     radius
      * @param theta yaw in radian [0, 2*pi]
      * @param phi   pitch in radian [-pi/2, pi/2]
@@ -92,18 +82,6 @@ public class BSFCommonUtil {
 
     public static boolean eq(float a, float b) {
         return Math.abs(a - b) < 1e-5;
-    }
-
-    /**
-     * 自定义二次函数
-     *
-     * @param x    x值
-     * @param maxX x最大值
-     * @param maxY y最大值
-     * @return y值
-     */
-    public static double quadraticFunction(double x, double maxX, double maxY) {
-        return 4 * x * maxY * (maxX - x) / (maxX * maxX);
     }
 
     public static boolean pointOnTheFrontConeArea(Vec3 p1v, Vec3 p1, Vec3 p2, double pointToVectorMaxDistance, double pointToVectorNormalPlaneMaxDistance) {
