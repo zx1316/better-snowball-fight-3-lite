@@ -17,8 +17,10 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 public class RendererRegistry {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(IceSkatesModel.LAYER_LOCATION, IceSkatesModel::createBodyLayer);
-        event.registerLayerDefinition(SnowFallBootsModel.LAYER_LOCATION, SnowFallBootsModel::createBodyLayer);
+        event.registerLayerDefinition(IceSkatesModel.LEFT_LAYER, IceSkatesModel::createBodyLayerLeft);
+        event.registerLayerDefinition(IceSkatesModel.RIGHT_LAYER, IceSkatesModel::createBodyLayerRight);
+        event.registerLayerDefinition(SnowFallBootsModel.LEFT_LAYER, SnowFallBootsModel::createBodyLayerLeft);
+        event.registerLayerDefinition(SnowFallBootsModel.RIGHT_LAYER, SnowFallBootsModel::createBodyLayerRight);
         event.registerLayerDefinition(BSFSnowGolemModel.LAYER_LOCATION, BSFSnowGolemModel::createBodyLayer);
     }
 

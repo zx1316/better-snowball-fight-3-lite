@@ -13,7 +13,8 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
 public class SnowFallBootsModel extends EntityModel<EntityRenderState> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Main.makeMyIdentifier("snow_fall_boots"), "main");
+    public static final ModelLayerLocation LEFT_LAYER = new ModelLayerLocation(Main.makeMyIdentifier("snow_fall_boots"), "left");
+    public static final ModelLayerLocation RIGHT_LAYER = new ModelLayerLocation(Main.makeMyIdentifier("snow_fall_boots"), "right");
     public final ModelPart bone;
 
     public SnowFallBootsModel(ModelPart root) {
@@ -21,13 +22,7 @@ public class SnowFallBootsModel extends EntityModel<EntityRenderState> {
         this.bone = root.getChild("bone");
     }
 
-    @SuppressWarnings("unused")
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-
-        PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(0.0F, 11.0F, 0.0F));
-
+    private static LayerDefinition createBodyLayerCommon(MeshDefinition meshdefinition, PartDefinition bone) {
         PartDefinition bone2 = bone.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, 6.0F, -3.5F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(0, 11).addBox(-3.0F, 9.0F, -4.0F, 6.0F, 1.0F, 7.0F, new CubeDeformation(0.0F))
@@ -45,6 +40,20 @@ public class SnowFallBootsModel extends EntityModel<EntityRenderState> {
         PartDefinition cube_r4 = bone3.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(19, 11).addBox(-1.0F, -0.8322F, -1.6464F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(1.2F, 9.4F, 2.6F, 0.7854F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
+    }
+
+    public static LayerDefinition createBodyLayerLeft() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(2.0F, 13.0F, 0.0F));
+        return createBodyLayerCommon(meshdefinition, bone);
+    }
+
+    public static LayerDefinition createBodyLayerRight() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(-2.0F, 13.0F, 0.0F));
+        return createBodyLayerCommon(meshdefinition, bone);
     }
 
     @Override
