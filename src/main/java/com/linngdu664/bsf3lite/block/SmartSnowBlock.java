@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
@@ -71,13 +72,15 @@ public class SmartSnowBlock extends HorizontalDirectionalBlock {
                     pLevel.levelEvent(2001, blockInWorld.getPos(), Block.getId(blockInWorld.getState()));
                 }
                 BSFSnowGolemEntity snowGolem = EntityRegistry.BSF_SNOW_GOLEM.get().create(pLevel, EntitySpawnReason.TRIGGERED);
+                RandomSource randomSource = pLevel.getRandom();
                 snowGolem.setOwnerReference(EntityReference.of(player));
                 snowGolem.setAliveRange(pStack.get(DataComponentRegistry.REGION));
-                snowGolem.setStyle((byte) (pLevel.getRandom().nextInt(0, AbstractBSFSnowGolemEntity.STYLE_NUM)));
+                snowGolem.setStyle((byte) (randomSource.nextInt(0, AbstractBSFSnowGolemEntity.STYLE_NUM)));
+                snowGolem.setPredictMotion(randomSource.nextFloat() < 0.1f);
                 BlockPos blockPos = blockPatternMatch.getBlock(0, 2, 0).getPos();
-                snowGolem.snapTo(blockPos.getX() + 0.5D, blockPos.getY() + 0.05D, blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+                snowGolem.snapTo(blockPos.getX() + 0.5, blockPos.getY() + 0.05, blockPos.getZ() + 0.5, 0.0F, 0.0F);
                 pLevel.addFreshEntity(snowGolem);
-                for (ServerPlayer serverplayer : pLevel.getEntitiesOfClass(ServerPlayer.class, snowGolem.getBoundingBox().inflate(5.0D))) {
+                for (ServerPlayer serverplayer : pLevel.getEntitiesOfClass(ServerPlayer.class, snowGolem.getBoundingBox().inflate(5.0))) {
                     CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, snowGolem);
                 }
                 for (int l = 0; l < getOrCreateSnowGolemFull().getHeight(); ++l) {

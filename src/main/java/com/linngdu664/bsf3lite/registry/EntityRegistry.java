@@ -27,7 +27,7 @@ public class EntityRegistry {
                     .sized(0.7F, 1.9F).clientTrackingRange(8).immuneTo(Blocks.POWDER_SNOW)
                     .build(ResourceKey.create(ENTITY_TYPES.getRegistryKey(), Main.makeMyIdentifier("bsf_snow_golem"))));
     public static final DeferredHolder<EntityType<?>, EntityType<HostileSnowGolemEntity>> HOSTILE_SNOW_GOLEM =
-            ENTITY_TYPES.register("region_controller_snow_golem", () -> EntityType.Builder.of(HostileSnowGolemEntity::new, MobCategory.MISC)
+            ENTITY_TYPES.register("hostile_snow_golem", () -> EntityType.Builder.of(HostileSnowGolemEntity::new, MobCategory.MISC)
                     .sized(0.7F, 1.9F).clientTrackingRange(8).immuneTo(Blocks.POWDER_SNOW)
                     .build(ResourceKey.create(ENTITY_TYPES.getRegistryKey(), Main.makeMyIdentifier("hostile_snow_golem"))));
     public static final DeferredHolder<EntityType<?>, EntityType<BSFDummyEntity>> BSF_DUMMY =

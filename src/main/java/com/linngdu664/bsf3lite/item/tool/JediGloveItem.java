@@ -34,7 +34,6 @@ public class JediGloveItem extends GloveItem {
             AABB aabb = player.getBoundingBox().inflate(3);
             List<AbstractBSFSnowballEntity> list = pLevel.getEntitiesOfClass(AbstractBSFSnowballEntity.class, aabb, p -> !player.equals(p.getOwner()) && p.canBeCaught());
             List<Snowball> list1 = pLevel.getEntitiesOfClass(Snowball.class, aabb, p -> !player.equals(p.getOwner()));
-            // todo check power
             PowerParticleOption particleOption = PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1f);
             for (AbstractBSFSnowballEntity snowball : list) {
                 ItemStack itemStack = snowball.getItem();

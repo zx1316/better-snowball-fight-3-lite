@@ -181,7 +181,7 @@
   "item.bsf3lite.smart_snow_block": "Smart Snow Block",
 
   "entity.bsf3lite.bsf_snow_golem": "Advanced Snow Golem",
-  "entity.bsf3lite.region_controller_snow_golem": "Advanced Snow Golem",
+  "entity.bsf3lite.hostile_snow_golem": "Hostile Advanced Snow Golem",
   "entity.bsf3lite.monster_gravity_executor": "Monster Gravity Field Generator",
   "entity.bsf3lite.monster_repulsion_executor": "Monster Repulsion Field Generator",
   "entity.bsf3lite.projectile_gravity_executor": "Projectile Gravity Field Generator",

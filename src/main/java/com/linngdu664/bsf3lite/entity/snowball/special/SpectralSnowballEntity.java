@@ -74,7 +74,6 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
         super.tick();
         Level level = level();
         if (level.isClientSide()) {
-            // todo change color and power
             level.addParticle(SpellParticleOption.create(ParticleTypes.INSTANT_EFFECT, 0xffffffff, 1f), xo, yo + 0.1, zo, 0, 0, 0);
         }
     }

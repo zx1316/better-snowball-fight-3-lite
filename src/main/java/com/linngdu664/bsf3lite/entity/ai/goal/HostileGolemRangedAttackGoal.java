@@ -74,23 +74,37 @@ public class HostileGolemRangedAttackGoal extends Goal {
             return false;
         }
         AbstractBSFWeaponItem weaponItem = (AbstractBSFWeaponItem) weapon.getItem();
-        float v = 3.0F;
+        float launchV = 3.0F;
         float acc = 1.0F;
         if (weaponItem.equals(ItemRegistry.POWERFUL_SNOWBALL_CANNON.get())) {
-            v = 4.0F;
+            launchV = 4.0F;
         } else if (weaponItem.equals(ItemRegistry.SNOWBALL_SHOTGUN.get())) {
-            v = 2.0F;
+            launchV = 2.0F;
             acc = 10.0F;
         }
+
+        double v = launchV * 0.98;  // 考虑到阻力，计算时假设初速度慢一点
         double h = pTarget.getEyeY() - golem.getEyeY();
         double dx = pTarget.getX() - golem.getX();
         double dz = pTarget.getZ() - golem.getZ();
         double x2 = BSFCommonUtil.lengthSqr(dx, dz);
-        double d = Math.sqrt(x2 + h * h);   // d是总距离
-        double x = Math.sqrt(x2);
+        double d = Math.sqrt(x2 + h * h);   // d 是总距离
+        double x = Math.sqrt(x2);       // x 是水平距离
         double cosTheta, sinTheta;
-        double k = 0.015 * x2 / (v * v);    // 0.5 * g / 400.0, g = 12
+        double k = 0.015 * x2 / (v * v);    // 0.5 * g / 400.0, 其中 g = 12
         cosTheta = 0.7071067811865475 / d * Math.sqrt(x2 - 2 * k * h + x * Math.sqrt(x2 - 4 * k * k - 4 * k * h));
+        if (golem.isPredictMotion()) {
+            Vec3 vel = pTarget.getEyePosition().subtract(lastPos);
+            double t = x / (v * cosTheta);      // t 是弹射物飞行时间
+            h += t * vel.y;
+            dx += t * vel.x;
+            dz += t * vel.z;
+            x2 = BSFCommonUtil.lengthSqr(dx, dz);
+            d = Math.sqrt(x2 + h * h);
+            x = Math.sqrt(x2);
+            k = 0.015 * x2 / (v * v);
+            cosTheta = 0.7071067811865475 / d * Math.sqrt(x2 - 2 * k * h + x * Math.sqrt(x2 - 4 * k * k - 4 * k * h));
+        }
         if (cosTheta > 1) {
             sinTheta = 0;
         } else {
@@ -99,7 +113,6 @@ public class HostileGolemRangedAttackGoal extends Goal {
                 sinTheta = -sinTheta;
             }
         }
-
         dx = dx / x * cosTheta;
         dz = dz / x * cosTheta;
         List<LivingEntity> list = golem.level().getEntitiesOfClass(LivingEntity.class, golem.getBoundingBox().inflate(x), p -> !p.isSpectator() && !golem.equals(p) && !pTarget.equals(p));
@@ -115,7 +128,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
             double r = Math.sqrt(BSFCommonUtil.lengthSqr(dx1, dz1));
             if (r < x && r * sinAlpha < Math.sqrt(BSFCommonUtil.lengthSqr(aabb.maxX - aabb.minX, aabb.maxZ - aabb.minZ)) * 0.5 + 0.8) {
                 double t = r * cosAlpha / (v * cosTheta);
-                double y = (v * sinTheta * t - 0.015 * t * t) + golem.getEyeY();
+                double y = v * sinTheta * t - 0.015 * t * t + golem.getEyeY();
                 if (y >= aabb.minY - 0.8 && y <= aabb.maxY + 0.8) {
                     changeTargetWhenNecessary(entity);
                     return false;
@@ -126,7 +139,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
         golem.setShootY(sinTheta);
         golem.setShootZ(dz);
         golem.setLaunchAccuracy(acc);
-        golem.setLaunchVelocity(v);
+        golem.setLaunchVelocity(launchV);
         return true;
     }
 

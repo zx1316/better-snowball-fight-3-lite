@@ -64,6 +64,7 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
     protected double shootZ;
     protected boolean dropEquipment;
     protected boolean dropSnowball;
+    protected boolean predictMotion;
     @Nullable
     protected RegionData aliveRange;
 
@@ -91,6 +92,7 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
         output.putBoolean("Enhance", getEnhance());
         output.putBoolean("DropEquipment", dropEquipment);
         output.putBoolean("DropSnowball", dropSnowball);
+        output.putBoolean("PredictMotion", predictMotion);
         if (aliveRange != null) {
             aliveRange.saveToValueOutput("AliveRange", output);
         }
@@ -106,6 +108,7 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
         setEnhance(input.getBooleanOr("Enhance", false));
         dropEquipment = input.getBooleanOr("DropEquipment", false);
         dropSnowball = input.getBooleanOr("DropSnowball", false);
+        predictMotion = input.getBooleanOr("PredictMotion", false);
         aliveRange = RegionData.loadFromValueInput("AliveRange", input);
     }
 
@@ -175,6 +178,14 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
 
     public void setDropSnowball(boolean b) {
         this.dropSnowball = b;
+    }
+
+    public boolean isPredictMotion() {
+        return predictMotion;
+    }
+
+    public void setPredictMotion(boolean b) {
+        this.predictMotion = b;
     }
 
     public void setAliveRange(RegionData region) {

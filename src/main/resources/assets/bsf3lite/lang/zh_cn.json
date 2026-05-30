@@ -181,7 +181,7 @@
   "item.bsf3lite.smart_snow_block": "智慧雪块",
 
   "entity.bsf3lite.bsf_snow_golem": "高级雪傀儡",
-  "entity.bsf3lite.region_controller_snow_golem": "高级雪傀儡",
+  "entity.bsf3lite.hostile_snow_golem": "敌对高级雪傀儡",
   "entity.bsf3lite.monster_gravity_executor": "怪物引力场发生器",
   "entity.bsf3lite.monster_repulsion_executor": "怪物斥力场发生器",
   "entity.bsf3lite.projectile_gravity_executor": "射弹引力场发生器",

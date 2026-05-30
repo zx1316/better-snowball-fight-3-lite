@@ -29,15 +29,6 @@ public class HostileSnowGolemEntity extends AbstractBSFSnowGolemEntity implement
     }
 
     @Override
-    public void tick() {
-        Level level = level();
-        if (!level.isClientSide() && isAlive()) {
-            hurt(level.damageSources().genericKill(), Float.MAX_VALUE);
-        }
-        super.tick();
-    }
-
-    @Override
     public boolean shouldConsumeAmmo() {
         return false;
     }

@@ -46,7 +46,6 @@ public class UnstableCoreItem extends Item {
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegistry.GRAVITY_CORE.get(), 1), true);
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegistry.REPULSION_CORE.get(), 1), true);
             if (!level.isClientSide()) {
-                // todo check power
                 ((ServerLevel) level).sendParticles(PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1f), context.getClickedPos().getX() + 0.5, context.getClickedPos().getY() + 0.5, context.getClickedPos().getZ() + 0.5, 64, 0, 0, 0, 0.12);
             }
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.UNSTABLE_CORE_BREAK.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
