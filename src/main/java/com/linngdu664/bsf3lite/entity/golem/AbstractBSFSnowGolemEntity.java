@@ -287,7 +287,7 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
     public void tick() {
         Level level = level();
         if (!level.isClientSide()) {
-            setTicksFrozen(0);
+            // 添加到 freeze_immune_entity_types tag，无须每刻都 setTicksFrozen(0)
             if (getWeaponAng() > 0) {
                 setWeaponAng(getWeaponAng() - 60);
             }
@@ -336,10 +336,7 @@ public abstract class AbstractBSFSnowGolemEntity extends PathfinderMob implement
         return true;
     }
 
-    @Override
-    protected int calculateFallDamage(double fallDistance, float damageModifier) {
-        return 0;
-    }
+    // 添加到 fall_damage_immune tag，无须重写 calculateFallDamage
 
     @Override
     protected SoundEvent getAmbientSound() {

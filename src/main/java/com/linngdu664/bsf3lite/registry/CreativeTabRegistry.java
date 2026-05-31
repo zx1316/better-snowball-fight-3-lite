@@ -3,8 +3,7 @@ package com.linngdu664.bsf3lite.registry;
 import com.linngdu664.bsf3lite.Main;
 import com.linngdu664.bsf3lite.item.component.ItemData;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -19,7 +18,7 @@ public class CreativeTabRegistry {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BSF_TAB = CREATIVE_TABS.register("bsf_tab", () -> net.minecraft.world.item.CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .icon(() -> ItemRegistry.EXPLOSIVE_SNOWBALL.get().getDefaultInstance())
-            .title(MutableComponent.create(new TranslatableContents("itemGroup.bsf_group", null, new Object[0])))
+            .title(Component.translatable("itemGroup.bsf_group"))
             .displayItems((parameters, output) -> {
                 output.accept(ItemRegistry.SMOOTH_SNOWBALL.get());
                 output.accept(ItemRegistry.DUCK_SNOWBALL.get());

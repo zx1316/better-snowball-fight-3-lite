@@ -72,10 +72,9 @@ public class HostileGolemRangedAttackGoal extends Goal {
     // todo 末影龙
     protected boolean canShoot(LivingEntity pTarget) {
         ItemStack weapon = golem.getWeapon();
-        if (weapon.isEmpty() || golem.hasEffect(EffectRegistry.WEAPON_JAM)) {
+        if (weapon.isEmpty() || !(weapon.getItem() instanceof AbstractBSFWeaponItem weaponItem) || golem.hasEffect(EffectRegistry.WEAPON_JAM)) {
             return false;
         }
-        AbstractBSFWeaponItem weaponItem = (AbstractBSFWeaponItem) weapon.getItem();
         float launchV = 3.0F;
         float acc = 1.0F;
         if (weaponItem.equals(ItemRegistry.POWERFUL_SNOWBALL_CANNON.get())) {
@@ -85,6 +84,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
             acc = 10.0F;
         }
 
+        // 计算发射角度
         double v = launchV * 0.98;  // 考虑到阻力，计算时假设初速度慢一点
         double h = pTarget.getEyeY() - golem.getEyeY();
         double dx = pTarget.getX() - golem.getX();
@@ -96,6 +96,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
         double k = 0.015 * x2 / (v * v);    // 0.5 * g / 400.0, 其中 g = 12
         cosTheta = 0.7071067811865475 / d * Math.sqrt(x2 - 2 * k * h + x * Math.sqrt(x2 - 4 * k * k - 4 * k * h));
         if (golem.isPredictMotion()) {
+            // 假设目标做匀速直线运动（因为无法得知是飞行还是下落），近似提前量
             Vec3 vel = pTarget.getEyePosition().subtract(lastPos);
             double t = x / (v * cosTheta);      // t 是弹射物飞行时间
             h += t * vel.y;
@@ -117,6 +118,8 @@ public class HostileGolemRangedAttackGoal extends Goal {
         }
         dx = dx / x * cosTheta;
         dz = dz / x * cosTheta;
+
+        // 防误伤机制
         List<LivingEntity> list = golem.level().getEntitiesOfClass(LivingEntity.class, golem.getBoundingBox().inflate(x), p -> !p.isSpectator() && !golem.equals(p) && !pTarget.equals(p));
         for (LivingEntity entity : list) {
             double dx1 = entity.getX() - golem.getX();
@@ -137,6 +140,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
                 }
             }
         }
+
         golem.setShootX(dx);
         golem.setShootY(sinTheta);
         golem.setShootZ(dz);

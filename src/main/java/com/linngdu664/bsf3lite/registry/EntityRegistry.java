@@ -72,12 +72,12 @@ public class EntityRegistry {
     public static class attributeRegister {
         @SubscribeEvent
         public static void onCreateEntityAttribute(EntityAttributeCreationEvent event) {
-            event.put(BSF_SNOW_GOLEM.get(), TamableAnimal.createLivingAttributes()
+            event.put(BSF_SNOW_GOLEM.get(), LivingEntity.createLivingAttributes()
                     .add(Attributes.MAX_HEALTH, 15.0)
                     .add(Attributes.FOLLOW_RANGE, 60.0)
                     .add(Attributes.MOVEMENT_SPEED, 0.3)
                     .build());
-            event.put(HOSTILE_SNOW_GOLEM.get(), TamableAnimal.createLivingAttributes()
+            event.put(HOSTILE_SNOW_GOLEM.get(), LivingEntity.createLivingAttributes()
                     .add(Attributes.MAX_HEALTH, 15.0)
                     .add(Attributes.FOLLOW_RANGE, 100.0)
                     .add(Attributes.MOVEMENT_SPEED, 0.3)

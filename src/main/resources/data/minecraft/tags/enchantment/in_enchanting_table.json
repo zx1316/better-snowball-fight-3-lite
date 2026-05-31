@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "bsf3lite:floating_shooting",
-    "bsf3lite:kinetic_energy_storage"
+    "bsf3lite:kinetic_energy_storage",
+    "bsf3lite:snow_golem_exclusive"
   ]
 }
