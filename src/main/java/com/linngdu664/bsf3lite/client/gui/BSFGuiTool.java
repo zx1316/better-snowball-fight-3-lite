@@ -1,6 +1,8 @@
 package com.linngdu664.bsf3lite.client.gui;
 
-import com.linngdu664.bsf3lite.client.gui.util.TextureOption;
+import com.linngdu664.bsf3lite.client.gui.render.GuiUtil;
+import com.linngdu664.bsf3lite.client.gui.render.TextureOption;
+import com.linngdu664.bsf3lite.client.gui.render.Textures;
 import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -9,10 +11,6 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 
-/**
- * Gui window utils and floating coords render tools
- * Note: Text and item floating coords should use pose translate and methods in GuiGraphicsExtractor
- */
 public class BSFGuiTool {
     /**
      * 渲染进度条

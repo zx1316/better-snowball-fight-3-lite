@@ -1,6 +1,6 @@
-package com.linngdu664.bsf3lite.client.gui.util;
+package com.linngdu664.bsf3lite.client.gui.render;
 
-import com.linngdu664.bsf3lite.client.gui.GuiUtil;
+import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 

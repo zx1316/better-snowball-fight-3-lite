@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.client.gui;
+package com.linngdu664.bsf3lite.client.gui.render;
 
 import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import com.linngdu664.bsf3lite.client.renderer.state.gui.FloatBlitRenderState;
@@ -16,6 +16,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec2;
 import org.joml.Matrix3x2f;
 
+/**
+ * Gui window utils and floating coords render tools
+ * Note: Text and item floating coords should use pose translate and methods in GuiGraphicsExtractor
+ */
 public class GuiUtil {
     public static int heightFrameCenter(Window window, int height) {
         return heightFrameRatio(window, height, 0.5);

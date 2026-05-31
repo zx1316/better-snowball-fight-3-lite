@@ -1,7 +1,4 @@
-package com.linngdu664.bsf3lite.client.gui;
-
-import com.linngdu664.bsf3lite.client.gui.util.GuiSprite;
-import com.linngdu664.bsf3lite.client.gui.util.GuiSubSprite;
+package com.linngdu664.bsf3lite.client.gui.render;
 
 public class Textures {
     public static final GuiSprite SNOWBALL_FRAME = new GuiSprite("snowball_frame", 23, 62);

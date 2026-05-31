@@ -1,7 +1,9 @@
 package com.linngdu664.bsf3lite.client.gui;
 
+import com.linngdu664.bsf3lite.client.gui.render.GuiUtil;
+import com.linngdu664.bsf3lite.client.gui.render.Textures;
 import com.linngdu664.bsf3lite.client.gui.util.HudContext;
-import com.linngdu664.bsf3lite.client.gui.util.TextureOption;
+import com.linngdu664.bsf3lite.client.gui.render.TextureOption;
 import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import com.linngdu664.bsf3lite.entity.BSFDummyEntity;
 import com.linngdu664.bsf3lite.entity.golem.BSFSnowGolemEntity;
@@ -68,7 +70,7 @@ public class GuiHandler {
         if (pickEntity.getType().equals(EntityRegistry.BSF_SNOW_GOLEM.get()) && player.equals(((BSFSnowGolemEntity) pickEntity).getOwner())) {
             Window window = instance.getWindow();
             BSFSnowGolemEntity entity = (BSFSnowGolemEntity) pickEntity;
-            //显示装备
+            // 显示装备
             List<Pair<Vec3, Consumer<Vec2>>> list = new ArrayList<>();
             Vec3 entityPosition = entity.getPosition(partialTick);
             Vec3 viewVector0Y = entity.getMiddleModelForward(partialTick, 0);
@@ -91,7 +93,7 @@ public class GuiHandler {
                 }));
             }
             converter.convertAndConsume(list, guiGraphics.guiWidth(), guiGraphics.guiHeight());
-            //显示模式
+            // 显示模式
             byte locator = entity.getLocator();
             byte status = entity.getStatus();
             ctx.sLocatorComponent = Component.translatable(SnowGolemModeTweakerItem.locatorMap(locator));
@@ -108,7 +110,7 @@ public class GuiHandler {
             ctx.locateV2I = locateV2I;
             ctx.statusV2I = statusV2I;
 
-            //显示血条/cd
+            // 显示血条/cd
             V2I barFrame = new V2I(100, 10);
             int padding = 2;
             V2I barPos = new V2I(GuiUtil.widthFrameCenter(window, barFrame.x()), GuiUtil.heightFrameRatio(window, barFrame.y(), 0.1));
@@ -118,7 +120,7 @@ public class GuiHandler {
                 BSFGuiTool.renderProgressBar(guiGraphics, barPos, barFrame, padding, 0xffffffff, 0xff62df86, (float) entity.getPotionSickness() / 100);
             }
 
-            //显示当前目标
+            // 显示当前目标
             Optional<Component> targetName = entity.getTargetName();
             V2I v2I = GuiUtil.v2IRatio(window, 0.4, 0.75);
             Component transComp = Component.translatable("tweaker_target_now.tip", targetName.orElseGet(() -> Component.translatable("snow_golem_target_null.tip")));
@@ -147,7 +149,7 @@ public class GuiHandler {
         if (tweaker != null) {
             Minecraft instance = Minecraft.getInstance();
             Window window = instance.getWindow();
-            //显示模式调整器gui
+            // 显示模式调整器gui
             byte locator = tweaker.getOrDefault(DataComponentRegistry.TWEAKER_TARGET_MODE, (byte) 0);
             ctx.tLocatorComponent = Component.translatable(SnowGolemModeTweakerItem.locatorMap(locator));
             byte status = tweaker.getOrDefault(DataComponentRegistry.TWEAKER_STATUS_MODE, (byte) 0);
@@ -177,7 +179,7 @@ public class GuiHandler {
         if (!(sLocatorComponent == null && tLocatorComponent == null)) {
             Minecraft instance = Minecraft.getInstance();
             Window window = instance.getWindow();
-            //显示模式调整文字
+            // 显示模式调整文字
             Component lStr = Component.translatable("tweaker_target.tip", sLocatorComponent == null ? tLocatorComponent : tLocatorComponent == null || sLocatorComponent.equals(tLocatorComponent) ? sLocatorComponent : sLocatorComponent.getString() + " << " + tLocatorComponent.getString());
             Component sStr = Component.translatable("tweaker_status.tip", sStatusComponent == null ? tStatusComponent : tStatusComponent == null || sStatusComponent.equals(tStatusComponent) ? sStatusComponent : sStatusComponent.getString() + " << " + tStatusComponent.getString());
             V2I v2I = GuiUtil.v2IRatio(window, 0.6, 0.75);

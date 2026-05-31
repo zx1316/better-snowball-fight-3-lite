@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.client.gui.util;
+package com.linngdu664.bsf3lite.client.gui.render;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.renderer.RenderPipelines;

@@ -22,7 +22,7 @@ public class CoordinateConverter {
     private final float tanHalfFovy;
     private final float tanHalfFovx;
 
-    public CoordinateConverter(float partialTicks) {
+    public CoordinateConverter() {
         Minecraft mc = Minecraft.getInstance();
         Window window = mc.getWindow();
         GameRenderer gameRenderer = mc.gameRenderer;

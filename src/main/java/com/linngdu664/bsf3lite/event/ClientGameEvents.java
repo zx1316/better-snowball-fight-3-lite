@@ -25,8 +25,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
@@ -37,7 +35,6 @@ import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedHashSet;
@@ -106,10 +103,10 @@ public class ClientGameEvents {
         HitResult pick = instance.hitResult;
         HitResult.Type pickType = pick.getType();
         float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(true);
-        CoordinateConverter converter = new CoordinateConverter(partialTick);
+        CoordinateConverter converter = new CoordinateConverter();
         HudContext hudCtx = new HudContext();
 
-        //gui队列
+        // gui队列
         GuiHandler.itemInHandBSFWeapon(guiGraphics, mainHandItem, offHandItem);
         if (pickType == HitResult.Type.ENTITY) {
             Entity entity1 = ((EntityHitResult) pick).getEntity();
