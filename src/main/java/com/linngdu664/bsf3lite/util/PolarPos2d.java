@@ -20,7 +20,7 @@ public class PolarPos2d {
     public PolarPos2d(Vec2d pole, Vec2d p) {
         this.pole = pole;
         this.radius = Math.sqrt(pole.distanceToSqr(p));
-        this.angle = Math.atan2(p.y - pole.y, p.x - pole.x);
+        this.angle = Math.atan2(p.y() - pole.y(), p.x() - pole.x());
     }
 
     public void rotate(double angle) {

@@ -1,13 +1,10 @@
 package com.linngdu664.bsf3lite.util;
 
-public class Vec2d {
+public record Vec2d(double x, double y) {
     public static final Vec2d ZERO = new Vec2d(0, 0);
-    public final double x;
-    public final double y;
 
     public Vec2d(Vec2d vec2d) {
-        this.x = vec2d.x;
-        this.y = vec2d.y;
+        this(vec2d.x, vec2d.y);
     }
 
     public Vec2d(double x, double y) {
@@ -64,13 +61,5 @@ public class Vec2d {
 
     public Vec2d negated() {
         return new Vec2d(-this.x, -this.y);
-    }
-
-    @Override
-    public String toString() {
-        return "Vec2d{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }

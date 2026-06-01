@@ -8,6 +8,7 @@ import com.linngdu664.bsf3lite.registry.EffectRegistry;
 import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
@@ -69,7 +70,6 @@ public class HostileGolemRangedAttackGoal extends Goal {
         return true;
     }
 
-    // todo 末影龙
     protected boolean canShoot(LivingEntity pTarget) {
         ItemStack weapon = golem.getWeapon();
         if (weapon.isEmpty() || !(weapon.getItem() instanceof AbstractBSFWeaponItem weaponItem) || golem.hasEffect(EffectRegistry.WEAPON_JAM)) {
@@ -86,9 +86,10 @@ public class HostileGolemRangedAttackGoal extends Goal {
 
         // 计算发射角度
         double v = launchV * 0.98;  // 考虑到阻力，计算时假设初速度慢一点
-        double h = pTarget.getEyeY() - golem.getEyeY();
-        double dx = pTarget.getX() - golem.getX();
-        double dz = pTarget.getZ() - golem.getZ();
+        Vec3 aimPos = getAimTargetPos(pTarget, golem);
+        double h = aimPos.y - golem.getEyeY();
+        double dx = aimPos.x - golem.getX();
+        double dz = aimPos.z - golem.getZ();
         double x2 = BSFCommonUtil.lengthSqr(dx, dz);
         double d = Math.sqrt(x2 + h * h);   // d 是总距离
         double x = Math.sqrt(x2);       // x 是水平距离
@@ -96,10 +97,10 @@ public class HostileGolemRangedAttackGoal extends Goal {
         double k = 0.015 * x2 / (v * v);    // 0.5 * g / 400.0, 其中 g = 12
         cosTheta = 0.7071067811865475 / d * Math.sqrt(x2 - 2 * k * h + x * Math.sqrt(x2 - 4 * k * k - 4 * k * h));
         if (golem.isPredictMotion()) {
-            // 假设目标做匀速直线运动（因为无法得知是飞行还是下落），近似提前量
+            // 假设目标水平面做匀速直线运动（不考虑 y，因为无法得知是飞行还是落体），近似提前量
             Vec3 vel = pTarget.getEyePosition().subtract(lastPos);
             double t = x / (v * cosTheta);      // t 是弹射物飞行时间
-            h += t * vel.y;
+//            h += t * vel.y;
             dx += t * vel.x;
             dz += t * vel.z;
             x2 = BSFCommonUtil.lengthSqr(dx, dz);
@@ -154,6 +155,26 @@ public class HostileGolemRangedAttackGoal extends Goal {
             golem.setTarget(entity);
         }
         attackTime = 1;
+    }
+
+    private static Vec3 getAimTargetPos(Entity target, Entity attacker) {
+        if (target.isMultipartEntity()) {
+            return target.getBoundingBox().getCenter();
+//            PartEntity<?>[] parts = target.getParts();
+//            PartEntity<?> nearest = null;
+//            double nearestDist = Double.MAX_VALUE;
+//            for (PartEntity<?> part : parts) {
+//                double dist = part.distanceToSqr(attacker);
+//                if (dist < nearestDist) {
+//                    nearestDist = dist;
+//                    nearest = part;
+//                }
+//            }
+//            if (nearest != null) {
+//                return nearest.getBoundingBox().getCenter();
+//            }
+        }
+        return target.getEyePosition();
     }
 
     public void tick() {
