@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.NotNull;
 
 public class LargeSnowballTankItem extends SnowballTankItem {
@@ -20,8 +19,7 @@ public class LargeSnowballTankItem extends SnowballTankItem {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Main.makeMyIdentifier("large_snowball_tank")))
                 .stacksTo(1)
-                .durability(192)
-                .rarity(Rarity.UNCOMMON));
+                .durability(192));
     }
 
     @Override

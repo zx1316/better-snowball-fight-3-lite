@@ -21,7 +21,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class HostileGolemRangedAttackGoal extends Goal {
-    private static final double ATTACK_DISTANCE_SQ = 50 * 50;
     private final AbstractBSFSnowGolemEntity golem;
     protected final double speedModifier;
     protected final int attackInterval;
@@ -75,6 +74,7 @@ public class HostileGolemRangedAttackGoal extends Goal {
     public void tick() {
         LivingEntity target = golem.getTarget();
         if (target != null) {
+            // 抄的骷髅的 ai
             float attackRadiusSqr = this.attackRadiusSqr;
             float attackRadius = this.attackRadius;
             if (golem.getWeapon().getItem() instanceof SnowballShotgunItem) {
