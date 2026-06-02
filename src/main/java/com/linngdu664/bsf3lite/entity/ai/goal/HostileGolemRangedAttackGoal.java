@@ -14,12 +14,14 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 import java.util.List;
 
 public class HostileGolemRangedAttackGoal extends Goal {
+    private static final double ATTACK_DISTANCE_SQ = 50 * 50;
     private final AbstractBSFSnowGolemEntity golem;
     protected final double speedModifier;
     protected final int attackInterval;
@@ -68,6 +70,75 @@ public class HostileGolemRangedAttackGoal extends Goal {
     @Override
     public boolean requiresUpdateEveryTick() {
         return true;
+    }
+
+    public void tick() {
+        LivingEntity target = golem.getTarget();
+        if (target != null) {
+            float attackRadiusSqr = this.attackRadiusSqr;
+            float attackRadius = this.attackRadius;
+            if (golem.getWeapon().getItem() instanceof SnowballShotgunItem) {
+                attackRadius *= 0.2F;
+                attackRadiusSqr *= 0.04F;
+            }
+            double d0 = golem.distanceToSqr(target.getX(), target.getY(), target.getZ());
+            boolean flag = golem.getSensing().hasLineOfSight(target);
+            boolean flag1 = seeTime > 0;
+            if (flag != flag1) {
+                seeTime = 0;
+            }
+            if (flag) {
+                ++seeTime;
+            } else {
+                --seeTime;
+            }
+            if (d0 <= attackRadiusSqr && seeTime >= 20 || !golem.canMoveAndAttack()) {
+                golem.getNavigation().stop();
+                ++strafingTime;
+            } else {
+                golem.getNavigation().moveTo(target, speedModifier);
+                strafingTime = -1;
+            }
+            if (strafingTime >= 20) {
+                if (golem.getRandom().nextFloat() < 0.3F) {
+                    strafingClockwise = !strafingClockwise;
+                }
+                if (golem.getRandom().nextFloat() < 0.3F) {
+                    strafingBackwards = !strafingBackwards;
+                }
+                strafingTime = 0;
+            }
+            if (strafingTime > -1 && golem.canMoveAndAttack()) {
+                if (d0 > attackRadiusSqr * 0.64F) {
+                    strafingBackwards = false;
+                } else if (d0 < attackRadiusSqr * 0.09F) {
+                    strafingBackwards = true;
+                }
+                golem.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
+                golem.lookAt(target, 30.0F, 30.0F);
+            } else {
+                golem.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            }
+            if (--attackTime <= 0) {
+                if (attackTime == 0) {
+                    if (!flag || !canShoot(target)) {
+                        return;
+                    }
+                    float f = (float) Math.sqrt(d0) / attackRadius;
+                    float f1 = Mth.clamp(f, 0.1F, 1.0F);
+                    golem.performRangedAttack(target, f1);
+                }
+                attackTime = attackInterval;
+            }
+            lastPos = target.getEyePosition();
+        }
+    }
+
+    protected void changeTargetWhenNecessary(LivingEntity entity) {
+        if (!(entity instanceof HostileSnowGolemEntity)) {
+            golem.setTarget(entity);
+        }
+        attackTime = 1;
     }
 
     protected boolean canShoot(LivingEntity pTarget) {
@@ -150,92 +221,55 @@ public class HostileGolemRangedAttackGoal extends Goal {
         return true;
     }
 
-    protected void changeTargetWhenNecessary(LivingEntity entity) {
-        if (!(entity instanceof HostileSnowGolemEntity)) {
-            golem.setTarget(entity);
+    private Vec3 getAimTargetPos(Entity target, Entity attacker) {
+        if (!target.isMultipartEntity()) {
+            return target.getEyePosition();
         }
-        attackTime = 1;
-    }
 
-    private static Vec3 getAimTargetPos(Entity target, Entity attacker) {
-        if (target.isMultipartEntity()) {
-            return target.getBoundingBox().getCenter();
-//            PartEntity<?>[] parts = target.getParts();
-//            PartEntity<?> nearest = null;
-//            double nearestDist = Double.MAX_VALUE;
-//            for (PartEntity<?> part : parts) {
-//                double dist = part.distanceToSqr(attacker);
-//                if (dist < nearestDist) {
-//                    nearestDist = dist;
-//                    nearest = part;
-//                }
-//            }
-//            if (nearest != null) {
-//                return nearest.getBoundingBox().getCenter();
-//            }
+        // 对于多碰撞箱实体
+        float attackRadiusSqr = this.attackRadiusSqr;
+        if (golem.getWeapon().getItem() instanceof SnowballShotgunItem) {
+            attackRadiusSqr *= 0.04F;
         }
-        return target.getEyePosition();
-    }
-
-    public void tick() {
-        LivingEntity target = golem.getTarget();
-        if (target != null) {
-            float attackRadiusSqr = this.attackRadiusSqr;
-            float attackRadius = this.attackRadius;
-            if (golem.getWeapon().getItem() instanceof SnowballShotgunItem) {
-                attackRadius *= 0.2F;
-                attackRadiusSqr *= 0.04F;
+        Vec3 eyePos = attacker.getEyePosition();
+        PartEntity<?>[] parts = target.getParts();
+        // 首先瞄准攻击半径内最大最方的碰撞箱
+        AABB best = null;
+        double maxScore = -Double.MAX_VALUE;
+        for (PartEntity<?> part : parts) {
+            AABB aabb = part.getBoundingBox();
+            if (aabb.distanceToSqr(eyePos) > attackRadiusSqr) {
+                continue;
             }
-            double d0 = golem.distanceToSqr(target.getX(), target.getY(), target.getZ());
-            boolean flag = golem.getSensing().hasLineOfSight(target);
-            boolean flag1 = seeTime > 0;
-            if (flag != flag1) {
-                seeTime = 0;
+            double a = aabb.maxX - aabb.minX;
+            double b = aabb.maxY - aabb.minY;
+            double c = aabb.maxZ - aabb.minZ;
+            double abc = a * b * c;
+            double apbpc = a + b + c;
+            double score = abc * abc / (apbpc * apbpc * apbpc);
+            if (score > maxScore) {
+                maxScore = score;
+                best = aabb;
             }
-            if (flag) {
-                ++seeTime;
-            } else {
-                --seeTime;
-            }
-            if (d0 <= attackRadiusSqr && seeTime >= 20 || !golem.canMoveAndAttack()) {
-                golem.getNavigation().stop();
-                ++strafingTime;
-            } else {
-                golem.getNavigation().moveTo(target, speedModifier);
-                strafingTime = -1;
-            }
-            if (strafingTime >= 20) {
-                if (golem.getRandom().nextFloat() < 0.3F) {
-                    strafingClockwise = !strafingClockwise;
-                }
-                if (golem.getRandom().nextFloat() < 0.3F) {
-                    strafingBackwards = !strafingBackwards;
-                }
-                strafingTime = 0;
-            }
-            if (strafingTime > -1 && golem.canMoveAndAttack()) {
-                if (d0 > attackRadiusSqr * 0.64F) {
-                    strafingBackwards = false;
-                } else if (d0 < attackRadiusSqr * 0.09F) {
-                    strafingBackwards = true;
-                }
-                golem.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
-                golem.lookAt(target, 30.0F, 30.0F);
-            } else {
-                golem.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            }
-            if (--attackTime <= 0) {
-                if (attackTime == 0) {
-                    if (!flag || !canShoot(target)) {
-                        return;
-                    }
-                    float f = (float) Math.sqrt(d0) / attackRadius;
-                    float f1 = Mth.clamp(f, 0.1F, 1.0F);
-                    golem.performRangedAttack(target, f1);
-                }
-                attackTime = attackInterval;
-            }
-            lastPos = target.getEyePosition();
         }
+        if (best != null) {
+            return best.getCenter();
+        }
+        // 兜底：最近的碰撞箱
+        AABB nearest = null;
+        double nearestDist = Double.MAX_VALUE;
+        for (PartEntity<?> part : parts) {
+            AABB aabb = part.getBoundingBox();
+            double dist = aabb.distanceToSqr(eyePos);
+            if (dist < nearestDist) {
+                nearestDist = dist;
+                nearest = aabb;
+            }
+        }
+        if (nearest != null) {
+            return nearest.getCenter();
+        }
+        // 终极兜底：总碰撞箱的中部
+        return target.getBoundingBox().getCenter();
     }
 }
