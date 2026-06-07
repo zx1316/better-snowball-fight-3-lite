@@ -495,6 +495,7 @@
   "block.bsf3lite.region_controller_view": "區域控製器終端",
   "block.bsf3lite.region_player_inspector": "區域玩家安檢器",
 
+  "key.category.bsf3lite.main": "更好的打雪仗",
   "key.bsf3lite.ammo_switch_prev": "向前循環切換彈藥",
   "key.bsf3lite.ammo_switch_next": "向後循環切換彈藥",
   "enchantment.bsf3lite.kinetic_energy_storage": "動能儲存",

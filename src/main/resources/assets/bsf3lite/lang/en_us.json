@@ -495,6 +495,7 @@
   "block.bsf3lite.region_controller_view": "Region Controller Terminal",
   "block.bsf3lite.region_player_inspector": "Region Player Inspector",
 
+  "key.category.bsf3lite.main": "Better Snowball Fight",
   "key.bsf3lite.ammo_switch_prev": "Switch to Previous Ammo",
   "key.bsf3lite.ammo_switch_next": "Switch to Next Ammo",
   "enchantment.bsf3lite.kinetic_energy_storage": "Kinetic Energy Storage",
