@@ -41,7 +41,7 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
     private static final float FREEZE_PROPAGATION_RATE = 0.1f;
     private final Icicle[] icicles = new Icicle[ICICLE_MAX_NUM];
     private final ArrayDeque<BlockPos> tmpFreezingBlocks = new ArrayDeque<>();
-    private final double freezePercentage;
+    private final float freezePercentage;
     private final int freezeTime;
     private boolean isBuildingIcicle = false;
     private boolean isFreezing = false;
@@ -52,7 +52,7 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
 
     public IcicleSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, ServerConfig.ICICLE_SNOWBALL_DURATION.getConfigValue());
-        this.freezePercentage = BSFCommonUtil.randDouble(pLevel.getRandom(), 0.6, 0.9);
+        this.freezePercentage = BSFCommonUtil.randFloat(pLevel.getRandom(), 0.6f, 0.9f);
         this.freezeTime = pLevel.getRandom().nextInt(40, 50);
     }
 
@@ -60,7 +60,7 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
         super(EntityRegistry.ICICLE_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.ICICLE_SNOWBALL.toStack(), launchAdjustment, snowStock, ServerConfig.ICICLE_SNOWBALL_DURATION.getConfigValue(), region);
         this.initSnowStock = snowStock;
         this.destroyStepSize = Math.max(snowStock / 60, 1);
-        this.freezePercentage = BSFCommonUtil.randDouble(pLevel.getRandom(), 0.6, 0.9);
+        this.freezePercentage = BSFCommonUtil.randFloat(pLevel.getRandom(), 0.6f, 0.9f);
         this.freezeTime = pLevel.getRandom().nextInt(40, 50);
     }
 

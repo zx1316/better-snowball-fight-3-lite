@@ -32,7 +32,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
     private static final EntityDataAccessor<Boolean> INVISIBLE = SynchedEntityData.defineId(AbstractConstructSnowballEntity.class, EntityDataSerializers.BOOLEAN);
     protected final ArrayDeque<BlockPos> allBlock = new ArrayDeque<>();
     protected int blockDurationTick;    // default: 20 * 4
-    protected float destroyStepSize = 5;
+    protected int destroyStepSize = 5;
     protected boolean inBlockDuration = false;
     private boolean inDestroying = false;
 
@@ -58,7 +58,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
         super.addAdditionalSaveData(output);
         output.putBoolean("Invisible", getInvisible());
         output.putInt("BlockDurationTick", blockDurationTick);
-        output.putFloat("DestroyStepSize", destroyStepSize);
+        output.putInt("DestroyStepSize", destroyStepSize);
         output.putBoolean("InBlockDuration", inBlockDuration);
         output.putBoolean("InDestroying", inDestroying);
         long[] tmpArray = new long[allBlock.size()];
@@ -75,7 +75,7 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
         super.readAdditionalSaveData(input);
         setInvisible(input.getBooleanOr("Invisible", false));
         blockDurationTick = input.getIntOr("BlockDurationTick", 0);
-        destroyStepSize = input.getFloatOr("DestroyStepSize", 0);
+        destroyStepSize = input.getIntOr("DestroyStepSize", 0);
         inBlockDuration = input.getBooleanOr("InBlockDuration", false);
         inDestroying = input.getBooleanOr("InDestroying", false);
         input.read("AllBlock", Codec.LONG_STREAM).ifPresent(tmpStream -> tmpStream.forEach(longBlockPos -> allBlock.push(BlockPos.of(longBlockPos))));

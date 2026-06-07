@@ -47,6 +47,10 @@ public class BSFCommonUtil {
         return randomSource.nextDouble() * (b - a) + a;
     }
 
+    public static float randFloat(RandomSource randomSource, float a, float b) {
+        return randomSource.nextFloat() * (b - a) + a;
+    }
+
     /**
      * 使用RandomSource生成[min(a, b), max(a, b))的随机双精度浮点数
      */
