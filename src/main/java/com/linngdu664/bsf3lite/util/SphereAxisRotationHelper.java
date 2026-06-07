@@ -9,7 +9,7 @@ public class SphereAxisRotationHelper {
     float angle = 0;
 
 
-    public SphereAxisRotationHelper(Vec3 offset, double axisYaw, double axisPitch) {
+    public SphereAxisRotationHelper(Vec3 offset, float axisYaw, float axisPitch) {
         this(offset, BSFCommonUtil.radRotationToVector(1, axisYaw, axisPitch));
     }
 

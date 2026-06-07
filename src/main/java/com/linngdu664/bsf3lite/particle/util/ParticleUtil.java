@@ -39,7 +39,7 @@ public class ParticleUtil {
     public static void spawnForwardConeParticles(Level pLevel, ParticleOptions particleOptions, double eX, double eY, double eZ, Vec3 sightVec, float r, float aStep, float rStep, double loweredVision) {
         // particleOptions=ParticleTypes.SNOWFLAKE r=4.5 deg=30 d=0.5f
         Vec3 vecA = sightVec.cross(new Vec3(0, 1, 0)).normalize();
-        if (vecA == Vec3.ZERO) {
+        if (BSFCommonUtil.eq(vecA.lengthSqr(), 0)) {
             vecA = sightVec.cross(new Vec3(1, 0, 0)).normalize();
         }
         Vec3 vecB = sightVec.cross(vecA).normalize();
@@ -113,8 +113,8 @@ public class ParticleUtil {
     public static void spawnSphereGatherParticles(Level level, ParticleOptions particleOptions, Vec3 pos, double range, int num, double v) {
         for (int i = 0; i < num; i++) {
             RandomSource randomSource = level.getRandom();
-            double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
-            double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
+            float theta = BSFCommonUtil.randFloat(randomSource, 0, 2 * Mth.PI);
+            float phi = (float) Math.acos(BSFCommonUtil.randFloat(randomSource, -1, 1)) - Mth.HALF_PI;
             Vec3 direction = BSFCommonUtil.radRotationToVector(1, theta, phi);
             Vec3 pos1 = direction.scale(-range).add(pos);
             Vec3 v1 = direction.scale(v);
@@ -125,8 +125,8 @@ public class ParticleUtil {
     public static void spawnSphereDiffusionParticles(Level level, ParticleOptions particleOptions, Vec3 pos, int num, double v) {
         for (int i = 0; i < num; i++) {
             RandomSource randomSource = level.getRandom();
-            double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
-            double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
+            float theta = BSFCommonUtil.randFloat(randomSource, 0, 2 * Mth.PI);
+            float phi = (float) Math.acos(BSFCommonUtil.randFloat(randomSource, -1, 1)) - Mth.HALF_PI;
             Vec3 v1 = BSFCommonUtil.radRotationToVector(v, theta, phi);
             level.addParticle(particleOptions, pos.x, pos.y, pos.z, v1.x, v1.y, v1.z);
         }
@@ -135,8 +135,8 @@ public class ParticleUtil {
     public static void spawnSubspaceSnowballParticles(Level level, ParticleOptions particleOptions, Vec3 pos, double range, int num) {
         for (int i = 0; i < num; i++) {
             RandomSource randomSource = level.getRandom();
-            double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
-            double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
+            float theta = BSFCommonUtil.randFloat(randomSource, 0, 2 * Mth.PI);
+            float phi = (float) Math.acos(BSFCommonUtil.randFloat(randomSource, -1, 1)) - Mth.HALF_PI;
             Vec3 direction = BSFCommonUtil.radRotationToVector(1, theta, phi).normalize();
             Vec3 pos1 = direction.scale(-range).add(pos);
             level.addParticle(particleOptions, pos1.x, pos1.y, pos1.z, pos.x, pos.y, pos.z);

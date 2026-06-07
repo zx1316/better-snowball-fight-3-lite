@@ -31,7 +31,6 @@ public class BSFCommonUtil {
         return vec3AngleCos(a, b) * a.length();
     }
 
-    // Calculate the square of the modulus(length) of a vector.
     public static double lengthSqr(double x, double y) {
         return x * x + y * y;
     }
@@ -47,10 +46,6 @@ public class BSFCommonUtil {
         return randomSource.nextDouble() * (b - a) + a;
     }
 
-    public static float randFloat(RandomSource randomSource, float a, float b) {
-        return randomSource.nextFloat() * (b - a) + a;
-    }
-
     /**
      * 使用RandomSource生成[min(a, b), max(a, b))的随机双精度浮点数
      */
@@ -60,6 +55,10 @@ public class BSFCommonUtil {
 
     public static double randNormalDouble(RandomSource randomSource, double mu, double sigma) {
         return mu + sigma * randomSource.nextGaussian();
+    }
+
+    public static float randFloat(RandomSource randomSource, float a, float b) {
+        return randomSource.nextFloat() * (b - a) + a;
     }
 
     public static int randIntWithInfer(RandomSource randomSource, int a, int b) {
@@ -72,8 +71,8 @@ public class BSFCommonUtil {
      * @param phi   pitch in radian [-pi/2, pi/2]
      * @return xyz vector
      */
-    public static Vec3 radRotationToVector(double r, double theta, double phi) {
-        return new Vec3(r * Mth.cos((float) phi) * Mth.cos((float) theta), r * Mth.sin((float) phi), r * Mth.cos((float) phi) * Mth.sin((float) theta));
+    public static Vec3 radRotationToVector(double r, float theta, float phi) {
+        return new Vec3(r * (Mth.cos(phi) * Mth.cos(theta)), r * Mth.sin(phi), r * (Mth.cos(phi) * Mth.sin(theta)));
     }
 
     public static Vec3i vec3ToI(Vec3 vec3) {

@@ -129,15 +129,15 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
         // Determine the direction of the icicle
         // init icicle
         for (int i = 0; i < TRY_SUMMON_ICICLE_MAX_TIMES; i++) {
-            double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
-            double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
+            float theta = BSFCommonUtil.randFloat(randomSource, 0, 2 * Mth.PI);
+            float phi = (float) Math.acos(BSFCommonUtil.randFloat(randomSource, -1, 1)) - Mth.HALF_PI;
             Vec3 direction = BSFCommonUtil.radRotationToVector(TRY_SUMMON_ICICLE_DETECTION_RADIUS, theta, phi);
             BlockPos blockPos1 = impactPoint.offset(Mth.floor(direction.x), Mth.floor(direction.y), Mth.floor(direction.z));
             if ((level.getBlockState(blockPos1).canBeReplaced() || posIsLooseSnow(level, blockPos1)) && iciclesNum < ICICLE_MAX_NUM) {
                 icicles[iciclesNum++] = new Icicle(direction.normalize(), BSFCommonUtil.randDouble(randomSource, 0.3, 1), BSFCommonUtil.randDouble(randomSource, 0.1, 0.2));
             }
         }
-        if (iciclesNum == 0 || snowStock <= 0) {
+        if (iciclesNum <= 0 || snowStock <= 0) {
             this.discard();
         }
         isBuildingIcicle = true;
@@ -247,11 +247,11 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
             public void pointGenerate(Level level) {
                 for (int i = 0; i < Mth.ceil(radius); i++) {
                     Vec3 a = icicleVec.cross(new Vec3(0, 1, 0)).normalize();
-                    if (a.lengthSqr() == 0) {
+                    if (BSFCommonUtil.eq(a.lengthSqr(), 0)) {
                         a = icicleVec.cross(new Vec3(1, 0, 0)).normalize();
                     }
                     Vec3 b = a.cross(icicleVec).normalize();
-                    float x = (float) BSFCommonUtil.randDouble(level.getRandom(), 0, 2 * Mth.PI);
+                    float x = BSFCommonUtil.randFloat(level.getRandom(), 0, 2 * Mth.PI);
                     Vec3 c = a.scale(Mth.cos(x)).add(b.scale(Mth.sin(x))).scale(radius);
                     tryPlaceLooseSnowBlock(level, new BlockPos(BSFCommonUtil.vec3ToI(point.add(c))));
                 }

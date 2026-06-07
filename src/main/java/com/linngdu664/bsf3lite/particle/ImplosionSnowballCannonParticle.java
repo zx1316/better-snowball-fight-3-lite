@@ -67,8 +67,8 @@ public class ImplosionSnowballCannonParticle extends SingleQuadParticle {
         @Override
         public @Nullable Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, RandomSource randomSource) {
             float f = randomSource.nextFloat() * 0.6F + 0.4F;
-            double theta = BSFCommonUtil.randDouble(randomSource, 0, 2 * Mth.PI);
-            double phi = Math.acos(BSFCommonUtil.randDouble(randomSource, -1, 1)) - Mth.HALF_PI;
+            float theta = BSFCommonUtil.randFloat(randomSource, 0, 2 * Mth.PI);
+            float phi = (float) Math.acos(BSFCommonUtil.randFloat(randomSource, -1, 1)) - Mth.HALF_PI;
             return new ImplosionSnowballCannonParticle(pLevel, new Vec3(pX, pY, pZ), BSFCommonUtil.radRotationToVector(ImplosionSnowballCannonItem.RADIUS, theta, phi), new Vec3(pXSpeed, pYSpeed, pZSpeed).normalize(), f * 0.7F, f * 0.7F, f * 0.9F, this.sprite);
         }
     }
