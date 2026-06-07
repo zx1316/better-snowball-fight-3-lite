@@ -112,10 +112,14 @@ public class IcicleSnowballEntity extends AbstractSnowStorageSnowballEntity {
     }
 
     private void icicleInit(Level level) {
-        AABB area = getBoundingBox().inflate(100);
-        for (Player player : level.players()) {
-            if (area.contains(player.getX(), player.getY(), player.getZ()) && !player.isSpectator()) {
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenshakePayload(20).setEasing(Easing.SINE_IN_OUT).setIntensity(0.5F));
+        if (snowStock > 0) {
+            double range = Math.max(4, (double) snowStock * 0.0133333333333333333); // 6000 储雪时，范围 80m
+            float shake = (float) range * 0.5f;
+            AABB area = getBoundingBox().inflate(range);
+            for (Player player : level.players()) {
+                if (area.contains(player.getX(), player.getY(), player.getZ()) && !player.isSpectator()) {
+                    PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenshakePayload(20).setEasing(Easing.SINE_IN_OUT).setIntensity(Math.min(2f, shake / distanceTo(player))));
+                }
             }
         }
 
