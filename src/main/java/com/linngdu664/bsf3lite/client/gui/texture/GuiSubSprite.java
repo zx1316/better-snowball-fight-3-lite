@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.client.gui.render;
+package com.linngdu664.bsf3lite.client.gui.texture;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 

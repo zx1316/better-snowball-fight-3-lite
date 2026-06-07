@@ -1,4 +1,4 @@
-package com.linngdu664.bsf3lite.client.gui.render;
+package com.linngdu664.bsf3lite.client.gui;
 
 import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import com.linngdu664.bsf3lite.client.renderer.state.gui.FloatBlitRenderState;

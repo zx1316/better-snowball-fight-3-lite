@@ -1,9 +1,8 @@
 package com.linngdu664.bsf3lite.client.gui;
 
-import com.linngdu664.bsf3lite.client.gui.render.GuiUtil;
-import com.linngdu664.bsf3lite.client.gui.render.Textures;
+import com.linngdu664.bsf3lite.client.gui.texture.Textures;
 import com.linngdu664.bsf3lite.client.gui.util.HudContext;
-import com.linngdu664.bsf3lite.client.gui.render.TextureOption;
+import com.linngdu664.bsf3lite.client.gui.texture.TextureOption;
 import com.linngdu664.bsf3lite.client.gui.util.V2I;
 import com.linngdu664.bsf3lite.entity.BSFDummyEntity;
 import com.linngdu664.bsf3lite.entity.golem.BSFSnowGolemEntity;
