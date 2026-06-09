@@ -2,8 +2,7 @@ package com.linngdu664.bsf3lite.client.gui;
 
 import com.linngdu664.bsf3lite.client.gui.texture.Textures;
 import com.linngdu664.bsf3lite.client.gui.util.HudContext;
-import com.linngdu664.bsf3lite.client.gui.texture.TextureOption;
-import com.linngdu664.bsf3lite.client.gui.util.V2I;
+import com.linngdu664.bsf3lite.util.V2I;
 import com.linngdu664.bsf3lite.entity.BSFDummyEntity;
 import com.linngdu664.bsf3lite.entity.golem.BSFSnowGolemEntity;
 import com.linngdu664.bsf3lite.item.tool.SnowGolemModeTweakerItem;
@@ -44,7 +43,7 @@ public class GuiHandler {
             ItemStack current = weaponItem.getCurrentAmmoItemStack();
             ItemStack prev = weaponItem.getPrevAmmoItemStack();
             ItemStack next = weaponItem.getNextAmmoItemStack();
-            V2I v2I = Textures.SNOWBALL_FRAME.renderVerticalCenter(guiGraphics, TextureOption.DEFAULT, window, 0);
+            V2I v2I = Textures.SNOWBALL_FRAME.renderVerticalCenter(guiGraphics, window, 0);
             int startPos = v2I.y();
             guiGraphics.item(prev, 3, startPos + 3);
             guiGraphics.item(current, 3, startPos + 23);
@@ -97,14 +96,14 @@ public class GuiHandler {
             byte status = entity.getStatus();
             ctx.sLocatorComponent = Component.translatable(SnowGolemModeTweakerItem.locatorMap(locator));
             ctx.sStatusComponent = Component.translatable(SnowGolemModeTweakerItem.statusMap(status));
-            V2I locateV2I = Textures.GOLEM_LOCATOR_GUI.renderRatio(guiGraphics, TextureOption.DEFAULT, window, 0.7, 0.5);
+            V2I locateV2I = Textures.GOLEM_LOCATOR_GUI.renderRatio(guiGraphics, window, 0.7, 0.5);
             locateV2I = new V2I(locateV2I.x() - 1, locateV2I.y() - 1 + locator * 20);
-            Textures.GOLEM_SELECTOR_GUI.render(guiGraphics, TextureOption.DEFAULT, locateV2I.x(), locateV2I.y());
-            V2I statusV2I = Textures.GOLEM_STATUS_GUI.renderRatio(guiGraphics, TextureOption.DEFAULT, window, 0.7, 0.5, 60, 0);
+            Textures.GOLEM_SELECTOR_GUI.render(guiGraphics, locateV2I.x(), locateV2I.y());
+            V2I statusV2I = Textures.GOLEM_STATUS_GUI.renderRatio(guiGraphics, window, 0.7, 0.5, 60, 0);
             statusV2I = new V2I(statusV2I.x() - 1, statusV2I.y() - 1 + status * 20);
-            Textures.GOLEM_SELECTOR_GUI.render(guiGraphics, TextureOption.DEFAULT, statusV2I.x(), statusV2I.y());
+            Textures.GOLEM_SELECTOR_GUI.render(guiGraphics, statusV2I.x(), statusV2I.y());
             if (entity.getEnhance()) {
-                Textures.ADVANCE_MODE_GUI.renderRatio(guiGraphics, TextureOption.DEFAULT, window, 0.5, 0.8);
+                Textures.ADVANCE_MODE_GUI.renderRatio(guiGraphics, window, 0.5, 0.8);
             }
             ctx.locateV2I = locateV2I;
             ctx.statusV2I = statusV2I;
@@ -153,19 +152,19 @@ public class GuiHandler {
             ctx.tLocatorComponent = Component.translatable(SnowGolemModeTweakerItem.locatorMap(locator));
             byte status = tweaker.getOrDefault(DataComponentRegistry.TWEAKER_STATUS_MODE, (byte) 0);
             ctx.tStatusComponent = Component.translatable(SnowGolemModeTweakerItem.statusMap(status));
-            V2I locateV2IT = Textures.TWEAKER_LOCATOR_GUI.renderRatio(guiGraphics, TextureOption.DEFAULT, window, 0.7, 0.5, 30, 0);
+            V2I locateV2IT = Textures.TWEAKER_LOCATOR_GUI.renderRatio(guiGraphics, window, 0.7, 0.5, 30, 0);
             locateV2IT = new V2I(locateV2IT.x() - 1, locateV2IT.y() - 1 + locator * 20);
-            Textures.TWEAKER_SELECTOR_GUI.render(guiGraphics, TextureOption.DEFAULT, locateV2IT.x(), locateV2IT.y());
-            V2I statusV2IT = Textures.TWEAKER_STATUS_GUI.renderRatio(guiGraphics, TextureOption.DEFAULT, window, 0.7, 0.5, 90, 0);
+            Textures.TWEAKER_SELECTOR_GUI.render(guiGraphics, locateV2IT.x(), locateV2IT.y());
+            V2I statusV2IT = Textures.TWEAKER_STATUS_GUI.renderRatio(guiGraphics, window, 0.7, 0.5, 90, 0);
             statusV2IT = new V2I(statusV2IT.x() - 1, statusV2IT.y() - 1 + status * 20);
-            Textures.TWEAKER_SELECTOR_GUI.render(guiGraphics, TextureOption.DEFAULT, statusV2IT.x(), statusV2IT.y());
+            Textures.TWEAKER_SELECTOR_GUI.render(guiGraphics, statusV2IT.x(), statusV2IT.y());
             V2I locateV2I = ctx.locateV2I;
             if (locateV2I != null && locateV2I.y() != locateV2IT.y()) {
-                Textures.SETTER_ARROW_GUI.render(guiGraphics, TextureOption.DEFAULT, locateV2I.x() + 23, locateV2IT.y() + 2);
+                Textures.SETTER_ARROW_GUI.render(guiGraphics, locateV2I.x() + 23, locateV2IT.y() + 2);
             }
             V2I statusV2I = ctx.statusV2I;
             if (statusV2I != null && statusV2I.y() != statusV2IT.y()) {
-                Textures.SETTER_ARROW_GUI.render(guiGraphics, TextureOption.DEFAULT, statusV2I.x() + 23, statusV2IT.y() + 2);
+                Textures.SETTER_ARROW_GUI.render(guiGraphics, statusV2I.x() + 23, statusV2IT.y() + 2);
             }
         }
     }

@@ -1,8 +1,7 @@
 package com.linngdu664.bsf3lite.client.gui;
 
-import com.linngdu664.bsf3lite.client.gui.texture.TextureOption;
 import com.linngdu664.bsf3lite.client.gui.texture.Textures;
-import com.linngdu664.bsf3lite.client.gui.util.V2I;
+import com.linngdu664.bsf3lite.util.V2I;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -50,7 +49,7 @@ public class BSFGuiTool {
         renderAdvancedLine(guiGraphics, linkPoint, xPoint, d, color, true, 0.3f, 0xff000000);
         renderFilledRectangle(guiGraphics, equipPoint.add(new Vec2(-2f, -1f)), equipPoint.add(new Vec2(2f, 3f)), 0xff000000);
         renderFilledRectangle(guiGraphics, equipPoint.add(new Vec2(-1f, 0)), equipPoint.add(new Vec2(1f, 2f)), color);
-        Textures.EQUIPMENT_SLOT_FRAME_GUI.render(guiGraphics, TextureOption.DEFAULT, (int) framePoint.x, (int) framePoint.y);
+        Textures.EQUIPMENT_SLOT_FRAME_GUI.render(guiGraphics, (int) framePoint.x, (int) framePoint.y);
         guiGraphics.item(itemStack, (int) (framePoint.x + 3), (int) (framePoint.y + 3));
         FormattedCharSequence formattedcharsequence = msg.getVisualOrderText();
         guiGraphics.text(font, formattedcharsequence, (int) (framePoint.x - font.width(formattedcharsequence)), (int) (framePoint.y + 7), color, true);

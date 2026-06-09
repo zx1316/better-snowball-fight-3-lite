@@ -1,6 +1,6 @@
 package com.linngdu664.bsf3lite.client.gui;
 
-import com.linngdu664.bsf3lite.client.gui.util.V2I;
+import com.linngdu664.bsf3lite.util.V2I;
 import com.linngdu664.bsf3lite.client.renderer.state.gui.FloatBlitRenderState;
 import com.linngdu664.bsf3lite.client.renderer.state.gui.FloatColoredQuadRenderState;
 import com.linngdu664.bsf3lite.client.renderer.state.gui.FloatColoredRectangleRenderState;
