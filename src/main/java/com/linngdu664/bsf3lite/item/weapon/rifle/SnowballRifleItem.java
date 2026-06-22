@@ -104,7 +104,7 @@ public class SnowballRifleItem extends AbstractBSFWeaponItem {
             player.push(-pushRank * cameraVec.x, -pushRank * cameraVec.y, -pushRank * cameraVec.z);
         } else {
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, new ForwardConeParticlesPayload(new ForwardConeParticlesParas(player.getEyePosition(), cameraVec, 4.5F, 45, 1.5F, 0.1), BSFParticleType.SNOWFLAKE.ordinal()));
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.SHOTGUN_FIRE_2.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             stack.hurtAndBreak(1, player, player.getUsedItemHand());
             player.awardStat(Stats.ITEM_USED.get(this));
         }
