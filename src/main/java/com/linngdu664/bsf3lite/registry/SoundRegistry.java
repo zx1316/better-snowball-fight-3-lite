@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class SoundRegistry {
-    public static final int MEME_SOUND_AMOUNT = 64;
+    public static final int MEME_SOUND_AMOUNT = 87;
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, Main.MODID);
     public static final DeferredHolder<SoundEvent, SoundEvent> SNOWBALL_CANNON_SHOOT = build("snowball_cannon_shoot");
@@ -40,7 +40,7 @@ public class SoundRegistry {
 
     private static DeferredHolder<SoundEvent, SoundEvent>[] buildMeme() {
         DeferredHolder<SoundEvent, SoundEvent>[] memes = new DeferredHolder[MEME_SOUND_AMOUNT];
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < MEME_SOUND_AMOUNT; i++) {
             memes[i] = build(String.format("memesound%02d", i));
         }
         return memes;
