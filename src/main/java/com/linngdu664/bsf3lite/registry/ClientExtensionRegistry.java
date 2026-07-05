@@ -37,6 +37,9 @@ public class ClientExtensionRegistry {
         event.registerItem(weaponExtensions, ItemRegistry.SNOWBALL_SHOTGUN);
         event.registerItem(weaponExtensions, ItemRegistry.SCULK_SNOWBALL_LAUNCHER);
         event.registerItem(weaponExtensions, ItemRegistry.IMPLOSION_SNOWBALL_CANNON);
+        event.registerItem(weaponExtensions, ItemRegistry.SNOWBALL_RIFLE);
+        event.registerItem(weaponExtensions, ItemRegistry.FREEZING_SNOWBALL_RIFLE);
+        event.registerItem(weaponExtensions, ItemRegistry.POWERFUL_SNOWBALL_RIFLE);
 
         event.registerItem(new IClientItemExtensions() {
             private HumanoidModel<?> cachedModel;
