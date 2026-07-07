@@ -7,10 +7,7 @@ import com.linngdu664.bsf3lite.registry.EffectRegistry;
 import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -58,10 +55,8 @@ public class SculkSnowballLauncherItem extends AbstractBSFWeaponItem {
                 pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundRegistry.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                 if (!itemStack.has(DataComponentRegistry.SCULK_SOUND_ID)) {
                     itemStack.set(DataComponentRegistry.SCULK_SOUND_ID, -1);
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
-                            .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));
                 }
-                SculkSnowballEntity snowballEntity = new SculkSnowballEntity(pPlayer, pLevel, itemStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1), itemStack.get(DataComponentRegistry.REGION.get()));
+                SculkSnowballEntity snowballEntity = new SculkSnowballEntity(pPlayer, pLevel, itemStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1), itemStack.get(DataComponentRegistry.REGION));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 2.0F, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
                 itemStack.hurtAndBreak(1, pPlayer, pUsedHand);
@@ -75,13 +70,10 @@ public class SculkSnowballLauncherItem extends AbstractBSFWeaponItem {
     }
 
     @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return !oldStack.getItem().equals(newStack.getItem());
-    }
-
-    @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
         builder.accept(Component.translatable("sculk_snowball_launcher.tooltip").withStyle(ChatFormatting.GRAY));
+        int soundId = itemStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1);
+        builder.accept(Component.translatable("sculk_snowball_launcher2.tooltip", soundId == -1 ? Component.translatable("random_sound.tip") : Component.translatable("sound_id.tip", soundId)).withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("sculk_snowball_launcher1.tooltip", Minecraft.getInstance().options.keyShift.getTranslatedKeyMessage()).withStyle(ChatFormatting.DARK_GRAY));
         builder.accept(Component.translatable("guns1.tooltip").withStyle(ChatFormatting.GRAY));
         builder.accept(Component.translatable("guns2.tooltip", CYCLE_MOVE_AMMO_PREV.getTranslatedKeyMessage(), CYCLE_MOVE_AMMO_NEXT.getTranslatedKeyMessage()).withStyle(ChatFormatting.DARK_GRAY));

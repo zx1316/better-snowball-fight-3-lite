@@ -244,6 +244,7 @@
   "jedi_glove.tooltip": "隔空接住前方飞来的雪球",
   "snow_trap_setter.tooltip": "长按在雪上放置陷阱",
   "sculk_snowball_launcher.tooltip": "发射会产生噪音的幽匿雪球",
+  "sculk_snowball_launcher2.tooltip": "当前音效：%1$s",
   "sculk_snowball_launcher1.tooltip": "<%1$s+滚轮> 选择音效",
   "snow_golem_container.tooltip": "收纳/放出高级雪傀儡",
   "snowball_clamp.tooltip": "把雪压制成雪球",

@@ -5,9 +5,7 @@ import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.registry.SoundRegistry;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -37,11 +35,9 @@ public record SculkSnowballLauncherSwitchSoundPayload(boolean isIncrease) implem
                 }
                 itemStack.set(DataComponentRegistry.SCULK_SOUND_ID, soundId);
                 if (soundId == -1) {
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
-                            .append(": ").append(MutableComponent.create(new TranslatableContents("random_sound.tip", null, new Object[]{}))));
+                    sender.sendOverlayMessage(Component.translatable("random_sound.tip"));
                 } else {
-                    itemStack.set(DataComponents.CUSTOM_NAME, MutableComponent.create(new TranslatableContents("item.bsf3lite.sculk_snowball_launcher", null, new Object[]{}))
-                            .append(": ").append(MutableComponent.create(new TranslatableContents("sound_id.tip", null, new Object[]{String.valueOf(soundId)}))));
+                    sender.sendOverlayMessage(Component.translatable("sound_id.tip", soundId));
                 }
             }
         });

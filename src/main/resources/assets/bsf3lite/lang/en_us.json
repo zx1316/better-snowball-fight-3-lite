@@ -244,6 +244,7 @@
   "jedi_glove.tooltip": "Catch the snowball flying towards you without touching",
   "snow_trap_setter.tooltip": "Press and hold to place traps on the snow",
   "sculk_snowball_launcher.tooltip": "Launches noise-making sculk snowball",
+  "sculk_snowball_launcher2.tooltip": "Current sound: %1$s",
   "sculk_snowball_launcher1.tooltip": "<%1$s+Mouse Scroll> Select sound",
   "snow_golem_container.tooltip": "Store/Release Advanced Snow Golem",
   "snowball_clamp.tooltip": "Compress the snow into a snowball",

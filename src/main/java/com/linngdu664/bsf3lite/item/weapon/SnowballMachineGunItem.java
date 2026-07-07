@@ -190,10 +190,10 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
         return 72000;
     }
 
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return !oldStack.getItem().equals(newStack.getItem());
-    }
+//    @Override
+//    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+//        return !oldStack.getItem().equals(newStack.getItem());
+//    }
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {

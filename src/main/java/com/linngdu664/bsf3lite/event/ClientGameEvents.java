@@ -11,6 +11,7 @@ import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
 import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
 import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerStatusModePayload;
 import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerTargetModePayload;
+import com.linngdu664.bsf3lite.registry.DataComponentRegistry;
 import com.linngdu664.bsf3lite.registry.ItemRegistry;
 import com.linngdu664.bsf3lite.registry.KeyMappingRegistry;
 import net.minecraft.client.Camera;
@@ -18,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -42,6 +44,7 @@ import java.util.LinkedHashSet;
 @EventBusSubscriber(modid = Main.MODID, value = Dist.CLIENT)
 public class ClientGameEvents {
     public static final RandomSource BSF_RANDOM_SOURCE = RandomSource.create();
+    private static ItemStack prevMainHandStack;
 
     @SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
@@ -161,11 +164,22 @@ public class ClientGameEvents {
         ScreenshakeHandler.clientTick(camera, null);
         ScreenshakeHandler.clientTick(camera, BSF_RANDOM_SOURCE);
 
-        // tick weapons
         LocalPlayer player = minecraft.player;
         if (player == null) {
             return;
         }
+        ItemStack mainHandStack = player.getMainHandItem();
+        if (mainHandStack != prevMainHandStack && mainHandStack.is(ItemRegistry.SCULK_SNOWBALL_LAUNCHER)) {
+            int soundId = mainHandStack.getOrDefault(DataComponentRegistry.SCULK_SOUND_ID, -1);
+            if (soundId == -1) {
+                minecraft.gui.setOverlayMessage(Component.translatable("random_sound.tip"), false);
+            } else {
+                minecraft.gui.setOverlayMessage(Component.translatable("sound_id.tip", soundId), false);
+            }
+        }
+        prevMainHandStack = mainHandStack;
+
+        // tick weapons
         Inventory inventory = player.getInventory();
         for (int i = 0, size = inventory.getContainerSize(); i < size; i++) {
             ItemStack itemStack = inventory.getItem(i);
