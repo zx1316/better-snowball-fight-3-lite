@@ -30,6 +30,7 @@ public class RegionData {
 
     private final BlockPos start, end;
     private final int minX, minY, minZ, maxX, maxY, maxZ;       // prevent replication computation
+
     public RegionData(BlockPos start, BlockPos end) {
         this.start = start;
         this.end = end;
@@ -58,7 +59,7 @@ public class RegionData {
 
     public static RegionData loadFromValueInput(String key, ValueInput in) {
         Optional<Long> startLong = in.getLong(key + "Start");
-        Optional<Long> endLong = in.getLong(key + "Start");
+        Optional<Long> endLong = in.getLong(key + "End");
         if (startLong.isPresent() && endLong.isPresent()) {
             BlockPos start = BlockPos.of(startLong.get());
             BlockPos end = BlockPos.of(endLong.get());
