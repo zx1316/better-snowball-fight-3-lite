@@ -44,11 +44,11 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     }
 
     @Override
-    public ILaunchAdjustment getLaunchAdjustment(double damageDropRate, Item snowball) {
+    public ILaunchAdjustment getLaunchAdjustment(float damageDropRate, Item snowball) {
         return new ILaunchAdjustment() {
             @Override
-            public double adjustPunch(double punch) {
-                return punch + 1.2;
+            public float adjustPunch(float punch) {
+                return punch + 1.2F;
             }
 
             @Override

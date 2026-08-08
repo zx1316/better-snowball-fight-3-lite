@@ -16,11 +16,11 @@ public class PowerfulSnowballRifle extends SnowballRifleItem {
     }
 
     @Override
-    public ILaunchAdjustment getLaunchAdjustment(double damageDropRate, Item snowball) {
+    public ILaunchAdjustment getLaunchAdjustment(float damageDropRate, Item snowball) {
         return new ILaunchAdjustment() {
             @Override
-            public double adjustPunch(double punch) {
-                return punch + 2;
+            public float adjustPunch(float punch) {
+                return punch + 2F;
             }
 
             @Override

@@ -15,12 +15,17 @@ public abstract class AbstractSnowStorageSnowballEntity extends AbstractConstruc
     protected int snowStock = 0;
 
     public AbstractSnowStorageSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel, int duration) {
-        super(pEntityType, pLevel, duration, new BSFSnowballEntityProperties().canBeCaught(false));
+        super(pEntityType, pLevel, duration, makeProperties());
     }
 
     public AbstractSnowStorageSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, ILaunchAdjustment launchAdjustment, int snowStock, int duration, RegionData region) {
-        super(pEntityType, pShooter, pLevel, itemStack, duration, new BSFSnowballEntityProperties().canBeCaught(false).applyAdjustment(launchAdjustment), region);
+        super(pEntityType, pShooter, pLevel, itemStack, duration,
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
         this.snowStock = snowStock;
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().canBeCaught(false);
     }
 
     @Override

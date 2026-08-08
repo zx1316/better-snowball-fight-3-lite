@@ -12,15 +12,21 @@ import net.minecraft.world.level.Level;
 
 public class StoneSnowballEntity extends AbstractNormalSnowballEntity {
     public StoneSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(5));
+        super(pEntityType, pLevel, makeProperties());
     }
 
     public StoneSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.STONE_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.STONE_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(2).basicBlazeDamage(4), region);
+        super(EntityRegistry.STONE_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.STONE_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
     }
 
     public StoneSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.STONE_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.STONE_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(2).basicBlazeDamage(4).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.STONE_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.STONE_SNOWBALL.toStack(),
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().damage(3).blazeDamage(5);
     }
 
     @Override

@@ -16,11 +16,13 @@ public class SmoothSnowballEntity extends AbstractNormalSnowballEntity {
     }
 
     public SmoothSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.SMOOTH_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.SMOOTH_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.SMOOTH_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.SMOOTH_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().aliveRange(region));
     }
 
     public SmoothSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.SMOOTH_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.SMOOTH_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.SMOOTH_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.SMOOTH_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment).aliveRange(region));
     }
 
     @Override

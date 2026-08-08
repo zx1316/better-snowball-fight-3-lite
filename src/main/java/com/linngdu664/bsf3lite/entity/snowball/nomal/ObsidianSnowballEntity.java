@@ -12,15 +12,21 @@ import net.minecraft.world.level.Level;
 
 public class ObsidianSnowballEntity extends AbstractNormalSnowballEntity {
     public ObsidianSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(6).basicBlazeDamage(8));
+        super(pEntityType, pLevel, makeProperties());
     }
 
     public ObsidianSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.OBSIDIAN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.OBSIDIAN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(6).basicBlazeDamage(8), region);
+        super(EntityRegistry.OBSIDIAN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.OBSIDIAN_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
     }
 
     public ObsidianSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.OBSIDIAN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.OBSIDIAN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(6).basicBlazeDamage(8).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.OBSIDIAN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.OBSIDIAN_SNOWBALL.toStack(),
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().damage(6).blazeDamage(8);
     }
 
     @Override

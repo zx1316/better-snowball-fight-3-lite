@@ -60,7 +60,7 @@ public class CompactedSnowballSetItem extends Item {
         if (!pLevel.isClientSide()) {
             ILaunchAdjustment launchAdjustment = new ILaunchAdjustment() {
                 @Override
-                public double adjustPunch(double punch) {
+                public float adjustPunch(float punch) {
                     return punch;
                 }
 

@@ -40,8 +40,8 @@ import java.util.function.Consumer;
 public class SnowmanInHandItem extends Item {
     private static final ILaunchAdjustment LAUNCH_ADJUSTMENT = new ILaunchAdjustment() {
         @Override
-        public double adjustPunch(double punch) {
-            return punch + 1;
+        public float adjustPunch(float punch) {
+            return punch + 1F;
         }
 
         @Override

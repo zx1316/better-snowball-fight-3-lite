@@ -36,47 +36,47 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile {
-    private final BSFSnowballEntityProperties properties;
     protected float particleGenerationStepSize = 0.5F;
-    protected float particleGeneratePointOffset;
+    protected float particleGeneratePointOffset = 0;
     protected Vec3 previousTickPosition = new Vec3(Double.NaN, Double.NaN, Double.NaN);
     protected boolean isCaught = false;
-    private RegionData aliveRange = null;
+    private float damage;
+    private float blazeDamage;
+    private int weaknessTicks;
+    private int frozenTicks;
+    private float punch;
+    private boolean canBeCaught;
+    private LaunchFrom launchFrom;
+    private RegionData aliveRange;
 
     public AbstractBSFSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel, BSFSnowballEntityProperties pProperties) {
         super(pEntityType, pLevel);
-        this.properties = pProperties;
+        copyProperties(pProperties);
     }
 
     public AbstractBSFSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties) {
         super(pEntityType, pX, pY, pZ, pLevel, itemStack);
-        this.properties = pProperties;
+        copyProperties(pProperties);
     }
 
-    public AbstractBSFSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties, RegionData region) {
-        super(pEntityType, pX, pY, pZ, pLevel, itemStack);
-        this.properties = pProperties;
-        this.aliveRange = RegionData.copy(region);
-    }
-
-    public AbstractBSFSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties, RegionData region) {
+    public AbstractBSFSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties) {
         super(pEntityType, pShooter, pLevel, itemStack);
-        this.properties = pProperties;
-        this.aliveRange = RegionData.copy(region);
+        copyProperties(pProperties);
     }
 
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
-        output.putFloat("Damage", properties.damage);
-        output.putFloat("BlazeDamage", properties.blazeDamage);
-        output.putInt("WeaknessTicks", properties.weaknessTicks);
-        output.putInt("FrozenTicks", properties.frozenTicks);
-        output.putDouble("Punch", properties.punch);
-        output.putBoolean("CanBeCaught", properties.canBeCaught);
-        output.putInt("LaunchFrom", properties.launchFrom.ordinal());
+        output.putFloat("Damage", damage);
+        output.putFloat("BlazeDamage", blazeDamage);
+        output.putInt("WeaknessTicks", weaknessTicks);
+        output.putInt("FrozenTicks", frozenTicks);
+        output.putFloat("Punch", punch);
+        output.putBoolean("CanBeCaught", canBeCaught);
+        output.putInt("LaunchFrom", launchFrom.ordinal());
         output.putFloat("ParticleGenerationStepSize", particleGenerationStepSize);
         output.putFloat("ParticleGenerationPointOffset", particleGeneratePointOffset);
         if (aliveRange != null) {
@@ -87,13 +87,17 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
-        properties.damage = input.getFloatOr("Damage", 0f);
-        properties.blazeDamage = input.getFloatOr("BlazeDamage", 0);
-        properties.weaknessTicks = input.getIntOr("WeaknessTicks", 0);
-        properties.frozenTicks = input.getIntOr("FrozenTicks", 0);
-        properties.punch = input.getDoubleOr("Punch", 0);
-        properties.canBeCaught = input.getBooleanOr("CanBeCaught", false);
-        properties.launchFrom = LaunchFrom.values()[input.getIntOr("LaunchFrom", 0)];
+        damage = input.getFloatOr("Damage", 0f);
+        blazeDamage = input.getFloatOr("BlazeDamage", 0);
+        weaknessTicks = input.getIntOr("WeaknessTicks", 0);
+        frozenTicks = input.getIntOr("FrozenTicks", 0);
+        punch = input.getFloatOr("Punch", 0);
+        canBeCaught = input.getBooleanOr("CanBeCaught", false);
+
+        int launchFromOrdinal = input.getIntOr("LaunchFrom", 0);
+        LaunchFrom[] launchFroms = LaunchFrom.values();
+        launchFrom = launchFromOrdinal >= 0 && launchFromOrdinal < launchFroms.length ? launchFroms[launchFromOrdinal] : LaunchFrom.HAND;
+
         particleGenerationStepSize = input.getFloatOr("ParticleGenerationStepSize", 0.5f); // command summoned fallback
         particleGeneratePointOffset = input.getFloatOr("ParticleGenerationPointOffset", 0);
         aliveRange = RegionData.loadFromValueInput("AliveRange", input);
@@ -125,24 +129,24 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
             Vec3 vel = getDeltaMovement();
 
             // Damage entity
-            float hurt = entity instanceof Blaze ? properties.blazeDamage : properties.damage;
+            float hurt = entity instanceof Blaze ? blazeDamage : damage;
             float relVel = (float) vel.subtract(entity.getDeltaMovement()).length();
             hurt *= 0.5f + 0.375f * relVel;
-            if (entity.hurtOrSimulate(level.damageSources().thrown(this, this.getOwner()), hurt)) {
+            if (entity.hurtOrSimulate(this.damageSources().thrown(this, this.getOwner()), hurt)) {
                 // Handle frozen and weakness effects
-                if (properties.frozenTicks > 0 && !(entity instanceof AbstractBSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
-                    if (entity.getTicksFrozen() < properties.frozenTicks) {
-                        entity.setTicksFrozen(properties.frozenTicks);
+                if (frozenTicks > 0 && !(entity instanceof AbstractBSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
+                    if (entity.getTicksFrozen() < frozenTicks) {
+                        entity.setTicksFrozen(frozenTicks);
                     }
                     entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 1));
                 }
-                if (properties.weaknessTicks > 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, properties.weaknessTicks, 1));
+                if (weaknessTicks > 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 1));
                 }
 
                 // Push entity
                 if (entity.isPushable()) {
-                    Vec3 vec3d = vel.multiply(0.1 * properties.punch, 0.0, 0.1 * properties.punch);
+                    Vec3 vec3d = vel.multiply(0.1 * punch, 0.0, 0.1 * punch);
                     entity.push(vec3d.x, 0.0, vec3d.z);
                 }
                 if (getOwner() instanceof LivingEntity owner) {
@@ -293,82 +297,95 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         return aliveRange;
     }
 
-    public final boolean canBeCaught() {
-        return properties.canBeCaught;
+    public boolean canBeCaught() {
+        return this.canBeCaught;
     }
 
-    public final float getDamage() {
-        return properties.damage;
+    public float getDamage() {
+        return this.damage;
     }
 
     public void setDamage(float damage) {
-        properties.damage = damage;
+        this.damage = damage;
     }
 
-    public final float getBlazeDamage() {
-        return properties.blazeDamage;
+    public float getBlazeDamage() {
+        return this.blazeDamage;
     }
 
     public void setBlazeDamage(float damage) {
-        properties.blazeDamage = damage;
+        this.blazeDamage = damage;
     }
 
-    public final int getWeaknessTicks() {
-        return properties.weaknessTicks;
+    public int getWeaknessTicks() {
+        return this.weaknessTicks;
     }
 
-    public final int getFrozenTicks() {
-        return properties.frozenTicks;
+    public int getFrozenTicks() {
+        return this.frozenTicks;
     }
 
-    public final double getPunch() {
-        return properties.punch;
+    public double getPunch() {
+        return this.punch;
     }
 
-    public final LaunchFrom getLaunchFrom() {
-        return properties.launchFrom;
+    public LaunchFrom getLaunchFrom() {
+        return this.launchFrom;
+    }
+
+    private void copyProperties(BSFSnowballEntityProperties properties) {
+        this.damage = properties.damage;
+        this.blazeDamage = properties.blazeDamage;
+        this.weaknessTicks = properties.weaknessTicks;
+        this.frozenTicks = properties.frozenTicks;
+        this.punch = properties.punch;
+        this.canBeCaught = properties.canBeCaught;
+        this.launchFrom = properties.launchFrom;
+        this.aliveRange = RegionData.copy(properties.aliveRange);
     }
 
     public static class BSFSnowballEntityProperties {
-        float damage;
-        float blazeDamage;
-        int weaknessTicks;
-        int frozenTicks;
-        double punch;
-        boolean canBeCaught;
-        LaunchFrom launchFrom;
+        private float damage;
+        private float blazeDamage;
+        private int weaknessTicks;
+        private int frozenTicks;
+        private float punch;
+        private boolean canBeCaught;
+        private @NotNull LaunchFrom launchFrom;
+        private @Nullable RegionData aliveRange;
 
         public BSFSnowballEntityProperties() {
-            damage = Float.MIN_NORMAL;
-            blazeDamage = 3;
-            weaknessTicks = 0;
-            frozenTicks = 0;
-            punch = 0;
-            canBeCaught = true;
-            launchFrom = LaunchFrom.HAND;
+            this.damage = Float.MIN_NORMAL;
+            this.blazeDamage = 3;
+            this.weaknessTicks = 0;
+            this.frozenTicks = 0;
+            this.punch = 0;
+            this.canBeCaught = true;
+            this.launchFrom = LaunchFrom.HAND;
+            this.aliveRange = null;
         }
 
-        public BSFSnowballEntityProperties basicDamage(float damage) {
+        public BSFSnowballEntityProperties damage(float damage) {
             this.damage = damage;
             return this;
         }
 
-        public BSFSnowballEntityProperties basicBlazeDamage(float damage) {
+        public BSFSnowballEntityProperties blazeDamage(float damage) {
             this.blazeDamage = damage;
             return this;
         }
 
-        public BSFSnowballEntityProperties basicWeaknessTicks(int ticks) {
+        public BSFSnowballEntityProperties weaknessTicks(int ticks) {
             this.weaknessTicks = ticks;
             return this;
         }
 
-        public BSFSnowballEntityProperties basicFrozenTicks(int ticks) {
+        public BSFSnowballEntityProperties frozenTicks(int ticks) {
             this.frozenTicks = ticks;
             return this;
         }
 
-        public BSFSnowballEntityProperties basicPunch(double punch) {
+        public BSFSnowballEntityProperties punch(float punch) {
             this.punch = punch;
             return this;
         }
@@ -378,13 +395,18 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
             return this;
         }
 
+        public BSFSnowballEntityProperties aliveRange(@Nullable RegionData aliveRange) {
+            this.aliveRange = aliveRange;
+            return this;
+        }
+
         public BSFSnowballEntityProperties applyAdjustment(ILaunchAdjustment adjustment) {
-            blazeDamage = adjustment.adjustBlazeDamage(blazeDamage);
-            damage = adjustment.adjustDamage(damage);
-            frozenTicks = adjustment.adjustFrozenTicks(frozenTicks);
-            weaknessTicks = adjustment.adjustWeaknessTicks(weaknessTicks);
-            punch = adjustment.adjustPunch(punch);
-            launchFrom = adjustment.getLaunchFrom();
+            this.blazeDamage = adjustment.adjustBlazeDamage(blazeDamage);
+            this.damage = adjustment.adjustDamage(damage);
+            this.frozenTicks = adjustment.adjustFrozenTicks(frozenTicks);
+            this.weaknessTicks = adjustment.adjustWeaknessTicks(weaknessTicks);
+            this.punch = adjustment.adjustPunch(punch);
+            this.launchFrom = adjustment.getLaunchFrom();
             return this;
         }
     }

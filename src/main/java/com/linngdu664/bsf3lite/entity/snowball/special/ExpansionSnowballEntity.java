@@ -25,7 +25,8 @@ public class ExpansionSnowballEntity extends AbstractConstructSnowballEntity {
     }
 
     public ExpansionSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.EXPANSION_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.EXPANSION_SNOWBALL.toStack(), ServerConfig.EXPANSION_SNOWBALL_DURATION.getConfigValue(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.EXPANSION_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.EXPANSION_SNOWBALL.toStack(), ServerConfig.EXPANSION_SNOWBALL_DURATION.getConfigValue(),
+                new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment).aliveRange(region));
     }
 
     @Override

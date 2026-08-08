@@ -25,11 +25,13 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public PowderSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.POWDER_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.POWDER_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.POWDER_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.POWDER_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().aliveRange(region));
     }
 
     public PowderSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.POWDER_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.POWDER_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.POWDER_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.POWDER_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment).aliveRange(region));
     }
 
     @Override

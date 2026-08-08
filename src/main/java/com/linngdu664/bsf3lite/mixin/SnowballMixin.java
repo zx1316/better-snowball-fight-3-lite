@@ -50,25 +50,25 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
-        bsf$spawnBasicParticles(level());
+        bsf3lite$spawnBasicParticles();
     }
 
     // Cancel "broadcastEntityEvent" and discard directly.
     @Inject(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;broadcastEntityEvent(Lnet/minecraft/world/entity/Entity;B)V"), cancellable = true)
-    private void injectedOnHit(HitResult pResult, CallbackInfo ci) {
+    private void injectedOnHit(HitResult hitResult, CallbackInfo ci) {
         this.discard();
         ci.cancel();
     }
 
     @Inject(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"), cancellable = true)
-    private void injectedBeforeInvokeHurtOnHitEntity(EntityHitResult pResult, CallbackInfo ci, @Local Entity entity) {
-        Level level = level();
+    private void injectedBeforeInvokeHurtOnHitEntity(EntityHitResult hitResult, CallbackInfo ci, @Local(name = "entity") Entity entity) {
         if (entity instanceof Player player) {
             ItemStack mainHand = player.getMainHandItem();
             ItemStack offHand = player.getOffhandItem();
             if ((offHand.getItem() instanceof GloveItem && player.getUsedItemHand() == InteractionHand.OFF_HAND ||
                     mainHand.getItem() instanceof GloveItem && player.getUsedItemHand() == InteractionHand.MAIN_HAND) &&
-                    player.isUsingItem() && bsf$isHeadingToSnowball(player)) {
+                    player.isUsingItem() && bsf3lite$isHeadingToSnowball(player)) {
+                Level level = level();
                 player.getInventory().placeItemBackInInventory(Items.SNOWBALL.getDefaultInstance(), true);
                 if (mainHand.getItem() instanceof GloveItem glove) {
                     mainHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
@@ -82,23 +82,24 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
                     ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
                 }
             } else {
-                player.hurt(this.damageSources().thrown(this, this.getOwner()), Float.MIN_NORMAL);
-                if (getOwner() instanceof LivingEntity owner) {
-                    owner.setLastHurtMob(player);
+                player.hurtOrSimulate(this.damageSources().thrown(this, this.getOwner()), Float.MIN_NORMAL);
+                if (getOwner() instanceof LivingEntity owner1) {
+                    owner1.setLastHurtMob(player);
                 }
-                bsf$spawnBasicParticles(level);
+                bsf3lite$spawnBasicParticles();
             }
             ci.cancel();
         } else {
-            if (getOwner() instanceof LivingEntity owner) {
-                owner.setLastHurtMob(entity);
+            if (getOwner() instanceof LivingEntity owner1) {
+                owner1.setLastHurtMob(entity);
             }
-            bsf$spawnBasicParticles(level);
+            bsf3lite$spawnBasicParticles();
         }
     }
 
     @Unique
-    private void bsf$spawnBasicParticles(Level level) {
+    private void bsf3lite$spawnBasicParticles() {
+        Level level = level();
         if (!level.isClientSide()) {
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
@@ -106,7 +107,7 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
     }
 
     @Unique
-    private boolean bsf$isHeadingToSnowball(Player player) {
+    private boolean bsf3lite$isHeadingToSnowball(Player player) {
         Vec3 speedVec = this.getDeltaMovement().normalize();
         Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
         return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;

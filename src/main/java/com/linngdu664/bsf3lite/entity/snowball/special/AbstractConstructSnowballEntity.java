@@ -42,8 +42,8 @@ public abstract class AbstractConstructSnowballEntity extends AbstractBSFSnowbal
         this.blockDurationTick = duration;
     }
 
-    public AbstractConstructSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, int duration, BSFSnowballEntityProperties pProperties, RegionData region) {
-        super(pEntityType, pShooter, pLevel, itemStack, pProperties, region);
+    public AbstractConstructSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, int duration, BSFSnowballEntityProperties pProperties) {
+        super(pEntityType, pShooter, pLevel, itemStack, pProperties);
         this.blockDurationTick = duration;
     }
 

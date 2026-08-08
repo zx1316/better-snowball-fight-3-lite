@@ -34,7 +34,7 @@ public class SculkSnowballLauncherItem extends AbstractBSFWeaponItem {
     }
 
     @Override
-    public ILaunchAdjustment getLaunchAdjustment(double damageDropRate, Item snowball) {
+    public ILaunchAdjustment getLaunchAdjustment(float damageDropRate, Item snowball) {
         return null;
     }
 

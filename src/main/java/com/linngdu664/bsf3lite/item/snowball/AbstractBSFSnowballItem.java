@@ -42,7 +42,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
     public ILaunchAdjustment getLaunchAdjustment(float playerBadEffectRate) {
         return new ILaunchAdjustment() {
             @Override
-            public double adjustPunch(double punch) {
+            public float adjustPunch(float punch) {
                 return punch;
             }
 

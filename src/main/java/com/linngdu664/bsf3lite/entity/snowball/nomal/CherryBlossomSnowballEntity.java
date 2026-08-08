@@ -20,11 +20,13 @@ public class CherryBlossomSnowballEntity extends AbstractNormalSnowballEntity {
     }
 
     public CherryBlossomSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().aliveRange(region));
     }
 
     public CherryBlossomSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CHERRY_BLOSSOM_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment).aliveRange(region));
     }
 
     @Override

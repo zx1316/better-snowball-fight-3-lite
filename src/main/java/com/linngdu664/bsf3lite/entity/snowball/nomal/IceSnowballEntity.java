@@ -12,15 +12,21 @@ import net.minecraft.world.level.Level;
 
 public class IceSnowballEntity extends AbstractNormalSnowballEntity {
     public IceSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(4).basicBlazeDamage(7).basicFrozenTicks(40));
+        super(pEntityType, pLevel, makeProperties());
     }
 
     public IceSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.ICE_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.ICE_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(6).basicFrozenTicks(40), region);
+        super(EntityRegistry.ICE_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.ICE_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
     }
 
     public IceSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.ICE_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.ICE_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(6).basicFrozenTicks(40).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.ICE_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.ICE_SNOWBALL.toStack(),
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().damage(4).blazeDamage(7).frozenTicks(40);
     }
 
     @Override

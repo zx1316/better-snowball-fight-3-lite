@@ -41,15 +41,21 @@ import java.util.List;
 
 public class CriticalFrozenSnowballEntity extends AbstractBSFSnowballEntity {
     public CriticalFrozenSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60));
+        super(pEntityType, pLevel, makeProperties());
     }
 
     public CriticalFrozenSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60), region);
+        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
     }
 
     public CriticalFrozenSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicDamage(3).basicBlazeDamage(8).basicFrozenTicks(60).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.CRITICAL_FROZEN_SNOWBALL.toStack(),
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().damage(3).blazeDamage(8).frozenTicks(60);
     }
 
     @Override
@@ -58,12 +64,7 @@ public class CriticalFrozenSnowballEntity extends AbstractBSFSnowballEntity {
         Level level = level();
         if (!level.isClientSide()) {
             if (!isCaught) {
-                float frozenRange;
-                if (getLaunchFrom() == LaunchFrom.FREEZING_CANNON) {
-                    frozenRange = 3.5F;
-                } else {
-                    frozenRange = 2.5F;
-                }
+                float frozenRange = getLaunchFrom() == LaunchFrom.FREEZING_CANNON ? 3.5F : 2.5F;
                 Vec3 location = BSFCommonUtil.getRealHitPosOnMoveVecWithHitResult(this, pResult);
                 BlockPos blockPos = new BlockPos(Mth.floor(location.x), Mth.floor(location.y), Mth.floor(location.z));
                 BlockState ice = Blocks.ICE.defaultBlockState();

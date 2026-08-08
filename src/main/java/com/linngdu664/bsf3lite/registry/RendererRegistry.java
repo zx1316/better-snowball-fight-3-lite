@@ -6,6 +6,7 @@ import com.linngdu664.bsf3lite.client.model.IceSkatesModel;
 import com.linngdu664.bsf3lite.client.model.SnowFallBootsModel;
 import com.linngdu664.bsf3lite.client.renderer.entity.BSFDummyRenderer;
 import com.linngdu664.bsf3lite.client.renderer.entity.BSFSnowGolemRenderer;
+import com.linngdu664.bsf3lite.client.renderer.entity.SculkSnowballRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
@@ -46,7 +47,7 @@ public class RendererRegistry {
         event.registerEntityRenderer(EntityRegistry.ICICLE_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CRITICAL_FROZEN_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CHERRY_BLOSSOM_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.SCULK_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SCULK_SNOWBALL.get(), SculkSnowballRenderer::new);
         event.registerEntityRenderer(EntityRegistry.DUCK_SNOWBALL.get(), ThrownItemRenderer::new);
     }
 }

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -23,14 +22,19 @@ public class SculkSnowballEntity extends AbstractBSFSnowballEntity {
     private int soundId;
 
     public SculkSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicPunch(2));
-        this.setItem(new ItemStack(ItemRegistry.SCULK_SNOWBALL.get()));
+        super(pEntityType, pLevel, makeProperties());
+        this.setItem(ItemRegistry.COMPACTED_SNOWBALL.toStack());
         this.soundId = -1;
     }
 
     public SculkSnowballEntity(LivingEntity pShooter, Level pLevel, int soundId, RegionData region) {
-        super(EntityRegistry.SCULK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.SCULK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicPunch(2), region);
+        super(EntityRegistry.SCULK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.COMPACTED_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
         this.soundId = soundId;
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().punch(2);
     }
 
     @Override
@@ -49,15 +53,18 @@ public class SculkSnowballEntity extends AbstractBSFSnowballEntity {
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
         Level level = level();
-        if (!level.isClientSide() && !isCaught) {
+        if (!level.isClientSide()) {
             discard();
-            ((ServerLevel) level).sendParticles(new ShriekParticleOption(0), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(new ShriekParticleOption(5), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(new ShriekParticleOption(10), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
-            if (soundId == -1) {
-                level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[level.getRandom().nextInt(SoundRegistry.MEME_SOUND_AMOUNT)].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
-            } else {
-                level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[soundId].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+            if (!isCaught) {
+                ServerLevel serverLevel = (ServerLevel) level;
+                serverLevel.sendParticles(new ShriekParticleOption(0), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+                serverLevel.sendParticles(new ShriekParticleOption(5), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+                serverLevel.sendParticles(new ShriekParticleOption(10), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+                if (soundId < 0 || soundId >= SoundRegistry.MEME_SOUND_AMOUNT) {
+                    level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[level.getRandom().nextInt(SoundRegistry.MEME_SOUND_AMOUNT)].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                } else {
+                    level.playSound(null, getX(), getY(), getZ(), SoundRegistry.MEME[soundId].get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                }
             }
         }
     }

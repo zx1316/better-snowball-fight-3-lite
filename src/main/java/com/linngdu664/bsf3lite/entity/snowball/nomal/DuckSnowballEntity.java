@@ -21,11 +21,13 @@ public class DuckSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     public DuckSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.DUCK_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties(), region);
+        super(EntityRegistry.DUCK_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().aliveRange(region));
     }
 
     public DuckSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.DUCK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(), new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.DUCK_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.DUCK_SNOWBALL.toStack(),
+                new BSFSnowballEntityProperties().applyAdjustment(launchAdjustment).aliveRange(region));
     }
 
     @Override

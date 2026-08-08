@@ -15,12 +15,12 @@ public abstract class AbstractNormalSnowballEntity extends AbstractBSFSnowballEn
         super(pEntityType, pLevel, pProperties);
     }
 
-    public AbstractNormalSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties, RegionData region) {
-        super(pEntityType, pX, pY, pZ, pLevel, itemStack, pProperties, region);
+    public AbstractNormalSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties) {
+        super(pEntityType, pX, pY, pZ, pLevel, itemStack, pProperties);
     }
 
-    public AbstractNormalSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties, RegionData region) {
-        super(pEntityType, pShooter, pLevel, itemStack, pProperties, region);
+    public AbstractNormalSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, LivingEntity pShooter, Level pLevel, ItemStack itemStack, BSFSnowballEntityProperties pProperties) {
+        super(pEntityType, pShooter, pLevel, itemStack, pProperties);
     }
 
     @Override

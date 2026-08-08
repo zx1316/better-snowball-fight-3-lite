@@ -12,15 +12,21 @@ import net.minecraft.world.level.Level;
 
 public class CompactedSnowballEntity extends AbstractNormalSnowballEntity {
     public CompactedSnowballEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new BSFSnowballEntityProperties().basicPunch(2));
+        super(pEntityType, pLevel, makeProperties());
     }
 
     public CompactedSnowballEntity(Level pLevel, double pX, double pY, double pZ, RegionData region) {
-        super(EntityRegistry.COMPACTED_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.COMPACTED_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicPunch(2), region);
+        super(EntityRegistry.COMPACTED_SNOWBALL.get(), pX, pY, pZ, pLevel, ItemRegistry.COMPACTED_SNOWBALL.toStack(),
+                makeProperties().aliveRange(region));
     }
 
     public CompactedSnowballEntity(LivingEntity pShooter, Level pLevel, ILaunchAdjustment launchAdjustment, RegionData region) {
-        super(EntityRegistry.COMPACTED_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.COMPACTED_SNOWBALL.toStack(), new BSFSnowballEntityProperties().basicPunch(2).applyAdjustment(launchAdjustment), region);
+        super(EntityRegistry.COMPACTED_SNOWBALL.get(), pShooter, pLevel, ItemRegistry.COMPACTED_SNOWBALL.toStack(),
+                makeProperties().applyAdjustment(launchAdjustment).aliveRange(region));
+    }
+
+    private static BSFSnowballEntityProperties makeProperties() {
+        return new BSFSnowballEntityProperties().punch(2);
     }
 
     @Override

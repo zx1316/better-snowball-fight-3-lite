@@ -49,7 +49,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
         this.typeFlag = flag;
     }
 
-    public abstract ILaunchAdjustment getLaunchAdjustment(double damageDropRate, Item snowball);
+    public abstract ILaunchAdjustment getLaunchAdjustment(float damageDropRate, Item snowball);
 
     public abstract boolean isAllowBulkedSnowball();
 
