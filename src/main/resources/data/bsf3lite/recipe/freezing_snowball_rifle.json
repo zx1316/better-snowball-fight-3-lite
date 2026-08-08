@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IIE",
+    "ACR",
+    "DL "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "E": "minecraft:ender_eye",
+    "A": "minecraft:amethyst_shard",
+    "C": "bsf3lite:freezing_snowball_cannon",
+    "R": "minecraft:end_rod",
+    "D": "minecraft:redstone",
+    "L": "minecraft:lever"
+  },
+  "result": {
+    "id": "bsf3lite:freezing_snowball_rifle",
+    "count": 1
+  }
+}
