@@ -8,6 +8,7 @@ import com.linngdu664.bsf3lite.client.screenshake.ScreenshakeHandler;
 import com.linngdu664.bsf3lite.item.tool.ColdCompressionJetEngineItem;
 import com.linngdu664.bsf3lite.item.weapon.AbstractBSFWeaponItem;
 import com.linngdu664.bsf3lite.item.weapon.cannon.SnowballCannonItem;
+import com.linngdu664.bsf3lite.network.to_client.handler.ToggleMovingSoundClientHandler;
 import com.linngdu664.bsf3lite.network.to_server.SculkSnowballLauncherSwitchSoundPayload;
 import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerStatusModePayload;
 import com.linngdu664.bsf3lite.network.to_server.SwitchTweakerTargetModePayload;
@@ -33,6 +34,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
@@ -150,6 +152,11 @@ public class ClientGameEvents {
                 event.setNewFovModifier(f);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onClientLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+        ToggleMovingSoundClientHandler.stopAllLoopingSounds();
     }
 
     @SubscribeEvent

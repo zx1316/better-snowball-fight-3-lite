@@ -1,12 +1,9 @@
 package com.linngdu664.bsf3lite.client.resources.sounds;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-
-import java.util.Objects;
 
 public class MovingSoundInstance extends AbstractTickableSoundInstance {
     private final Entity entity;
@@ -22,7 +19,7 @@ public class MovingSoundInstance extends AbstractTickableSoundInstance {
     @Override
     public void tick() {
         if (entity.isRemoved()) {
-            Minecraft.getInstance().getSoundManager().stop(this);
+            stop();
         } else {
             x = entity.getX();
             y = entity.getY();
@@ -30,22 +27,16 @@ public class MovingSoundInstance extends AbstractTickableSoundInstance {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (looping) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            MovingSoundInstance that = (MovingSoundInstance) o;
-            return Objects.equals(entity, that.entity) && Objects.equals(identifier, that.identifier);
-        }
-        return this == o;
+    public void requestStop() {
+        stop();
     }
 
     @Override
-    public int hashCode() {
-        if (looping) {
-            return 31 * Objects.hash(entity) + Objects.hash(identifier);
-        }
-        return super.hashCode();
+    public boolean canPlaySound() {
+        return !isStopped();
+    }
+
+    public boolean isBoundTo(Entity entity) {
+        return this.entity == entity;
     }
 }
