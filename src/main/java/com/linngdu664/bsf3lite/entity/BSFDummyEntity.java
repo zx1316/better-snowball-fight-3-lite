@@ -8,13 +8,15 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -24,15 +26,16 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import org.jetbrains.annotations.NotNull;
 
-public class BSFDummyEntity extends Mob {
+public class BSFDummyEntity extends LivingEntity {
     private static final EntityDataAccessor<Float> DPS = SynchedEntityData.defineId(BSFDummyEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Byte> STYLE = SynchedEntityData.defineId(BSFDummyEntity.class, EntityDataSerializers.BYTE);
     private final float[] damages = new float[20];
     private float damage = 0F;
     private int ptr = 0;
     private int showNameTime = 0;
+    private String dpsStrCache;
 
-    public BSFDummyEntity(EntityType<? extends Mob> entityType, Level level) {
+    public BSFDummyEntity(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -56,7 +59,17 @@ public class BSFDummyEntity extends Mob {
     }
 
     @Override
+    public HumanoidArm getMainArm() {
+        return HumanoidArm.RIGHT;
+    }
+
+    @Override
     public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInWall() {
         return false;
     }
 
@@ -66,6 +79,12 @@ public class BSFDummyEntity extends Mob {
 
     @Override
     public void setDeltaMovement(Vec3 deltaMovement) {
+    }
+
+    @Override
+    protected void tickHeadTurn(float yBodyRotT) {
+        this.yBodyRotO = this.yRotO;
+        this.yBodyRot = this.getYRot();
     }
 
     @Override
@@ -81,6 +100,45 @@ public class BSFDummyEntity extends Mob {
     }
 
     @Override
+    public void aiStep() {
+        if (this.isInterpolating()) {
+            this.getInterpolation().interpolate();
+        }
+
+        if (this.lerpHeadSteps > 0) {
+            this.lerpHeadRotationStep(this.lerpHeadSteps, this.lerpYHeadRot);
+            --this.lerpHeadSteps;
+        }
+
+        this.equipment.tick(this);
+
+        ProfilerFiller profiler = Profiler.get();
+
+        profiler.push("travel");
+        if (!this.level().isClientSide() || this.isLocalInstanceAuthoritative()) {
+            this.applyEffectsFromBlocks();
+        }
+        profiler.pop();
+
+        if (this.level() instanceof ServerLevel serverLevel) {
+            profiler.push("freezing");
+            if (!this.isInPowderSnow || !this.canFreeze()) {
+                this.setTicksFrozen(Math.max(0, this.getTicksFrozen() - 2));
+            }
+            this.removeFrost();
+            this.tryAddFrost();
+            if (this.tickCount % 40 == 0 && this.isFullyFrozen() && this.canFreeze()) {
+                this.hurtServer(serverLevel, this.damageSources().freeze(), 1.0F);
+            }
+            profiler.pop();
+        }
+
+        profiler.push("push");
+        this.pushEntities();
+        profiler.pop();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (!level().isClientSide()) {
@@ -88,46 +146,52 @@ public class BSFDummyEntity extends Mob {
             if (ptr >= damages.length) {
                 ptr = 0;
             }
+            float lastDps = getDPS();
+            float currentDps = lastDps;
             if (damage > 0F) {
                 float sum = 0F;
                 for (float v : damages) {
                     sum += v;
                 }
+                currentDps = sum;
                 entityData.set(DPS, sum);
                 damage = 0F;
             }
-            final float currentDps = getDPS();
-            final boolean dpsTooSmall = currentDps > 0.0 && currentDps < 0.01;
-            final boolean dpsTooBig = currentDps >= 10.0;
-            final boolean showNormal = !dpsTooSmall && !dpsTooBig;
-            setCustomName(Component.literal(String.format(showNormal ? "DPS: %.2f" : "DPS: %.3g", currentDps)));
+
+            if (currentDps != lastDps || this.dpsStrCache == null) {
+                boolean dpsTooSmall = currentDps > 0.0 && currentDps < 0.01;
+                boolean dpsTooBig = currentDps >= 10.0;
+                boolean showNormal = !dpsTooSmall && !dpsTooBig;
+                this.dpsStrCache = String.format(showNormal ? "DPS: %.2f" : "DPS: %.3g", currentDps);
+            }
+            setCustomName(Component.literal(this.dpsStrCache));
+
             if (this.showNameTime > 0) {
                 this.showNameTime--;
-            }else if (this.isCustomNameVisible()){
+            } else if (this.isCustomNameVisible()) {
                 this.setCustomNameVisible(false);
             }
         }
     }
 
     @Override
-    public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
-        ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        Item item = itemStack.getItem();
-        if (item.equals(Items.SNOWBALL)) {
-            Level level = level();
-            if (!level.isClientSide()) {
+    public @NotNull InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(Items.SNOWBALL) && !player.isSpectator()) {
+            if (player.isSpectator()) {
+                return InteractionResult.SUCCESS;
+            } else if (player.level().isClientSide()) {
+                return InteractionResult.SUCCESS_SERVER;
+            } else {
+                Level level = level();
                 entityData.set(STYLE, (byte) ((getStyle() + 1) % AbstractBSFSnowGolemEntity.STYLE_NUM));
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 1, this.getZ(), 20, 0, 0.5, 0, 0.05);
                 this.playSound(SoundEvents.SNOW_PLACE, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                return InteractionResult.SUCCESS_SERVER;
             }
-            return InteractionResult.SUCCESS;
+        } else {
+            return super.interact(player, hand, location);
         }
-        return InteractionResult.PASS;
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
     }
 
     public float getDPS() {

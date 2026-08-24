@@ -5,10 +5,10 @@ import com.linngdu664.bsf3lite.client.model.BSFDummyModel;
 import com.linngdu664.bsf3lite.client.renderer.entity.state.BSFDummyRenderState;
 import com.linngdu664.bsf3lite.entity.BSFDummyEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.Identifier;
 
-public class BSFDummyRenderer extends MobRenderer<BSFDummyEntity, BSFDummyRenderState, BSFDummyModel> {
+public class BSFDummyRenderer extends LivingEntityRenderer<BSFDummyEntity, BSFDummyRenderState, BSFDummyModel> {
     public BSFDummyRenderer(EntityRendererProvider.Context context) {
         super(context, new BSFDummyModel(context.bakeLayer(BSFDummyModel.LAYER_LOCATION)), 0.7f);
     }
