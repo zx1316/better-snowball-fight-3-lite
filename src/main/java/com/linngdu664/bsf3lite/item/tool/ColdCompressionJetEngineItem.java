@@ -3,10 +3,12 @@ package com.linngdu664.bsf3lite.item.tool;
 import com.linngdu664.bsf3lite.client.screenshake.Easing;
 import com.linngdu664.bsf3lite.network.to_client.ForwardConeParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.ForwardRaysParticlesPayload;
+import com.linngdu664.bsf3lite.network.to_client.RingParticlesPayload;
 import com.linngdu664.bsf3lite.network.to_client.ScreenshakePayload;
 import com.linngdu664.bsf3lite.network.to_client.ToggleMovingSoundPayload;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
+import com.linngdu664.bsf3lite.network.to_client.packed_paras.RingParticlesParas;
 import com.linngdu664.bsf3lite.particle.util.BSFParticleType;
 import com.linngdu664.bsf3lite.registry.ParticleRegistry;
 import com.linngdu664.bsf3lite.registry.SoundRegistry;
@@ -39,6 +41,10 @@ import java.util.function.Consumer;
 
 public class ColdCompressionJetEngineItem extends Item {
     public static final int STARTUP_DURATION = 24;
+    private static final float GLIDING_RING_RADIUS = 0.6F;
+    private static final int GLIDING_RING_PARTICLE_COUNT = 24;
+    private static final float GLIDING_RING_SPEED = 0.6F;
+    private static final double GLIDING_RING_OFFSET = 0.8;
 
     public ColdCompressionJetEngineItem() {
         super(new Item.Properties()
@@ -119,7 +125,16 @@ public class ColdCompressionJetEngineItem extends Item {
                     pLivingEntity.resetFallDistance();
                 }
             }
-            PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new ForwardConeParticlesPayload(new ForwardConeParticlesParas(particlesPos, vec3.reverse(), 2F, 60, 0.5F, 0), BSFParticleType.SNOWFLAKE.ordinal()));
+            if (pLivingEntity.isFallFlying()) {
+                Vec3 movement = pLivingEntity.getKnownMovement();
+                Vec3 ringNormal = movement.lengthSqr() > 1.0E-10 ? movement.normalize() : vec3;
+                Vec3 ringCenter = pLivingEntity.getPosition(0);
+                PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new RingParticlesPayload(
+                        new RingParticlesParas(ringCenter, ringNormal, GLIDING_RING_RADIUS, GLIDING_RING_PARTICLE_COUNT, GLIDING_RING_SPEED),
+                        BSFParticleType.HIGH_DRAG_SNOWFLAKE.ordinal()));
+            } else {
+                PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new ForwardConeParticlesPayload(new ForwardConeParticlesParas(particlesPos, vec3.reverse(), 2F, 60, 0.5F, 0), BSFParticleType.SNOWFLAKE.ordinal()));
+            }
         }
     }
 
