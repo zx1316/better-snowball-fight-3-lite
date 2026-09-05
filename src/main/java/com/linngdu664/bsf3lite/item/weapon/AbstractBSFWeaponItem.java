@@ -145,21 +145,23 @@ public abstract class AbstractBSFWeaponItem extends Item {
         }
         Inventory inventory = player.getInventory();
         int k = inventory.getContainerSize();
-        ItemStack ammoItemStack = null;
         for (int i = 0; i < k; i++) {
             ItemStack itemStack = inventory.getItem(i);
-            if (itemStack.getItem() instanceof SnowballTankItem && itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item().equals(ammoItem) && (ammoItemStack == null || ammoItemStack.getDamageValue() < itemStack.getDamageValue())) {
-                ammoItemStack = itemStack;
+            if (itemStack.getItem() instanceof SnowballTankItem && itemStack.getOrDefault(DataComponentRegistry.AMMO_ITEM, ItemData.EMPTY).item() == ammoItem) {
+                RegionData region = itemStack.get(DataComponentRegistry.REGION);
+                if (region == null || region.inRegion(player.position())) {
+                    return itemStack;
+                }
             }
-        }
-        if (ammoItemStack != null) {
-            return ammoItemStack;
         }
         if (isAllowBulkedSnowball()) {
             for (int i = 0; i < k; i++) {
                 ItemStack itemStack = inventory.getItem(i);
-                if (itemStack.getItem() instanceof AbstractBSFSnowballItem snowball && snowball.equals(ammoItem)) {
-                    return itemStack;
+                if (itemStack.getItem() instanceof AbstractBSFSnowballItem snowball && snowball == ammoItem) {
+                    RegionData region = itemStack.get(DataComponentRegistry.REGION);
+                    if (region == null || region.inRegion(player.position())) {
+                        return itemStack;
+                    }
                 }
             }
         }
