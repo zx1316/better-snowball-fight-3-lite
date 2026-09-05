@@ -2,6 +2,7 @@ package com.linngdu664.bsf3lite.particle.util;
 
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardConeParticlesParas;
 import com.linngdu664.bsf3lite.network.to_client.packed_paras.ForwardRaysParticlesParas;
+import com.linngdu664.bsf3lite.network.to_client.packed_paras.RingParticlesParas;
 import com.linngdu664.bsf3lite.util.BSFCommonUtil;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
@@ -107,6 +108,30 @@ public class ParticleUtil {
             dz = BSFCommonUtil.randDoubleWithInfer(randomSource, pos1.z, pos2.z);
             Vec3 v = normalizedV.scale(BSFCommonUtil.randDouble(randomSource, vMin, vMax)).add(inertia);
             pLevel.addParticle(particleOptions, dx, dy, dz, v.x, v.y, v.z);
+        }
+    }
+
+    public static void spawnRingParticles(Level level, ParticleOptions particleOptions, RingParticlesParas paras) {
+        Vec3 normal = paras.normal().normalize();
+        if (normal.lengthSqr() < 1.0E-10 || paras.particleCount() <= 0) {
+            return;
+        }
+
+        Vec3 basisA = normal.cross(new Vec3(0, 1, 0)).normalize();
+        if (basisA.lengthSqr() < 1.0E-10) {
+            basisA = normal.cross(new Vec3(1, 0, 0)).normalize();
+        }
+        Vec3 basisB = normal.cross(basisA).normalize();
+        float angleStep = Mth.TWO_PI / paras.particleCount();
+        float angleOffset = level.getRandom().nextFloat() * angleStep;
+
+        for (int i = 0; i < paras.particleCount(); i++) {
+            float angle = angleOffset + i * angleStep;
+            Vec3 radialDirection = basisA.scale(Mth.cos(angle)).add(basisB.scale(Mth.sin(angle)));
+            Vec3 particlePos = paras.center().add(radialDirection.scale(paras.radius()));
+            Vec3 particleVelocity = radialDirection.scale(paras.speed());
+            level.addParticle(particleOptions, particlePos.x, particlePos.y, particlePos.z,
+                    particleVelocity.x, particleVelocity.y, particleVelocity.z);
         }
     }
 

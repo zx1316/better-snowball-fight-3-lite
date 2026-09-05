@@ -19,6 +19,13 @@ public class BSFDummyRenderer extends LivingEntityRenderer<BSFDummyEntity, BSFDu
     }
 
     @Override
+    protected boolean shouldShowName(BSFDummyEntity entity, double distanceToCameraSq) {
+        return super.shouldShowName(entity, distanceToCameraSq)
+                && (entity.shouldShowName()
+                || entity.hasCustomName() && entity == this.entityRenderDispatcher.crosshairPickEntity);
+    }
+
+    @Override
     public void extractRenderState(BSFDummyEntity entity, BSFDummyRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         state.style = entity.getStyle();

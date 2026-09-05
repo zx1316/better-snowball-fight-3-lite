@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -142,21 +143,24 @@ public class BSFDummyEntity extends LivingEntity {
     public void tick() {
         super.tick();
         if (!level().isClientSide()) {
+            float expiredDamage = damages[ptr];
             damages[ptr++] = damage;
             if (ptr >= damages.length) {
                 ptr = 0;
             }
             float lastDps = getDPS();
             float currentDps = lastDps;
-            if (damage > 0F) {
+            if (damage != 0F || expiredDamage != 0F) {
                 float sum = 0F;
                 for (float v : damages) {
                     sum += v;
                 }
                 currentDps = sum;
-                entityData.set(DPS, sum);
-                damage = 0F;
+                if (currentDps != lastDps) {
+                    entityData.set(DPS, currentDps);
+                }
             }
+            damage = 0F;
 
             if (currentDps != lastDps || this.dpsStrCache == null) {
                 boolean dpsTooSmall = currentDps > 0.0 && currentDps < 0.01;
@@ -177,7 +181,7 @@ public class BSFDummyEntity extends LivingEntity {
     @Override
     public @NotNull InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (itemStack.is(Items.SNOWBALL) && !player.isSpectator()) {
+        if (itemStack.is(Items.SNOWBALL)) {
             if (player.isSpectator()) {
                 return InteractionResult.SUCCESS;
             } else if (player.level().isClientSide()) {
@@ -187,6 +191,7 @@ public class BSFDummyEntity extends LivingEntity {
                 entityData.set(STYLE, (byte) ((getStyle() + 1) % AbstractBSFSnowGolemEntity.STYLE_NUM));
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY() + 1, this.getZ(), 20, 0, 0.5, 0, 0.05);
                 this.playSound(SoundEvents.SNOW_PLACE, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                this.gameEvent(GameEvent.ENTITY_INTERACT, player);
                 return InteractionResult.SUCCESS_SERVER;
             }
         } else {

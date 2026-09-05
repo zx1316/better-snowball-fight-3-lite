@@ -15,6 +15,7 @@ public class NetworkRegistry {
         final PayloadRegistrar registrar = event.registrar("1");
         registrar.playToClient(ForwardConeParticlesPayload.TYPE, ForwardConeParticlesPayload.STREAM_CODEC, ForwardConeParticlesPayload::handleDataInClient);
         registrar.playToClient(ForwardRaysParticlesPayload.TYPE, ForwardRaysParticlesPayload.STREAM_CODEC, ForwardRaysParticlesPayload::handleDataInClient);
+        registrar.playToClient(RingParticlesPayload.TYPE, RingParticlesPayload.STREAM_CODEC, RingParticlesPayload::handleDataInClient);
         registrar.playToClient(ImplosionSnowballCannonParticlesPayload.TYPE, ImplosionSnowballCannonParticlesPayload.STREAM_CODEC, ImplosionSnowballCannonParticlesPayload::handleDataInClient);
         registrar.playToClient(ScreenshakePayload.TYPE, ScreenshakePayload.STREAM_CODEC, ScreenshakePayload::handleDataInClient);
         registrar.playToClient(ToggleMovingSoundPayload.TYPE, ToggleMovingSoundPayload.STREAM_CODEC, ToggleMovingSoundPayload::handleDataInClient);

@@ -17,6 +17,7 @@ public class ParticleRegistry {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(Registries.PARTICLE_TYPE, Main.MODID);
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SHORT_TIME_SNOWFLAKE = PARTICLES.register("short_time_snowflake", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> BIG_LONG_TIME_SNOWFLAKE = PARTICLES.register("big_long_time_snowflake", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> HIGH_DRAG_SNOWFLAKE = PARTICLES.register("high_drag_snowflake", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> GENERATOR_FIX = PARTICLES.register("generator_fix", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> GENERATOR_PUSH = PARTICLES.register("generator_push", () -> new SimpleParticleType(false));
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> IMPLOSION_SNOWBALL_CANNON = PARTICLES.register("implosion_snowball_cannon", () -> new SimpleParticleType(false));
@@ -26,6 +27,7 @@ public class ParticleRegistry {
     public static void registerParticleProvider(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticleRegistry.SHORT_TIME_SNOWFLAKE.get(), ShortTimeSnowflake.Provider::new);
         event.registerSpriteSet(ParticleRegistry.BIG_LONG_TIME_SNOWFLAKE.get(), BigLongTimeSnowflake.Provider::new);
+        event.registerSpriteSet(ParticleRegistry.HIGH_DRAG_SNOWFLAKE.get(), HighDragSnowflake.Provider::new);
         event.registerSpriteSet(ParticleRegistry.GENERATOR_FIX.get(), GeneratorFix.Provider::new);
         event.registerSpriteSet(ParticleRegistry.GENERATOR_PUSH.get(), GeneratorPush.Provider::new);
         event.registerSpriteSet(ParticleRegistry.IMPLOSION_SNOWBALL_CANNON.get(), ImplosionSnowballCannonParticle.Provider::new);
